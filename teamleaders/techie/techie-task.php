@@ -323,7 +323,7 @@ if(isset($_POST['submit'])){
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     <!--End Back To Top Button-->
 	
-	<!--Start footer-->
+	<!--Start footer--
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
