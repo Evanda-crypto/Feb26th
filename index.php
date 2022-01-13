@@ -72,8 +72,8 @@
             <li class="nav-item"> <a style="color: black;" href="admin/login.php" class="navbar-brand">ADMIN</a> </li>
             <li class="nav-item"> <a style="color: black;" href="teamleaders/techie/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
             <li class="nav-item"> <a style="color: black;" href="techie/login.php" class="navbar-brand">INSTALLATION </a></li>
-            <li class="nav-item"> <a style="color: black;" href="sales/saleslogin.php"class="navbar-brand">SALES</a></li>   
-        <!-- <li class="nav-item"> <a style="color: black;" href="admin/table.php"class="navbar-brand">test</a></li>
+            <li class="nav-item"> <a style="color: black;" href="sales/login.php"class="navbar-brand">SALES</a></li>   
+         <!--<li class="nav-item"> <a style="color: black;" href="users/register.php"class="navbar-brand">test</a></li>
           <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">test</a></li>     -->                                                                                                                                                                                                                                                         
 </div>
     </div>
@@ -90,7 +90,7 @@
             <div class="carousel-item active" style="background-image: url('assets/techie.png')">
                 <div class="carousel-caption d-none d-md-block">
                     <h3 class="display-4">Techies</h3>
-                    <p class="lead">Reliable Expertise who work to ensure safety installation strategies are implemented.</p>
+                    <p class="lead">Reliable Expertise who work to ensure safety installation strategies are Implemented.</p>
                 </div>
             </div> <!-- Slide Two - Set the background image for this slide in the line below -->
             <div class="carousel-item" style="background-image: url('assets/sales.png')">

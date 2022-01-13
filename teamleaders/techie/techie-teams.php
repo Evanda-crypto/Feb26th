@@ -83,7 +83,7 @@ include_once("session.php");
 
       <li>
       <li>
-        <a href="#">
+        <a href="">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
       </li>

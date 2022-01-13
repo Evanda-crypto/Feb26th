@@ -1,34 +1,40 @@
+
 <?php
 include("../db/db.php");
 if(isset($_POST['submit'])){
-   session_start();
-   $Username= $_POST['Username'];
-   $Password= $_POST['Password'];
-
+session_start();
+$EMAIL= $_POST['Email'];
+$Password= $_POST['Password'];
 
 if($connection){
-    $stmt= $connection->prepare("select * from admin where Username= ?");
-    $stmt->bind_param("s",$Username);
+    $stmt= $connection->prepare("select * from employees where EMAIL= ?");
+    $stmt->bind_param("s",$EMAIL);
     $stmt->execute();
     $stmt_result= $stmt->get_result();
     if($stmt_result->num_rows>0){
         $data= $stmt_result->fetch_assoc();
-        if($data['Password']==$Password){
+        if($data['DEPARTMENT']=="Sales"){
+        if(password_verify($Password, $data['PASSWORD'])){
 
-           $_SESSION['Admin']=$Username;
-           header("Location: dashboard.php");
+            $_SESSION['Sales']=$EMAIL;
+            $_SESSION['FName']=$data['FIRST_NAME'];
+            $_SESSION['LName']=$data['LAST_NAME'];
+            header('Location: SalesDashboard.php',true, 303);
         }
         else{
-            echo "<script>alert('Wrong Password.Please try again.');</script>";
+          echo "<script>alert('Wrong Password');</script>";
         }
+      }
+      else{
+        echo "<script>alert('No records');</script>";
+      }
     }
     else{
-        echo "<script>alert('Invalid Details');</script>";
-        
+      echo "<script>alert('No records');</script>";
     }
 }
 else{
-    echo "<script>alert('Connection failed.');</script>";
+  echo " connection failed";
 }
 }
 ?>
@@ -40,7 +46,7 @@ else{
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Admin | Login</title>
+  <title>Champs | Login</title>
   <!-- loader-->
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
@@ -78,7 +84,7 @@ else{
 			  <div class="form-group">
 			  <label for="exampleInputUsername" class="sr-only">Username</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Username" placeholder="Enter Username">
+				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Email" placeholder="Enter Username">
 				  <div class="form-control-position">
 					  <i class="icon-user"></i>
 				  </div>
@@ -108,7 +114,7 @@ else{
 		   </div>
 		  </div>
 		  <div class="card-footer text-center py-3">
-		    <p class="text-warning mb-0"><a href="../index.php">Back</a></p>
+		    <p class="text-warning mb-0"><a href="../users/register.php">Register</a></p>
 		  </div>
 	     </div>
     

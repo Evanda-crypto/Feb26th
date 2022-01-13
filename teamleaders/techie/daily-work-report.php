@@ -1,46 +1,39 @@
 <?php
 include('../../db/db.php');
 include_once("session.php");
-$id=$_GET['client-id'];
-
-$sql="select * from papdailysales where ClientID=$id";
-$result=mysqli_query($connection,$sql);
-$row=mysqli_fetch_assoc($result);
-$id=$row['ClientID'];
-$cname=$row['ClientName'];
-$contact=$row['ClientContact'];
-$availD=$row['ClientAvailability'];
-$reg=$row['Region'];
-$bname=$row['BuildingName'];
-$bcode=$row['BuildingCode'];
 
 if(isset($_POST['submit'])){
-    $TeamID = $_POST['teamid'];
-    $ClientID = $_POST['ClientID'];
-    $ClientName = $_POST['cname'];
-    $ClientContact = $_POST['contact'];
-    $ClientAvailability = $_POST['availD'];
-    $Region = $_POST['reg'];
-    $BuildingName = $_POST['bname'];
-    $BuildingCode = $_POST['bcode'];
-    $Date = $_POST['date'];
-
+    $Team_ID=$_POST['teamid'];
+    $Techie_1 = $_POST['building'];
+    $Techie_2 = $_POST['Techie2'];
+    $Email1 = $_POST['Email1'];
+    $Email2 = $_POST['Email2'];
+    $Region = $_POST['region'];
+    
+    
+    
+    //checking connection
     if($connection->connect_error){
         die('connection failed : '.$connection->connect_error);
     }
     else
-    {      
-        $stmt= $connection->prepare("insert into techietask (TeamID,ClientID,ClientName,ClientContact,ClientAvailability,Region,BuildingName,BuildingCode,Date)
-        values(?,?,?,?,?,?,?,?,?)");
-        //values from the fields
-        $stmt->bind_param("sssssssss",$TeamID,$ClientID,$ClientName,$ClientContact,$ClientAvailability,$Region,$BuildingName,$BuildingCode,$Date);
+    {
+         //Insert query
+        $stmt= $connection->prepare("insert into techieteams (Team_ID,Techie_1,Techie_2,Region,Email1,Email2)
+        values(?,?,?,?,?,?)");
+           //values from the fields
+        $stmt->bind_param("ssssss",$Team_ID,$Techie_1,$Techie_2,$Region,$Email1,$Email2);
         $stmt->execute();
-        echo "<script>alert('Successfull.');</script>";
-        header("location: dashboard.php");
+        echo "<script>alert('Information successfully submited');</script>";
         $stmt->close();
         $connection->close();
+    
     }
-}
+    }
+?>
+<?php
+include("../../db/db.php");
+include_once("session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +43,7 @@ if(isset($_POST['submit'])){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Techie | Task</title>
+  <title>Daily | Work | Report</title>
   <!-- loader-->
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
@@ -124,7 +117,7 @@ if(isset($_POST['submit'])){
 
       <li>
       <li>
-        <a href="">
+        <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
       </li>
@@ -206,44 +199,39 @@ if(isset($_POST['submit'])){
       <div class="col-lg-6">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">New Task</div>
+           <div class="card-title">Daily Work Report</div>
            <hr>
             <form method="POST">
            <div class="form-group">
             <label for="input-1">Team ID</label>
-            <input type="text" class="form-control" name="teamid" id="input-1" placeholder="Enter Team ID" value="<?php echo $_SESSION['Region']?>-" required>
+            <input type="text" class="form-control" name="teamid" id="input-1" placeholder="Enter Team ID" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Client ID</label>
-            <input type="text" class="form-control" name="ClientID" value="<?php echo $id?>" id="input-2" placeholder="Client ID">
+            <label for="input-2">Buildings</label>
+            <input type="text" class="form-control" name="building" id="input-2" placeholder="Buildings Worked On" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Client Name</label>
-            <input type="text" class="form-control" name="cname" value="<?php echo $cname?>" id="input-2" placeholder="Client Name">
+            <label for="input-2"></label>
+            <input type="text" class="form-control" name="Email1" id="input-2" placeholder="Techie 1 Email" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Contact</label>
-            <input type="text" class="form-control" name="contact" id="input-2" value="<?php echo $contact?>" placeholder="Client Contact">
+            <label for="input-2">Techie 2</label>
+            <input type="text" class="form-control" name="Techie2" id="input-2" placeholder="Techie 2" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Region</label>
-            <input type="text" class="form-control" name="reg" id="input-2" value="<?php echo $reg?>" placeholder="Region">
+            <label for="input-2">Techie 2 Email</label>
+            <input type="text" class="form-control" name="Email2" id="input-2" placeholder="Techie 2 Email" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Availability</label>
-            <input type="text" class="form-control" name="availD" id="input-2" value="<?php echo $availD?>" placeholder="Client Availability">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Building Name</label>
-            <input type="text" class="form-control" name="bname" id="input-2" value="<?php echo $bname?>" placeholder="Building Name">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Building Code</label>
-            <input type="text" class="form-control" name="bcode" id="input-2" value="<?php echo $bcode?>" placeholder="Building Code">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Date of Work</label>
-            <input type="date" class="form-control" name="date" id="input-2" placeholder="Date of Work" required>
+            <label for="input-1">Region</label>
+            <select type="text" class="form-control" name="region" id="input-1" name="Region" placeholder="Region" required>
+              <option value=""> Select Region</option>
+              <option value="G44">G44</option>
+              <option value="G45S">G45S</option>
+              <option value="G45N">G45N</option>
+              <option value="ZMM">ZMM</option>
+              <option value="RSM">RSM</option>
+            </select>
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
@@ -256,8 +244,8 @@ if(isset($_POST['submit'])){
      <div class="col-lg-6">
         <div class="card">
            <div class="card-body">
-           <div class="card-title">Pending Tasks for Teams <div class="form-outline">
-          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
+           <div class="card-title">Work Report <div class="form-outline">
+          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by TeamID.." aria-label="Search" /></div>
            </div>
            <hr>
            <div class="card">
@@ -271,30 +259,27 @@ if(isset($_POST['submit'])){
                     <th scope="col">Team ID</th>
                     <th scope="col">Techie 1</th>
                     <th scope="col">Techie 2</th>
-                    <th scope="col">Pending Tasks</th>
-
+                    
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                   <?php
 
-                          $sql="SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,techieteams.Techie_1,techieteams.Techie_2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
-                          left join techieteams on techietask.TeamID=techieteams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
-                          GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1";
+                          $sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
                           $result=mysqli_query($connection,$sql);
                           if($result){
                           while($row=mysqli_fetch_assoc($result)){
-                          $tid=$row['TeamID'];
-                          $t1=$row['Techie_1'];
-                          $t2=$row['Techie_2'];
-                          $task=$row['tasks'];
+                          $tid=$row['Team_ID'];
+                          $tname1=$row['Techie_1'];
+                          $tname2=$row['Techie_2'];
+                          
 
                           echo ' <tr>
                           <td>'.$tid.'</td>
-                          <td>'.$t1.'</td>
-                          <td>'.$t2.'</td>
-                          <td>'.$task.'</td>
+                          <td>'.$tname1.'</td>
+                          <td>'.$tname2.'</td>
+                          
                           </tr>';
 
                        }
@@ -410,30 +395,5 @@ $(document).ready(function () {
 $("myTable").stickyTableHeaders();
 });
 </script>
-<script>
- var todayDate= new Date();
- var month= todayDate.getMonth() + 1;
- var year= todayDate.getFullYear();
- var todate=todayDate.getDate();
-if(todate<10){
-  todate= "0"+ todate;
-}
-if(month<10){
-  month= "0"+ month;
-}
- maxdate= year +"-" + month + "-" + todate;
- document.getElementById("input-2").setAttribute("max",maxdate);
-</script>
 </body>
-<!--SELECT count(techietask.TeamID) as task,papinstalled.Team_ID from techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID WHERE papinstalled.ClientID is null and techietask.TeamID="1000"
-
-
-
-SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID WHERE papinstalled.ClientID is null  and techietask.Region="G44" GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1 
-
-
-
-
-
--->
 </html>

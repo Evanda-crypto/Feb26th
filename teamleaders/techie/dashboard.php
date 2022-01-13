@@ -581,7 +581,7 @@ $("myTable").stickyTableHeaders();
   var ctx = document.getElementById('chart1').getContext('2d');
 		
     var myChart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: <?php echo json_encode($Date); ?>,
         datasets: [{

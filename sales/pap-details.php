@@ -1,7 +1,7 @@
 
 <?php
 include("../db/db.php");
-include_once("salesloginsession.php");
+include_once("session.php");
 ?>
 
 <?php
@@ -299,9 +299,9 @@ else{
            </div>
           
            <div class="form-group">
-            <label for="input-1">Client Age</label>
+            <label for="input-1">Client Gender</label>
             <select type="text" class="form-control" id="input-1" name="gender" >
-              <option value=""> Select Age</option>
+              <option value=""> Select Gender</option>
               <option value="Male">Male</option>  
               <option value="Female">Female</option>  
               <option value="Other">Other</option>

@@ -41,7 +41,7 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>New | Team</title>
+  <title>Change | Team</title>
   <!-- loader-->
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
@@ -215,15 +215,8 @@ include_once("session.php");
             <input type="text" class="form-control" name="Techie2" id="input-2" value="<?php echo $t2?>" placeholder="Techie 2" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Region</label>
-            <select type="text" class="form-control" name="region" id="input-1" name="Region" placeholder="Region" required>
-              <option value=""><?php echo $reg?></option>
-              <option value="G44">G44</option>
-              <option value="G45S">G45S</option>
-              <option value="G45N">G45N</option>
-              <option value="ZMM">ZMM</option>
-              <option value="RSM">RSM</option>
-            </select>
+            <label for="input-2">Region</label>
+            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $reg?>" placeholder="Region" required>
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
