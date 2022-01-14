@@ -82,13 +82,13 @@ else
 		 	<!--	<img src="../assets/logo.png" alt="logo icon">-->
 		 	</div>
 		  <div class="card-title text-uppercase text-center py-3">Sign Up</div>
-		    <form method="POST">
+		    <form method="POST" autocomplete="off">
 			  <div class="form-group">
 			  <label for="exampleInputName" class="sr-only">First Name</label>
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="FName" placeholder="First Name" required>
 				  <div class="form-control-position">
-					  <i class="icon-user"></i>
+					
 				  </div>
 			   </div>
 			  </div>
@@ -97,7 +97,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="LName" placeholder="Last Name" required>
 				  <div class="form-control-position">
-					  <i class="icon-user"></i>
+				
 				  </div>
 			   </div>
 			  </div>
@@ -106,7 +106,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputEmailId" class="form-control input-shadow" name="Email" placeholder="Email ID" required>
 				  <div class="form-control-position">
-					  <i class="icon-envelope-open"></i>
+				
 				  </div>
 			   </div>
 			  </div>
@@ -114,7 +114,7 @@ else
 			  <label for="exampleInputUsername" class="sr-only">Gender</label>
 			   <div class="position-relative has-icon-right">
 				  <select type="text" id="input-1" class="form-control input-shadow" name="gender" required>
-                  <option value="">Select Gender</option>
+                  <option value="" disabled selected>Select Gender</option>
                    <option value="Male">Male</option>
                    <option value="Female">Female</option>
                    <option value="Other">Other</option>
@@ -126,7 +126,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="age" placeholder="Age" required>
 				  <div class="form-control-position">
-					  <i class="icon-calendar"></i>
+					 
 				  </div>
 			   </div>
 			  </div>
@@ -134,7 +134,7 @@ else
 			  <label for="exampleInputUsername" class="sr-only">Department</label>
 			   <div class="position-relative has-icon-right">
 				  <select type="text" id="input-1" class="form-control input-shadow" name="dpt" required>
-                  <option value="">Select Department</option>
+                  <option value="" disabled selected>Select Department</option>
                    <option value="Sales">Sales</option>
                    <option value="Techie">Techie</option>
                   </select>
@@ -145,7 +145,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="res" placeholder="Residence" required>
 				  <div class="form-control-position">
-					  <i class="icon-home"></i>
+				
 				  </div>
 			   </div>
 			  </div>
@@ -154,7 +154,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="password" id="exampleInputNam" onkeyup="check();" name="password" class="form-control input-shadow" placeholder="Password" required>
 				  <div class="form-control-position">
-					  <i class="icon-lock"></i>
+					  
 				  </div>
 			   </div>
 			  </div>
@@ -164,7 +164,7 @@ else
 			   <div class="position-relative has-icon-right">
 				  <input type="password" id="exampleInputPassword" onkeyup="check();" class="form-control input-shadow" placeholder="Confirm Password" required>
 				  <div class="form-control-position">
-					  <i class="icon-lock"></i>
+					
 				  </div>
 			   </div>
 			  </div>

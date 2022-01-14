@@ -80,7 +80,7 @@ else{
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Username" placeholder="Enter Username">
 				  <div class="form-control-position">
-					  <i class="icon-user"></i>
+					 
 				  </div>
 			   </div>
 			  </div>
@@ -89,7 +89,7 @@ else{
 			   <div class="position-relative has-icon-right">
 				  <input type="password" id="exampleInputPassword" name="Password" class="form-control input-shadow" placeholder="Enter Password">
 				  <div class="form-control-position">
-					  <i class="icon-lock"></i>
+					  
 				  </div>
 			   </div>
 			  </div>

@@ -14,7 +14,7 @@ $(document).ready(function() {
 
       },
 
-      defaultDate: 'Date()',
+      defaultDate: '2022-01-01',
 
       navLinks: true, // can click day/week names to navigate views
 

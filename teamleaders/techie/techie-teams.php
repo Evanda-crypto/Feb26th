@@ -181,7 +181,7 @@ include_once("session.php");
                     <tr>
                     <?php
 
-$sql="select * from techieteams order by Team_ID ASC";
+$sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
 $result=mysqli_query($connection,$sql);
 if($result){
 while($row=mysqli_fetch_assoc($result)){

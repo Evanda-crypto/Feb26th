@@ -10,7 +10,7 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>CSV</title>
+  <title>Buildings | Ref</title>
   <!-- loader-->
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
@@ -160,7 +160,7 @@ include_once("session.php");
       <div class="row mt-3">
         
           <div class="card">
-          <center> <h5 class="card-title">CSV</h5></center>
+          <center> <h5 class="card-title">Buildings Ref</h5></center>
           <div class="form-outline"><input type="search" id="myInput" style="width:20%;" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
             <div class="card-body">
 

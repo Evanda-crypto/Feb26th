@@ -80,13 +80,13 @@ else{
 		 		<img src="../assets/login.png" alt="logo icon">
 		 	</div>
 		  <div class="card-title text-uppercase text-center py-3"></div>
-		    <form method="POST">
+		    <form method="POST" autocomplete="off">
 			  <div class="form-group">
 			  <label for="exampleInputUsername" class="sr-only">Username</label>
 			   <div class="position-relative has-icon-right">
 				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Email" placeholder="Enter Username">
 				  <div class="form-control-position">
-					  <i class="icon-user"></i>
+					  
 				  </div>
 			   </div>
 			  </div>
@@ -95,7 +95,7 @@ else{
 			   <div class="position-relative has-icon-right">
 				  <input type="password" id="exampleInputPassword" name="Password" class="form-control input-shadow" placeholder="Enter Password">
 				  <div class="form-control-position">
-					  <i class="icon-lock"></i>
+					 
 				  </div>
 			   </div>
 			  </div>

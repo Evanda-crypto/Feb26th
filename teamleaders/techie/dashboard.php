@@ -262,7 +262,7 @@ include_once("session.php");
                                    echo "Problem in database connection! Contact administrator!" . mysqli_error();
                                  }else{
                                      $sql ="SELECT DateInstalled,COUNT(DateInstalled) as installed FROM papinstalled GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-                                     $result = mysqli_query($connection,$sql);
+                                     $result = mysqli_query($connection,$sql);# All Region installation
                                      $chart_data="";
                                       while ($row = mysqli_fetch_array($result)) { 
                                       $Date[]  = $row['DateInstalled']  ;
@@ -275,6 +275,21 @@ include_once("session.php");
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>PAP Installation</li>
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Installation[<?php echo $_SESSION['Region']?>]</li>
 			</ul>
+      <?php
+                                  
+                                  if (!$connection) {
+                                        # code...
+                                   echo "Problem in database connection! Contact administrator!" . mysqli_error();
+                                 }else{
+                                     $sql ="SELECT DateInstalled,COUNT(DateInstalled) as reginstallation FROM papinstalled where REGION='".$_SESSION['Region']."' GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+                                     $result = mysqli_query($connection,$sql);# individual region installation
+                                     $chart_data="";
+                                      while ($row = mysqli_fetch_array($result)) { 
+                                      #$Date[]  = $row['DateInstalled']  ;
+                                      $reginstallation[] = $row['reginstallation'];
+                                      
+                                      }
+                                   }?>
 			<div class="chart-container-1">
       <canvas id="chart1"></canvas>
 			</div>
@@ -585,15 +600,15 @@ $("myTable").stickyTableHeaders();
       data: {
         labels: <?php echo json_encode($Date); ?>,
         datasets: [{
-          label: 'New Visitor',
+          label: 'Pap Installed[All Regions]',
           data: <?php echo json_encode($number); ?>,
           backgroundColor: '#fff',
           borderColor: "transparent",
           pointRadius :"0",
           borderWidth: 3
         }, {
-          label: 'Old Visitor',
-          data: <?php echo json_encode($number); ?>,
+          label: 'Pap Installed[<?php echo $_SESSION['Region']?>]',
+          data: <?php echo json_encode($reginstallation); ?>,
           backgroundColor: "rgba(255, 255, 255, 0.25)",
           borderColor: "transparent",
           pointRadius :"0",

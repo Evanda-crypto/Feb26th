@@ -204,7 +204,7 @@ include_once("session.php");
             <form method="POST">
            <div class="form-group">
             <label for="input-1">Team ID</label>
-            <input type="text" class="form-control" name="teamid" id="input-1" placeholder="Enter Team ID" required>
+            <input type="text" class="form-control" name="teamid" value="<?php echo $_SESSION['Region']?>-" id="input-1" placeholder="Enter Team ID" required>
            </div>
            <div class="form-group">
             <label for="input-2">Techie 1</label>
@@ -224,13 +224,14 @@ include_once("session.php");
            </div>
            <div class="form-group">
             <label for="input-1">Region</label>
-            <select type="text" class="form-control" name="region" id="input-1" name="Region" placeholder="Region" required>
-              <option value=""> Select Region</option>
+            <select type="text" class="form-control" name="region" id="input-1" name="Region" value="<?php echo $_SESSION['Region']?>" placeholder="Region" required>
+              <option value="" disabled selected>Select Region</option>
               <option value="G44">G44</option>
               <option value="G45S">G45S</option>
               <option value="G45N">G45N</option>
               <option value="ZMM">ZMM</option>
-              <option value="RSM">RSM</option>
+              <option value="R&M">R&M</option>
+              <option value="JCR">JCR</option>
             </select>
            </div>
            <div class="form-group">

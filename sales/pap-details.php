@@ -242,13 +242,14 @@ else{
            <div class="form-group">
             <label for="input-1">Region</label>
             <select type="text" class="form-control" id="input-1" name="Region" placeholder="Region">
-              <option value=""> Select Region</option>
+              <option value="" disabled selected> Select Region</option>
               <option value="G44">G44</option>
               <option value="G45S">G45S</option>
               <option value="G45N">G45N</option>
               <option value="ZMM">ZMM</option>
               <option value="R&M">R&M</option>
-              <option value="Jacaranda">Jacaranda</option>
+              <option value="JCR">JCR</option>
+              <option value="KWST">KWST</option>
             </select>
            </div>
            <div class="form-group">
@@ -258,7 +259,7 @@ else{
            <div class="form-group">
             <label for="input-1">Apt Layout</label>
             <select type="text" class="form-control" id="input-1" name="aptlayout" placeholder="Enter Your Name">
-              <option value=""> Select Layout</option>
+              <option value="" disabled selected> Select Layout</option>
               <option value="Single">Single</option>
               <option value="Double">Double</option>
               <option value="Bedsitter">Bedsitter</option>
@@ -287,7 +288,7 @@ else{
            <div class="form-group">
             <label for="input-1">Client Availability</label>
             <select type="text" class="form-control" id="input-1" name="Day">
-              <option value=""> Select Day</option>
+              <option value="" disabled selected> Select Day</option>
               <option value="Mon">Mon</option>
               <option value="Tue">Tue</option>
               <option value="Wed">Wed</option>
@@ -301,7 +302,7 @@ else{
            <div class="form-group">
             <label for="input-1">Client Gender</label>
             <select type="text" class="form-control" id="input-1" name="gender" >
-              <option value=""> Select Gender</option>
+              <option value="" disabled selected> Select Gender</option>
               <option value="Male">Male</option>  
               <option value="Female">Female</option>  
               <option value="Other">Other</option>
@@ -309,7 +310,7 @@ else{
            <div class="form-group">
             <label for="input-1">Client Age</label>
             <select type="text" class="form-control" id="input-1" name="age">
-              <option value=""> Select Age</option>
+              <option value="" disabled selected> Select Age</option>
               <option value="Below 17">Below 17</option>  
               <option value="18-24">18-24</option>  
               <option value="25-34">25-34</option>  

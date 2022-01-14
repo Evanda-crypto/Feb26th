@@ -29,6 +29,7 @@ $stmt->bind_param("ssssss",$FIRST_NAME,$LAST_TNAME,$EMAIL,$DEPARTMENT,$REGION,$h
 $stmt->execute();
 echo "<script>alert('Successfull');</script>";
 $stmt->close();
+header("Location: add-teamleader.php");
 #$connection->close();
 }
 else{
@@ -263,7 +264,7 @@ else{
            </div>
            <div class="form-group">
             <label for="input-2">Email</label>
-            <input type="text" class="form-control" name="email" id="input-2" placeholder="Enter Email" value="<?php echo $email?>"  required>
+            <input type="text" class="form-control" name="Email" id="input-2" placeholder="Enter Email" value="<?php echo $email?>"  required>
            </div>
            <div class="form-group">
             <label for="input-1">Department</label>
@@ -275,14 +276,20 @@ else{
            </div>
            <div class="form-group">
             <label for="input-1">Region</label>
-            <select type="text" class="form-control" name="Region" id="input-1" name="Region" placeholder="Region" required>
-              <option >Select Region</option>
+            <select type="text" class="form-control" name="Region" id="input-1" placeholder="Region" required>
+              <option disabled selected>Select Region</option>
               <option value="G44">G44</option>
               <option value="ZMM">ZMM</option>
               <option value="G45S">G45S</option>
               <option value="G45N">G45N</option>
               <option value="R&M">R&M</option>
+              <option value="JCR">JCR</option>
+              <option value="KWST">KWST</option>
             </select>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Passwprd</label>
+            <input type="text" class="form-control" name="password" id="input-2" placeholder="Enter Email" value="123456"  required>
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i>Submit</button>
