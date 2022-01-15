@@ -13,7 +13,7 @@ include("session.php");
   <title>Admin | Dashboard</title>
   <!-- loader-->
    <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+ <!-- <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
    <!--Vector CSS -->
@@ -515,7 +515,7 @@ include("session.php");
                    <tbody><tr>
                    <?php
    
-   $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ");
+   $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc ");
    while($row=mysqli_fetch_assoc($query)){
        echo "<tr>";
       # echo "<td>",$row['No'],"</td>";

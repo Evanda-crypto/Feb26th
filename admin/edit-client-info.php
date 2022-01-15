@@ -300,7 +300,7 @@ else{
            <div class="form-group">
             <label for="input-1">Client Age</label>
             <select type="text" class="form-control" id="input-1" name="age" value="<?php echo $ClientAge?>" placeholder="Age">
-              <option value=""> Select Age</option>
+              <option value="" disabled selected> Select Age</option>
               <option value="Below 17">Below 17</option>  
               <option value="18-24">18-24</option>  
               <option value="25-34">25-34</option>  
@@ -342,7 +342,7 @@ else{
             <input type="text" class="form-control" name="adults" id="input-2" value="<?php echo $Adults?>" placeholder="Adults" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Chldren</label>
+            <label for="input-2">Children</label>
             <input type="text" class="form-control" name="children" id="input-2" value="<?php echo $Children?>" placeholder="Children" required>
            </div>
            <div class="form-group">
@@ -366,7 +366,7 @@ else{
          
       </div>
 
-     <div class="col-lg-6">
+     <!--<div class="col-lg-6">
         <div class="card">
            <div class="card-body">
            <div class="card-title">Emails  <div class="form-outline">

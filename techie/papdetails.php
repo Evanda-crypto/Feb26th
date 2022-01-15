@@ -5,7 +5,7 @@ $id=$_GET['clientid'];
 
 $sql="SELECT techietask.ClientName,techietask.Region,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,
 papdailysales.BuildingCode,papdailysales.Floor,CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode from papdailysales LEFT JOIN 
-techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND papdailysales.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
 $result=mysqli_query($connection,$sql);
 $row=mysqli_fetch_assoc($result);
 $clientid=$row['ClientID'];

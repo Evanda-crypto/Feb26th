@@ -217,7 +217,7 @@ include_once("session.php");
           <div class="card">
             <div class="card-body">
               
-              <h5 class="card-title">Pap Daily Installation</h5>
+            <center>  <h5 class="card-title">PAP DAILY INSTALLATION</h5></center>
              <div class="form-outline"><input type="search"  style="width:20%; margin-left:2%; margin-bottom:2%;"id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
           <div class="form-outline" style="width:10%; margin-left:2%; margin-bottom:2%;"> 	<!--		Show Numbers Of Rows 		-->
 			 		<select class  ="form-control" name="state" id="maxRows">

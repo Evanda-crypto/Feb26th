@@ -133,7 +133,7 @@ include_once("session.php");
      
     <li class="nav-item dropdown-lg">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-      <i class=""><?php echo $_SESSION['Region']?></i></a>
+      <b class=""><?php echo $_SESSION['Region']?></b></a>
     </li>
 
     <li class="nav-item">
@@ -176,7 +176,7 @@ include_once("session.php");
           <div class="card">
             <div class="card-body">
               
-              <h5 class="card-title">Pending Installation</h5>
+              <center><h5 class="card-title">PANDING INSTALLATION</h5></center>
              <!-- <div class="form-outline"><input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>-->
           <div class="form-outline" style="alignment:left;"> 	<!--		Show Numbers Of Rows 		-->
 			 		<select class  ="form-control" name="state" id="maxRows">

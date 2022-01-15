@@ -164,7 +164,7 @@ include_once("session.php");
   <ul class="navbar-nav align-items-center right-nav-link">
   <li class="nav-item dropdown-lg">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-      <i class=""><?php echo $_SESSION['Region']?></i></a>
+      <b class=""><?php echo $_SESSION['Region']?></b></a>
     </li>
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
@@ -245,7 +245,7 @@ include_once("session.php");
      <div class="col-lg-6">
         <div class="card">
            <div class="card-body">
-           <div class="card-title">Current Techie Teams  <div class="form-outline">
+           <center><div class="card-title">Current Techie Teams  <div class="form-outline"></center>
           <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by TeamID.." aria-label="Search" /></div>
            </div>
            <hr>

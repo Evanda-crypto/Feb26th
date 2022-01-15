@@ -260,7 +260,7 @@ else
            <div class="form-group">
             <label for="input-1">Department</label>
             <select type="text" class="form-control" name="Department" id="input-1" name="Region" placeholder="Region" required>
-              <option value=""> Select Deprtment</option>
+              <option value="" disabled selected> Select Deprtment</option>
               <option value="Sales">Sales</option>
               <option value="Techie">Techie</option>
             </select>
