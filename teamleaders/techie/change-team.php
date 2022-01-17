@@ -42,7 +42,7 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Change | Team</title>
-  <!-- loader-->
+  <!-- loader--
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->

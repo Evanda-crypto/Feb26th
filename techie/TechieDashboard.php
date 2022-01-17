@@ -12,11 +12,11 @@ include("../db/db.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Techie | Dashboard</title>
-  <!-- loader-->
-  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
+  <!-- loader--
+  <link href="../assets/css/pace.min.css" rel="stylesheet"/>--
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
-  <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- Vector CSS -->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
   <!-- simplebar CSS-->
@@ -238,7 +238,7 @@ include("../db/db.php");
 		 <div class="card-body">
 		    <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Daily Amount</li>
-		 <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Per Day</li>
+		<!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Per Day</li>-->
 			</ul>
 			<div class="chart-container-1">
 			  <canvas id="chart1"></canvas>

@@ -55,8 +55,8 @@ else
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>New PAP</title>
-  <!-- loader-->
-  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
+  <!-- loader--
+  <link href="../assets/css/pace.min.css" rel="stylesheet"/>--
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">

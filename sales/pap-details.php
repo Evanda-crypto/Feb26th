@@ -220,7 +220,7 @@ else{
       <div class="col-lg-6">
          <div class="card">
            <div class="card-body">
-           <div class="card-title"> New PAP Signed</div>
+           <div class="card-title"><center><h5> NEW PAP SIGNED</h5></center></div>
            <hr>
             <form method="POST">
            <div class="form-group">
@@ -229,7 +229,7 @@ else{
            </div>
            <div class="form-group">
             <label for="input-1">Champs</label>
-            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?>" readonly>
+            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?>" required>
            </div>
            <div class="form-group">
             <label for="input-1">Building Name</label>
@@ -323,7 +323,7 @@ else{
             <label for="input-5">Client Occupation</label>
             <input type="text" class="form-control" id="input-5" name="occupation" placeholder="Client Occupation">
            </div>
-           <var><var><div class="form-group">
+           <div class="form-group">
             <label for="input-3">Household Size</label>
             <input type="text" class="form-control" id="input-3" name="Householdsize" placeholder="Household Size">
            </div>
@@ -341,7 +341,7 @@ else{
            </div>
            <div class="form-group">
             <label for="input-1">Birthday</label>
-            <input type="text" class="form-control" id="input-5" name="Birthday" placeholder="Birtday">
+            <input type="text" class="form-control" id="input-5" name="Birthday" placeholder="Birthday">
            </div>
            <div class="form-group">
             <label for="input-4">Facebook</label>
@@ -368,9 +368,9 @@ else{
             <input type="text" class="form-control" id="input-5" name="bizdec" placeholder="Biz Description">
            </div>
            <div class="form-group">
-            <label for="input-5">Note</label>
+            <label for="input-5">Suggestions/Observations/Remarks</label>
             <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note">
-           </div></var></var>
+           </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-check"></i> Submit</button>
           </div>

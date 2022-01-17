@@ -11,11 +11,22 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Pap | Pending | Installation</title>
-  <!-- loader-->
+  <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <!-- simplebar CSS-->
   <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
@@ -218,25 +229,10 @@ include_once("session.php");
             <div class="card-body">
               
               <center><h5 class="card-title">PAP PENDING INSTALLATION</h5></center>
-             <!-- <div class="form-outline"><input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>-->
-          <div class="form-outline" style="width:10%; margin-left:2%; margin-bottom:2%;"> 	<!--		Show Numbers Of Rows 		-->
-			 		<select class  ="form-control" name="state" id="maxRows">
-						 <option value="10000">Show ALL Rows</option>
-						 <option value="5">5</option>
-						 <option value="25">25</option>
-						 <option value="50">50</option>
-						 <option value="100">100</option>
-						 <option value="250">250</option>
-						 <option value="500">500</option>
-						 <option value="1000">1000</option>
-						</select>
-			 		
-			  	</div>
 			  <div class="table-responsive">
-               <table class="table" id="myTable">
+               <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                    <th>No</th>
                     <th>PAP Code</th>
                     <th>Building Name</th>
                     <th>Building Code</th>
@@ -248,14 +244,21 @@ include_once("session.php");
                   </thead>
                   <tbody>
                     <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+</tr>
                     <?php
 
-$sql="SELECT ROW_NUMBER() OVER() AS No,CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
+$sql="SELECT CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
 $result=mysqli_query($connection,$sql);
 if($result){
 while($row=mysqli_fetch_assoc($result)){
-  $id=$row['No'];
-  $papcode=$row['papcode'];
+$papcode=$row['papcode'];
 $cname=$row['ClientName'];
 $contact=$row['ClientContact'];
 $bname=$row['BuildingName'];
@@ -264,36 +267,20 @@ $reg=$row['Region'];
 $dsign=$row['DateSigned'];
 
 echo ' <tr>
-<th scope="row">'.$id.'</th>
 <td>'.$papcode.'</td>
-<td>'.$cname.'</td>
-<td>'.$contact.'</td>
 <td>'.$bname.'</td>
 <td>'.$bcode.'</td>
 <td>'.$reg.'</td>
+<td>'.$cname.'</td>
+<td>'.$contact.'</td>
 <td>'.$dsign.'</td>
 </tr>';
 }}
 ?>
-                    </tr>
+                    
                   </tbody>
                 </table>
             </div>
-            
-            <div class='pagination-container'>
-				<nav>
-				  <ul class="pagination">
-            
-            <li data-page="prev" class="page-item" >
-								     <span> < <span class="page-item"></span></span>
-								    </li>
-				   <!--	Here the JS Function Will Add the Rows -->
-        <li data-page="next" id="prev" class="page-item">
-								       <span> > <span class="page-item"></span></span>
-								    </li>
-				  </ul>
-				</nav>
-			</div>
 
   </div>
             </div>
@@ -587,8 +574,8 @@ echo ' <tr>
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../assets/js/jquery.min.js"></script>-->
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
@@ -599,7 +586,12 @@ echo ' <tr>
   
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
-	
+  <script>
+        $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+    </script>
 </body>
 <script>
 function myFunction() {

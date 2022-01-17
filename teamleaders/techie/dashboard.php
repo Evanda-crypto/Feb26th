@@ -12,7 +12,7 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>TeamLeader | Dashboard</title>
-  <!-- loader-->
+  <!-- loader--
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
@@ -236,7 +236,7 @@ include_once("session.php");
  </div>  
 	  
 	<div class="row">
-     <div class="col-12 col-lg-8 col-xl-8">
+     <div class="col-12 col-lg-8 col-xl-8"  style="width:100%;">
 	    <div class="card">
 		 <div class="card-header">Installation Progress
 		   <div class="card-action">

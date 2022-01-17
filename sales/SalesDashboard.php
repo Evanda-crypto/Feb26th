@@ -12,12 +12,12 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Sales | Dashboard</title>
-  <!-- loader-->
+  <!-- loader--
   
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
-  <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- Vector CSS -->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
   <!-- simplebar CSS-->
@@ -260,9 +260,9 @@ include_once("session.php");
 		   </div>
 		 </div>
 		 <div class="card-body">
-		    <ul class="list-inline">
+		   <!-- <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>PAP Signed</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Buildings Confirmed</li>
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Buildings Confirmed</li>-->
 			</ul>
 			<div class="chart-container-1">
 			  <canvas id="chart1"></canvas>

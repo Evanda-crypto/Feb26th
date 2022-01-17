@@ -11,10 +11,21 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Pap | Master | Record</title>
-  <!-- loader-->
+  <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -215,83 +226,86 @@ include_once("session.php");
      
       <div class="row mt-3">
           <div class="card">
-               
+               <center><h5 class="card-title" style=" margin-top:1%;">PAP MASTER RECORD</h5></center> 
               
             <div class="card-body">
-            <center><h5 class="card-title" style=" margin-top:1%;">PAP MASTER RECORD</h5></center>
-            <div class="form-outline"  style="width:30%; margin-left:2%; margin-bottom:2%;"> 	<!--		Show Numbers Of Rows 		-->
-			 		<select class  ="form-control" name="state" id="maxRows"  style="width:20%; margin-left:2%; margin-bottom:2%;">
-						 <option value="10000">Show ALL Rows</option>
-						 <option value="5">5</option>
-						 <option value="25">25</option>
-						 <option value="50">50</option>
-						 <option value="100">100</option>
-						 <option value="250">250</option>
-						 <option value="500">500</option>
-						 <option value="1000">1000</option>
-						</select>
-			  	</div><div class="form-outline" ><input type="search" id="myInput" onkeyup="myFunction()" style="width:20%; margin-left:2%; margin-bottom:2%;"class="form-control" placeholder="Search by Building Name.." aria-label="Search" /></div>
-
 			  <div class="table-responsive">
-               <table class="table" id="myTable">
+               <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                    <th>PAP Code</th>
-                   <th>Building Name</th>
-                   <th>Building Code</th>
-                   <th>Region</th>
-                   <th>Champ Name</th>
-                   <th>Client Name</th>
-                   <th>Client Contact</th>
-                   <th>MAC Address</th>
-                   <th>Pap Status</th>
-                   <th>Date Turned On</th>
-                    </tr>
+                  <th class="th-sm">PAP Code
+                  </th>
+                   <th class="th-sm">Building Name
+                   </th>
+                   <th class="th-sm">Building Code
+                   </th>
+                   <th class="th-sm">Region
+                  </th>
+                   <th class="th-sm">Champ Name
+                   </th>
+                   <th class="th-sm">Client Name
+                   </th>
+                   <th class="th-sm">Client Contact
+                   </th>
+                   <th class="th-sm">MAC Address
+                   </th>
+                   <th class="th-sm">Pap Status
+                   </th>
+                   <th class="th-sm">Date Turned On
+                   </th>
+                  </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
                     <?php
-   
-   $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc");
-   while($row=mysqli_fetch_assoc($query)){
-       echo "<tr>";
-      # echo "<td>",$row['No'],"</td>";
-       echo "<td>",$row['PapCode'],"</td>";
-       echo "<td>",$row['BuildingName'],"</td>";
-       echo "<td>",$row['BuildingCode'],"</td>";
-       echo "<td>",$row['Region'],"</td>";
-       echo "<td>",$row['ChampName'],"</td>";
-       echo "<td>",$row['ClientName'],"</td>";
-       echo "<td>",$row['ClientContact'],"</td>";
-       echo "<td>",$row['Mac'],"</td>";
-       echo "<td>",$row['PapStatus'],"</td>";
-       echo "<td>",$row['DateTurnedOn'],"</td>";
-       echo "</tr>";
-   }
-   ?>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-            
-            <div class='pagination-container'>
-				<nav>
-				  <ul class="pagination">
-            
-            <li data-page="prev" class="page-item" >
-								     <span> < <span class="page-item"></span></span>
-								    </li>
-				   <!--	Here the JS Function Will Add the Rows -->
-        <li data-page="next" id="prev" class="page-item">
-								       <span> > <span class="page-item"></span></span>
-								    </li>
-				  </ul>
-				</nav>
-			</div>
 
+$sql="SELECT  PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
+$result=mysqli_query($connection,$sql);
+if($result){
+while($row=mysqli_fetch_assoc($result)){
+$code=$row['PapCode'];
+$bname=$row['BuildingName'];
+$bcode=$row['BuildingCode'];
+$reg=$row['Region'];
+$champ=$row['ChampName'];
+$cname=$row['ClientName'];
+$contact=$row['ClientContact'];
+$mac=$row['Mac'];
+$status=$row['PapStatus'];
+$on=$row['DateTurnedOn'];
+
+echo ' <tr>
+<td>'.$code.'</td>
+<td>'.$bname.'</td>
+<td>'.$bcode.'</td>
+<td>'.$reg.'</td>
+<td>'.$champ.'</td>
+<td>'.$cname.'</td>
+<td>'.$contact.'</td>
+<td>'.$mac.'</td>
+<td>'.$status.'</td>
+<td>'.$on.'</td>
+</tr>';
+
+}
+ }
+?>
+</tbody>
+</table>
+</div>
   </div>
-            </div>
-          </div>
+</div> </div>
         
        <!-- <div class="col-lg-6">
           <div class="card">
@@ -581,9 +595,9 @@ include_once("session.php");
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
-  <script src="../assets/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../assets/js/jquery.min.js"></script>-->
+  <!-<script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
   <!-- simplebar js -->
@@ -595,30 +609,6 @@ include_once("session.php");
   <script src="../assets/js/app-script.js"></script>
 	
 </body>
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
-$(document).ready(function () {
-$("myTable").stickyTableHeaders();
-});
-</script>
 <script>
   var ctx = document.getElementById('chart1').getContext('2d');
 		
@@ -681,158 +671,9 @@ $("myTable").stickyTableHeaders();
     });  
 </script>
 <script>
-    getPagination('#myTable');
-					//getPagination('.table-class');
-					//getPagination('table');
-
-		  /*					PAGINATION 
-		  - on change max rows select options fade out all rows gt option value mx = 5
-		  - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
-		  - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
-		  - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
-		  - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
-		  */
-		 
-
-function getPagination(table) {
-  var lastPage = 1;
-
-  $('#maxRows')
-    .on('change', function(evt) {
-      //$('.paginationprev').html('');						// reset pagination
-
-     lastPage = 1;
-      $('.pagination')
-        .find('li')
-        .slice(1, -1)
-        .remove();
-      var trnum = 0; // reset tr counter
-      var maxRows = parseInt($(this).val()); // get Max Rows from select option
-
-      if (maxRows == 5000) {
-        $('.pagination').hide();
-      } else {
-        $('.pagination').show();
-      }
-
-      var totalRows = $(table + ' tbody tr').length; // numbers of rows
-      $(table + ' tr:gt(0)').each(function() {
-        // each TR in  table and not the header
-        trnum++; // Start Counter
-        if (trnum > maxRows) {
-          // if tr number gt maxRows
-
-          $(this).hide(); // fade it out
-        }
-        if (trnum <= maxRows) {
-          $(this).show();
-        } // else fade in Important in case if it ..
-      }); //  was fade out to fade it in
-      if (totalRows > maxRows) {
-        // if tr total rows gt max rows option
-        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
-        //	numbers of pages
-        for (var i = 1; i <= pagenum; ) {
-          // for each page append pagination li
-          $('.pagination #prev')
-            .before(
-              '<li data-page="' +
-                i +
-                '">\
-								  <span>' +
-                i++ +
-                '<span class="sr-only">(current)</span></span>\
-								</li>'
-            )
-            .show();
-        } // end for i
-      } // end if row count > max rows
-      $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
-      $('.pagination li').on('click', function(evt) {
-        // on click each page
-        evt.stopImmediatePropagation();
-        evt.preventDefault();
-        var pageNum = $(this).attr('data-page'); // get it's number
-
-        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
-
-        if (pageNum == 'prev') {
-          if (lastPage == 1) {
-            return;
-          }
-          pageNum = --lastPage;
-        }
-        if (pageNum == 'next') {
-          if (lastPage == $('.pagination li').length - 2) {
-            return;
-          }
-          pageNum = ++lastPage;
-        }
-
-        lastPage = pageNum;
-        var trIndex = 0; // reset tr counter
-        $('.pagination li').removeClass('active'); // remove active class from all li
-        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
-        // $(this).addClass('active');					// add active class to the clicked
-	  	limitPagging();
-        $(table + ' tr:gt(0)').each(function() {
-          // each tr in table not the header
-          trIndex++; // tr index counter
-          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-          if (
-            trIndex > maxRows * pageNum ||
-            trIndex <= maxRows * pageNum - maxRows
-          ) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          } //else fade in
-        }); // end of for each tr in table
-      }); // end of on click pagination list
-	  limitPagging();
-    })
-    .val(5)
-    .change();
-
-  // end of on select change
-
-  // END OF PAGINATION
-}
-
-function limitPagging(){
-	// alert($('.pagination li').length)
-
-	if($('.pagination li').length > 7 ){
-			if( $('.pagination li.active').attr('data-page') <= 3 ){
-			$('.pagination li:gt(5)').hide();
-			$('.pagination li:lt(5)').show();
-			$('.pagination [data-page="next"]').show();
-		}if ($('.pagination li.active').attr('data-page') > 3){
-			$('.pagination li:gt(0)').hide();
-			$('.pagination [data-page="next"]').show();
-			for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
-				$('.pagination [data-page="'+i+'"]').show();
-
-			}
-
-		}
-	}
-}
-
-$(function() {
-  // Just to append id number for each row
-  $('table tr:eq(0)').prepend('<th> ID </th>');
-
-  var id = 0;
-
-  $('table tr:gt(0)').each(function() {
-    id++;
-    $(this).prepend('<td>' + id + '</td>');
-  });
+$(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
 });
-
-//  Developed By Yasser Mas
-// yasser.mas2@gmail.com
-
 </script>
 </html>

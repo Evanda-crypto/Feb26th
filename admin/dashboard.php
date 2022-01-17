@@ -11,7 +11,7 @@ include("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Admin | Dashboard</title>
-  <!-- loader-->
+  <!-- loader--
    <link href="../assets/css/pace.min.css" rel="stylesheet"/>
  <!-- <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
@@ -474,7 +474,7 @@ include("session.php");
            </div>
          </div>
      </div>
-	</div><!--End Row-->
+	</div><!--End Row--
 	
 	<div class="row">
 	 <div class="col-12 col-lg-12">
@@ -492,7 +492,7 @@ include("session.php");
               <a class="dropdown-item" href="javascript:void();">Something else here</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>-->
+               </div>--
               </div>
              </div>
 		 </div>
@@ -515,7 +515,7 @@ include("session.php");
                    <tbody><tr>
                    <?php
    
-   $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc ");
+  /* $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc ");
    while($row=mysqli_fetch_assoc($query)){
        echo "<tr>";
       # echo "<td>",$row['No'],"</td>";
@@ -530,7 +530,7 @@ include("session.php");
        echo "<td>",$row['PapStatus'],"</td>";
        echo "<td>",$row['DateTurnedOn'],"</td>";
        echo "</tr>";
-   }
+   }*/
    ?>
                    </tr>
                  </tbody></table>

@@ -12,8 +12,8 @@ include("../db/db.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title> My | Task</title>
-  <!-- loader-->
-  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
+  <!-- loader--
+  <link href="../assets/css/pace.min.css" rel="stylesheet"/>--
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
   <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
@@ -272,7 +272,7 @@ include("../db/db.php");
 
                                   $sql="SELECT techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
                                   papdailysales.BuildingCode,papdailysales.Floor,CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode from papdailysales LEFT JOIN 
-                                  techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+                                  techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                   $result=mysqli_query($connection,$sql);
                                   if($result){
                                   while($row=mysqli_fetch_assoc($result)){
