@@ -2,11 +2,6 @@
 <?php
 include("../db/db.php");
 include_once("session.php");
-?>
-
-<?php
-include("../db/db.php");
-include_once("session.php");
 if(isset($_POST['submit'])){
 $DateSigned = $_POST['DateSigned'];
 $ChampName = $_POST['ChampName'];
@@ -36,10 +31,6 @@ $BizCat = $_POST['bizcat'];
 $BizDec = $_POST['bizdec'];
 $Note = $_POST['Note'];
 
-
-
-
-
 //checking if connection is not created successfully
 if($connection->connect_error){
     die('connection failed : '.$connection->connect_error);
@@ -53,10 +44,8 @@ else{
     $stmt->bind_param("sssssssssssssssssssssssssss",$DateSigned,$ChampName,$BuildingName,$BuildingCode,$Region,$Apt,$AptLayout,$Floor,$ClientName,$ClientAvailability,$ClientContact,
     $ClientWhatsApp,$ClientGender,$ClientAge,$ClientOccupation,$HouseholdSize,$Children,$Teenagers,$Adults,$Birthday,$Facebook,$Instagram,$Twitter,$BizName,$BizCat,$BizDec,$Note);
     $stmt->execute();
-    echo "<script>alert('Successfull.');</script>";
     $stmt->close();
     $connection->close();
-    #header("location: pap-details.php");
 }
 }
 ?>
@@ -69,9 +58,9 @@ else{
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>New PAP Signed</title>
-  <!-- loader-->
+  <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <script src="../assets/js/pace.min.js"></script>-->
   <!--favicon-->
   <link rel="icon" href="../assets/images/favicon.ico" type="image/x-icon">
   <!-- simplebar CSS-->
@@ -86,8 +75,29 @@ else{
   <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="../assets/css/app-style.css" rel="stylesheet"/>
-  
-  
+  <style>
+    .box{
+        color: #fff;
+        padding: 20px;
+        display: none;
+        margin-top: 20px;
+    }
+    .red{ background: transparent; }
+    .green{ background: transparent; }
+    .blue{ background: transparent; }
+    label{ margin-right: 15px; }
+</style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+$(document).ready(function(){
+    $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+    });
+});
+</script>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -225,23 +235,23 @@ else{
             <form method="POST">
            <div class="form-group">
             <label for="input-1">Date Signed</label>
-            <input type="date" class="form-control" id="input-1" name="DateSigned" placeholder="Date Signed">
+            <input type="date" class="form-control" id="input-1" name="DateSigned" placeholder="Date Signed" required>
            </div>
            <div class="form-group">
             <label for="input-1">Champs</label>
-            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?>" required>
+            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?> <?php echo $_SESSION['LName'];?>" required>
            </div>
            <div class="form-group">
             <label for="input-1">Building Name</label>
-            <input type="text" class="form-control" id="input-1" name="Buildingname" placeholder="Building Name">
+            <input type="text" class="form-control" id="input-1" name="Buildingname" placeholder="Building Name" required>
            </div>
            <div class="form-group">
             <label for="input-1">Building Code</label>
-            <input type="text" class="form-control" id="input-1" name="BuildingCode" placeholder="Building Code">
+            <input type="text" class="form-control" id="input-1" name="BuildingCode" placeholder="Building Code" required>
            </div>
            <div class="form-group">
             <label for="input-1">Region</label>
-            <select type="text" class="form-control" id="input-1" name="Region" placeholder="Region">
+            <select type="text" class="form-control" id="input-1" name="Region" placeholder="Region" required>
               <option value="" disabled selected> Select Region</option>
               <option value="G44">G44</option>
               <option value="G45S">G45S</option>
@@ -253,8 +263,8 @@ else{
             </select>
            </div>
            <div class="form-group">
-            <label for="input-1">Apt</label>
-            <input type="text" class="form-control" id="input-1" name="Apt" placeholder="Apartment">
+            <label for="input-1">Floor</label>
+            <input type="text" class="form-control" id="input-1" name="floor" placeholder="Floor" required>
            </div>
            <div class="form-group">
             <label for="input-1">Apt Layout</label>
@@ -270,46 +280,32 @@ else{
             </select>
            </div>
            <div class="form-group">
-            <label for="input-1">Floor</label>
-            <input type="text" class="form-control" id="input-1" name="floor" placeholder="Floor">
-           </div>
-           <div class="form-group">
             <label for="input-2">Client Name</label>
-            <input type="text" class="form-control" id="input-2" name="ClientName" placeholder="Client Name">
+            <input type="text" class="form-control" id="input-2" name="ClientName" placeholder="Client Name" required>
            </div>
            <div class="form-group">
-            <label for="input-4">Client Contact</label>
-            <input type="text" class="form-control" id="input-4" name="ClientContact" placeholder="Client Contact">
+            <label for="input-4">Contact</label>
+            <input type="text" class="form-control" id="input-4" name="ClientContact" placeholder="Contact" required>
            </div>
            <div class="form-group">
-            <label for="input-5">Client WhatsApp</label>
-            <input type="text" class="form-control" id="input-5" name="WhatsApp" placeholder="Client WhatsApp">
+            <label for="input-5">WhatsApp</label>
+            <input type="text" class="form-control" id="input-5" name="WhatsApp" placeholder="WhatsApp" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Client Availability</label>
-            <select type="text" class="form-control" id="input-1" name="Day">
-              <option value="" disabled selected> Select Day</option>
-              <option value="Mon">Mon</option>
-              <option value="Tue">Tue</option>
-              <option value="Wed">Wed</option>
-              <option value="Thu">Thu</option>
-              <option value="Fri">Fri</option>
-              <option value="sat">Sat</option>
-              <option value="Sun">Sun</option>
-            </select>
+            <label for="input-5">Availability</label>
+            <input type="text" class="form-control" id="input-5" name="Day" placeholder="Availability" required>
            </div>
-          
            <div class="form-group">
             <label for="input-1">Client Gender</label>
-            <select type="text" class="form-control" id="input-1" name="gender" >
+            <select type="text" class="form-control" id="input-1" name="gender"  required>
               <option value="" disabled selected> Select Gender</option>
               <option value="Male">Male</option>  
               <option value="Female">Female</option>  
               <option value="Other">Other</option>
              </select>
            <div class="form-group">
-            <label for="input-1">Client Age</label>
-            <select type="text" class="form-control" id="input-1" name="age">
+            <label for="input-1">Age</label>
+            <select type="text" class="form-control" id="input-1" name="age" required>
               <option value="" disabled selected> Select Age</option>
               <option value="Below 17">Below 17</option>  
               <option value="18-24">18-24</option>  
@@ -320,28 +316,12 @@ else{
             </select>
            </div>
            <div class="form-group">
-            <label for="input-5">Client Occupation</label>
-            <input type="text" class="form-control" id="input-5" name="occupation" placeholder="Client Occupation">
-           </div>
-           <div class="form-group">
-            <label for="input-3">Household Size</label>
-            <input type="text" class="form-control" id="input-3" name="Householdsize" placeholder="Household Size">
-           </div>
-           <div class="form-group">
-            <label for="input-4">Children</label>
-            <input type="text" class="form-control" id="input-4" name="Children" placeholder="Children">
-           </div>
-           <div class="form-group">
-            <label for="input-5">Teenagers</label>
-            <input type="text" class="form-control" id="input-5" name="Teenagers" placeholder="Teenagers">
-           </div>
-           <div class="form-group">
-            <label for="input-4">Adults</label>
-            <input type="text" class="form-control" id="input-4" name="Adults" placeholder="Adults">
+            <label for="input-5">Occupation</label>
+            <input type="text" class="form-control" id="input-5" name="occupation" placeholder="Client Occupation" required>
            </div>
            <div class="form-group">
             <label for="input-1">Birthday</label>
-            <input type="text" class="form-control" id="input-5" name="Birthday" placeholder="Birthday">
+            <input type="text" class="form-control" id="input-5" name="Birthday" placeholder="Birthday" >
            </div>
            <div class="form-group">
             <label for="input-4">Facebook</label>
@@ -356,6 +336,38 @@ else{
             <input type="text" class="form-control" id="input-5" name="twitter" placeholder="Twitter">
            </div>
            <div class="form-group">
+            <label for="input-5">Suggestions/Observations/Remarks</label>
+            <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note" required>
+           </div>
+           <div>
+       <center> <label><input type="radio" name="colorRadio" value="red"> Personal</label>
+        <label><input type="radio" name="colorRadio" value="green"> Business</label></center>
+    </div>
+       <div class="red box">
+             <div class="form-group">
+            <label for="input-1">Apt</label>
+            <input type="text" class="form-control" id="input-1" name="Apt" placeholder="Apartment">
+           </div>
+
+          <div class="form-group">
+            <label for="input-3">Household Size</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-3" name="Householdsize" placeholder="Household Size">
+           </div>
+           <div class="form-group">
+            <label for="input-4">Children</label>
+            <input type="number" class="form-control" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" id="input-4" name="Children" placeholder="Children">
+           </div>
+           <div class="form-group">
+            <label for="input-5">Teenagers</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-5" name="Teenagers" placeholder="Teenagers">
+           </div>
+           <div class="form-group">
+            <label for="input-4">Adults</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-4" name="Adults" placeholder="Adults">
+           </div>
+    </div>
+    <div class="green box">
+    <div class="form-group">
             <label for="input-5">Biz Name</label>
             <input type="text" class="form-control" id="input-5" name="bizname" placeholder="Biz Name">
            </div>
@@ -367,17 +379,14 @@ else{
             <label for="input-5">Biz Description</label>
             <input type="text" class="form-control" id="input-5" name="bizdec" placeholder="Biz Description">
            </div>
-           <div class="form-group">
-            <label for="input-5">Suggestions/Observations/Remarks</label>
-            <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note">
-           </div>
+         </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-check"></i> Submit</button>
           </div>
           </form>
          </div>
          </div>
-      </div>
+    </div>
 
       <!--<div class="col-lg-6">
         <div class="card">
@@ -483,18 +492,18 @@ else{
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
+  <!-- Bootstrap core JavaScript--
   <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
- <!-- simplebar js -->
+ <!-- simplebar js --
   <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
-  <!-- sidebar-menu js -->
+  <!-- sidebar-menu js --
   <script src="../assets/js/sidebar-menu.js"></script>
   
-  <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
+  <!-- Custom scripts --
+  <script src="../assets/js/app-script.js"></script>-->
   <script>
  var todayDate= new Date();
  var month= todayDate.getMonth() + 1;
@@ -524,4 +533,14 @@ if(month<10){
  maxdate= year +"-" + month + "-" + todate;
  document.getElementById("input-1").setAttribute("max",maxdate);
  </script> 
+   <script>
+$(document).ready(function(){
+    $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".box").not(targetBox).hide();
+        $(targetBox).show();
+    });
+});
+</script>
 </html>

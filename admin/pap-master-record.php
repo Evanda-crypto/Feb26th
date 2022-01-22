@@ -105,13 +105,13 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -270,11 +270,13 @@ include_once("session.php");
                 </tr>
                     <?php
 
-$sql="SELECT  PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
+$sql="SELECT  turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
+ELSE CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
+end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
 $result=mysqli_query($connection,$sql);
 if($result){
 while($row=mysqli_fetch_assoc($result)){
-$code=$row['PapCode'];
+$code=$row['papcode'];
 $bname=$row['BuildingName'];
 $bcode=$row['BuildingCode'];
 $reg=$row['Region'];

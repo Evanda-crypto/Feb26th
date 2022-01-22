@@ -13,7 +13,7 @@ include_once("session.php");
   <title>Pap | Daily | Installation</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <script src="../assets/js/pace.min.js"></script>-->
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -106,13 +106,13 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -234,7 +234,6 @@ include_once("session.php");
                   <thead>
                     <tr>
                     <th>Client ID</th>
-                    <th>PAP Code</th>
                     <th>Team ID</th>
                     <th>Techie 1</th>
                     <th>Techie 2</th>
@@ -245,7 +244,6 @@ include_once("session.php");
                   </thead>
                   <tbody>
                     <tr>
-                    <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -253,16 +251,15 @@ include_once("session.php");
                   <td></td>
                   <td></td>
                   <td></td>
-                
+                  </tr>
                     <?php
 
-                     $sql="SELECT papinstalled.ClientID,papinstalled.PAPCode,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+                     $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
                      FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null  and papinstalled.DateInstalled >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY papinstalled.DateInstalled ASC";
                     $result=mysqli_query($connection,$sql);
                      if($result){
                       while($row=mysqli_fetch_assoc($result)){
                       $cid=$row['ClientID'];
-                      $code=$row['PAPCode'];
                       $teamid=$row['Team_ID'];
                       $t1=$row['Techie_1'];
                       $t2=$row['Techie_2'];
@@ -272,20 +269,23 @@ include_once("session.php");
 
                       echo ' <tr>
                       <td>'.$cid.'</td>
-                      <td>'.$code.'</td>
                       <td>'.$teamid.'</td>
                       <td>'.$t1.'</td>
                       <td>'.$t2.'</td>
                       <td>'.$mac.'</td>
-                      <td>'.$date.'</td> <td>
-<button class="btn-info" ><a href="turnedon.php?clientid='.$cid.'" class="text-bold">Turn On</a></button>
-                                         </td> </tr>';
-                                      }} ?>
-                                      </tr>
-                    
+                      <td>'.$date.'</td> 
+                      <td>
+                      <button class="btn-info" ><a href="turnedon.php?clientid='.$cid.'" class="text-bold">Turn On</a></button>
+                      </td> 
+                      </tr>';
+
+                                      }
+                                      } 
+                                      ?>
                   </tbody>
                 </table>
-            </div></div>
+            </div>
+          </div>
             </div>
           </div>
         
@@ -582,19 +582,19 @@ include_once("session.php");
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
-  <!-- simplebar js -->
+  <!-- simplebar js -
   <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
-  <!-- sidebar-menu js -->
+  <!-- sidebar-menu js --
   <script src="../assets/js/sidebar-menu.js"></script>
   
-  <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
+  <!-- Custom scripts --
+  <script src="../assets/js/app-script.js"></script>-->
   <script>
-        $(document).ready(function () {
+  $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
-    </script>
+</script>
 </body>
 <script>
   var ctx = document.getElementById('chart1').getContext('2d');

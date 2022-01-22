@@ -124,7 +124,7 @@ else
         <div class="form-group">
 			  <label for="exampleInputName" class="sr-only">Age</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="age" placeholder="Age" required>
+				  <input type="number" id="exampleInputName" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control input-shadow" name="age" placeholder="Age" required>
 				  <div class="form-control-position">
 					 
 				  </div>
@@ -158,7 +158,7 @@ else
 				  </div>
 			   </div>
 			  </div>
-        <center> <span style="font-family: Georgia;" id='message'> </span></center> </br>
+        <center> <span style="font-family: Georgia;" id='message1'> </span></center> </br>
 			  <div class="form-group">
 			   <label for="exampleInputPassword" class="sr-only">CPassword</label>
 			   <div class="position-relative has-icon-right">
@@ -168,6 +168,7 @@ else
 				  </div>
 			   </div>
 			  </div>
+        <center> <span style="font-family: Georgia;" id='message'> </span></center> </br>
         <button type="submit" id="submit" name="submit" class="btn btn-light btn-block">Sign Up</button>
 			 </form>
 		   </div>
@@ -248,6 +249,21 @@ else
           document.getElementById('message').innerHTML='Password not matching!!';
           document.getElementById('submit').disable=true;
         }
+
+        $('#exampleInputNam').on('blur', function(){
+    if($(this).val().length > 6){
+      document.getElementById('message1').style.color='green';
+          document.getElementById('message1').innerHTML='Strong pass';
+          document.getElementById('submit').disable=false;
+    }
+    else{
+          document.getElementById('message1').style.color='red';
+          document.getElementById('message1').innerHTML='Weak pass!!';
+          document.getElementById('submit').disable=true;
+        }
+});
       }
+
+
     </script>
 </html>

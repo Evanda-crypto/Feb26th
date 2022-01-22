@@ -37,14 +37,14 @@ $ChampName = $row['ChampName'];
 $ClientName = $_POST['ClientName'];
 $ClientContact = $_POST['ClientContact'];
 $ClientGender = $row['ClientGender'];
-$ClientAge = $_POST['ClientAge'];
+$ClientAge = $row['ClientAge'];
 $ClientOccupation = $row['ClientOccupation'];
 $ClientAvailability = $row['ClientAvailability'];
 $Region = $row['Region'];
 $BuildingName = $row['BuildingName'];
 $BuildingCode = $row['BuildingCode'];
 $Apt = $row['Apt'];
-$Floor = $row['Floors'];
+$Floor = $row['Floor'];
 $AptLayout = $row['AptLayout'];
 $HouseholdSize = $_POST['HouseholdSize'];
 $Children = $_POST['Children'];
@@ -55,23 +55,22 @@ $ClientWhatsApp = $_POST['whatsapp'];
 $Facebook = $_POST['facebook'];
 $Instagram = $_POST['instagram'];
 $Twitter = $_POST['twitter'];
-$BizName = $_POST['Bizname'];
-$BizCat = $_POST['Bizcat'];
-$BizDec = $_POST['Bizdec'];
+$BizName = $_POST['BizName'];
+$BizCat = $_POST['BizCat'];
+$BizDec = $_POST['BizDec'];
 
 $sql="update papdailysales set ClientID=$id,ChampName='$ChampName',ClientName='$ClientName',ClientContact='$ClientContact'
 ,ClientGender='$ClientGender',ClientAge='$ClientAge',ClientOccupation='$ClientOccupation',ClientAvailability='$ClientAvailability',Region='$Region',BuildingName='$BuildingName',BuildingCode='$BuildingCode',Apt='$Apt'
-,Floor='$Floor',AptLayout='$AptLayout',HouseholdSize='$HouseholdSize',Children='$Children',Teenagers='$Teenagers',Adults='$Adults',Birthday='$Birthday',ClientWhatsApp='$WhatsApp',Facebook='$Facebook',
+,Floor='$Floor',AptLayout='$AptLayout',HouseholdSize='$HouseholdSize',Children='$Children',Teenagers='$Teenagers',Adults='$Adults',Birthday='$Birthday',ClientWhatsApp='$ClientWhatsApp',Facebook='$Facebook',
 Instagram='$Instagram',Twitter='$Twitter',BizName='$BizName',BizCat='$BizCat',BizDec='$BizDec' where ClientID=$id";
 
 $result=mysqli_query($connection,$sql);
-if($result){
-
-    echo "<script>alert('Update successfull.');</script>";
-    header("location: pap-daily-sales.php");
-}
-else{
-    die(mysqli_error($connection));
+if ($result) {
+  header("Location: pap-daily-sales.php");
+} else {
+  $msg = '<div class="alert alert-warning" role="alert">
+  Error occurs while updating the query
+</div>';
 }
 }
 ?>
@@ -88,6 +87,8 @@ else{
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -168,13 +169,13 @@ else{
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -298,9 +299,9 @@ else{
             <input type="text" class="form-control" name="ClientName" value="<?php echo $ClientName?>" id="input-1" placeholder="Client Name" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Client Age</label>
+            <label for="input-1">Age</label>
             <select type="text" class="form-control" id="input-1" name="age" value="<?php echo $ClientAge?>" placeholder="Age">
-              <option value="" disabled selected> Select Age</option>
+              <option value="" disabled selected>Select Age</option>
               <option value="Below 17">Below 17</option>  
               <option value="18-24">18-24</option>  
               <option value="25-34">25-34</option>  
@@ -310,52 +311,52 @@ else{
             </select>
            </div>
            <div class="form-group">
-            <label for="input-2">Client Contact</label>
+            <label for="input-2">Contact</label>
             <input type="text" class="form-control" name="ClientContact" id="input-2" value="<?php echo $ClientContact?>" placeholder="Client Contact" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Clent WhatsApp</label>
+            <label for="input-2">WhatsApp</label>
             <input type="text" class="form-control" name="whatsapp" id="input-2" value="<?php echo $WhatsApp?>" placeholder="Client WhatsApp" required>
            </div>
            <div class="form-group">
             <label for="input-1">Facebook</label>
-            <input type="text" class="form-control" name="facebook" id="input-1" value="<?php echo $facebook?>" placeholder="Client Facebook" required>
+            <input type="text" class="form-control" name="facebook" id="input-1" value="<?php echo $facebook?>" placeholder="Client Facebook" >
            </div>
            <div class="form-group">
             <label for="input-2">Twitter</label>
-            <input type="text" class="form-control" name="twitter" id="input-2" value="<?php echo $Twitter?>" placeholder="Client Twitter" required>
+            <input type="text" class="form-control" name="twitter" id="input-2" value="<?php echo $Twitter?>" placeholder="Client Twitter" >
            </div>
            <div class="form-group">
             <label for="input-2">Instagram</label>
-            <input type="text" class="form-control" name="instagram" id="input-2" value="<?php echo $Instagram?>" placeholder="Client Instagram" required>
+            <input type="text" class="form-control" name="instagram" id="input-2" value="<?php echo $Instagram?>" placeholder="Client Instagram" >
            </div>
            <div class="form-group">
             <label for="input-1">Household Size</label>
-            <input type="text" class="form-control" name="household" id="input-1" value="<?php echo $HouseholdSize?>" placeholder="Household Size" required>
+            <input type="text" class="form-control" name="HouseholdSize" id="input-1" value="<?php echo $HouseholdSize?>" placeholder="Household Size" >
            </div>
            <div class="form-group">
             <label for="input-1">Teenagers</label>
-            <input type="text" class="form-control" name="teenagers" id="input-1" value="<?php echo $Teenagers?>" placeholder="Teenagers" required>
+            <input type="text" class="form-control" name="Teenagers" id="input-1" value="<?php echo $Teenagers?>" placeholder="Teenagers" >
            </div>
            <div class="form-group">
             <label for="input-2">Adults</label>
-            <input type="text" class="form-control" name="adults" id="input-2" value="<?php echo $Adults?>" placeholder="Adults" required>
+            <input type="text" class="form-control" name="Adults" id="input-2" value="<?php echo $Adults?>" placeholder="Adults" >
            </div>
            <div class="form-group">
             <label for="input-2">Children</label>
-            <input type="text" class="form-control" name="children" id="input-2" value="<?php echo $Children?>" placeholder="Children" required>
+            <input type="text" class="form-control" name="Children" id="input-2" value="<?php echo $Children?>" placeholder="Children" >
            </div>
            <div class="form-group">
             <label for="input-1">Biz Name</label>
-            <input type="text" class="form-control" name="bizname" id="input-1" value="<?php echo $Bizname?>" placeholder="Biz Name" required>
+            <input type="text" class="form-control" name="BizName" id="input-1" value="<?php echo $Bizname?>" placeholder="Biz Name" >
            </div>
            <div class="form-group">
             <label for="input-2">Biz Cat</label>
-            <input type="text" class="form-control" name="bizcat" id="input-2" value="<?php echo $Bizcat?>" placeholder="Biz Cat" required>
+            <input type="text" class="form-control" name="BizCat" id="input-2" value="<?php echo $Bizcat?>" placeholder="Biz Cat" >
            </div>
            <div class="form-group">
             <label for="input-2">Biz Dec</label>
-            <input type="text" class="form-control" name="bizdec" id="input-2" value="<?php echo $Bizdec?>" placeholder="Biz Dec" required>
+            <input type="text" class="form-control" name="BizDec" id="input-2" value="<?php echo $Bizdec?>" placeholder="Biz Dec" >
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>

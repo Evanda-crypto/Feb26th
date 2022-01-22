@@ -49,6 +49,8 @@ else{
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -140,13 +142,13 @@ else{
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -330,6 +332,7 @@ else{
                     <th scope="col">Email</th>
                     <th scope="col">Department</th>
                     <th scope="col">Region</th>
+
                     
                   </tr>
                 </thead>
@@ -341,33 +344,32 @@ else{
                     <td></td>
                     <td></td>
                     <td></td>
-                  <?php
+                    <?php
+                        $query  = "SELECT * FROM teamleaders";
+                        $result  = mysqli_query($connection, $query);
 
-                          $sql="SELECT * from teamleaders order by ID Desc";
-                          $result=mysqli_query($connection,$sql);
-                          if($result){
-                          while($row=mysqli_fetch_assoc($result)){
-                            $id=$row['ID'];   
-                          $fname=$row['FIRST_NAME'];
-                          $lname=$row['LAST_NAME'];
-                          $email=$row['EMAIL'];
-                          $dpt=$row['DEPARTMENT'];
-                          $reg=$row['REGION'];
-                          
+                        $num_rows  = mysqli_num_rows($result);
 
-                          echo ' <tr>
-                          <td>'.$id.'</td>
-                          <td>'.$fname.'</td>
-                          <td>'.$lname.'</td>
-                          <td>'.$email.'</td>
-                          <td>'.$dpt.'</td>
-                          <td>'.$reg.'</td>
-                          
-                          </tr>';
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <th><?php echo $row['FIRST_NAME']; ?></th>
+                                    <th><?php echo $row['LAST_NAME']; ?></th>
+                                    <th><?php echo $row['EMAIL']; ?></th>
+                                    <th><?php echo $row['DEPARTMENT']; ?></th>
+                                    <th><?php echo $row['REGION']; ?></th>
 
-                       }
-                         }
-                       ?>
+
+                                </tr>
+                        <?php
+
+                            }
+                        }
+                        ?>
                   </tr>
                 </tbody>
               </table>

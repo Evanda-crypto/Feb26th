@@ -3,16 +3,17 @@ include_once("session.php");
 include("../db/db.php");
 $id=$_GET['clientid'];
 
-$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,
-papdailysales.BuildingCode,papdailysales.Floor,CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode from papdailysales LEFT JOIN 
+$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
+papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
 techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
 $result=mysqli_query($connection,$sql);
 $row=mysqli_fetch_assoc($result);
 $clientid=$row['ClientID'];
 $teamid=$row['Team_ID'];
-$papcode=$row['papcode'];
 $date=$row['Date'];
 $reg=$row['Region'];
+$t1=$row['Techie_1'];
+$t2=$row['Techie_2'];
 
 
 if(isset($_POST['submit'])){
@@ -21,8 +22,9 @@ $MacAddress = $_POST['macaddress'];
 $SerialNumber = $_POST['serialnumber'];
 $DateInstalled = $_POST['dateinstalled'];
 $ClientID = $_POST['ClientID'];
-$PAPCode = $_POST['papcode'];
 $Region = $_POST['region'];
+$techie1 = $row['Techie_1'];
+$techie2 = $row['Techie_2'];
 
 
 
@@ -32,16 +34,25 @@ if($connection->connect_error){
 }
 else
 {
+  $stmt= $connection->prepare("select * from papinstalled where MacAddress= ?");
+  $stmt->bind_param("s",$MacAddress);
+  $stmt->execute();
+  $stmt_result= $stmt->get_result();
+  if($stmt_result->num_rows>0){
+    echo "<script>alert('The Macaddress Already Exists');</script>";
+  }
+  else{
      //Insert query
-    $stmt= $connection->prepare("insert into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,PAPCode,Region)
-    values(?,?,?,?,?,?,?)");
+    $stmt= $connection->prepare("insert into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region)
+    values(?,?,?,?,?,?)");
        //values from the fields
-    $stmt->bind_param("sssssss",$Team_ID,$ClientID,$MacAddress,$SerialNumber,$DateInstalled,$PAPCode,$Region);
+    $stmt->bind_param("ssssss",$Team_ID,$ClientID,$MacAddress,$SerialNumber,$DateInstalled,$Region);
     $stmt->execute();
     echo "<script>alert('Information successfully submited');</script>";
     $stmt->close();
     $connection->close();
     header('location: my-task.php');
+  }
 
 }
 }
@@ -231,10 +242,6 @@ else
            <div class="form-group">
             <label for="input-3">Serial Number</label>
             <input type="text" class="form-control" id="input-3" placeholder="Serial Number" name="serialnumber" maxlength="13" required>
-           </div>
-           <div class="form-group">
-            <label for="input-3">PAP Code</label>
-            <input type="text" class="form-control" id="input-3" value="<?php echo $papcode?>" name="papcode" readonly>
            </div>
            <div class="form-group">
             <label for="input-4">Date Installed</label>

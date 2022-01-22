@@ -2,7 +2,21 @@
 include("../../db/db.php");
 include_once("session.php");
 ?>
-
+<!--Graphs-->
+<?php
+                                  if (!$connection) {
+                                    # code...
+                                  echo "Problem in database connection! Contact administrator!" . mysqli_error();
+                                      }else{
+                                      $sql ="SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 order by buildings Desc";
+                                      $result = mysqli_query($connection,$sql);
+                                      $chart_data="";
+                                      while ($row = mysqli_fetch_array($result)) { 
+ 
+                                      $Region[]  = $row['Region']  ;
+                                      $Build[] = $row['buildings'];
+                                       }
+                                    }?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -77,6 +91,14 @@ include_once("session.php");
       <li>
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending,papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
         </a>
       </li>
 
@@ -189,7 +211,7 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(*) as installed from papinstalled where DATE(DateInstalled) = CURDATE()";
+                                             $query="SELECT COUNT(*) as installed from papinstalled where DATE(DateInstalled) = CURDATE() and Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['installed']."<br><br>";
@@ -198,7 +220,7 @@ include_once("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Daily Installation <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
+                  <p class="mb-0 text-white small-font">Daily Installation[<?php echo $_SESSION['Region']?>] <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -299,13 +321,13 @@ include_once("session.php");
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
 		       <h5 class="mb-0"><?php
-                                             $query="SELECT COUNT(*) as installed from papinstalled where DATE(DateInstalled) = CURDATE()";
+                                             $query="SELECT COUNT(*) as installed from papinstalled where DATE(DateInstalled) = CURDATE() and region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['installed']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Installation <span> <i class="fa fa-"></i></span></small>
+			   <small class="mb-0">Daily Installation[<?php echo $_SESSION['Region']?>] <span> <i class="fa fa-"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
@@ -337,24 +359,24 @@ include_once("session.php");
 		</div>
 	 </div>
 
-     <div class="col-12 col-lg-4 col-xl-4">
-       <!-- <div class="card">
-           <div class="card-header">Weekly sales
+   <div class="col-12 col-lg-4 col-xl-4">
+        <div class="card">
+           <div class="card-header">Buildings Per Region
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
               <i class="icon-options"></i>
              </a>
-              <div class="dropdown-menu dropdown-menu-right">
+            <!--  <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="javascript:void();">Action</a>
               <a class="dropdown-item" href="javascript:void();">Another action</a>
               <a class="dropdown-item" href="javascript:void();">Something else here</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>
+               </div>-->
               </div>
              </div>
-           </div>
+            </div>
            <div class="card-body">
 		     <div class="chart-container-2">
                <canvas id="chart2"></canvas>
@@ -364,33 +386,39 @@ include_once("session.php");
              <table class="table align-items-center">
                <tbody>
                  <tr>
-                   <td><i class="fa fa-circle text-white mr-2"></i> Direct</td>
-                   <td>$5856</td>
-                   <td>+55%</td>
+                   <td><i class="fa fa-circle text-white mr-2"></i> <?php echo json_encode($Region[0]); ?></td>
+                   <td><?php echo json_encode($Build[0]); ?></td>
+                   <td></td>
                  </tr>
                  <tr>
-                   <td><i class="fa fa-circle text-light-1 mr-2"></i>Affiliate</td>
-                   <td>$2602</td>
-                   <td>+25%</td>
+                   <td><i class="fa fa-circle text-light-1 mr-2"></i><?php echo json_encode($Region[1]); ?></td>
+                   <td><?php echo json_encode($Build[1]); ?></td>
+                   <td></td>
                  </tr>
                  <tr>
-                   <td><i class="fa fa-circle text-light-2 mr-2"></i>E-mail</td>
-                   <td>$1802</td>
-                   <td>+15%</td>
+                   <td><i class="fa fa-circle text-light-2 mr-2"></i><?php echo json_encode($Region[2]); ?></td>
+                   <td><?php echo json_encode($Build[2]); ?></td>
+                   <td></td>
                  </tr>
                  <tr>
-                   <td><i class="fa fa-circle text-light-3 mr-2"></i>Other</td>
-                   <td>$1105</td>
-                   <td>+5%</td>
+                   <td><i class="fa fa-circle text-light-3 mr-2"></i><?php echo json_encode($Region[3]); ?></td>
+                   <td><?php echo json_encode($Build[3]); ?></td>
+                   <td></td>
+                 </tr>
+                 <tr>
+                   <td><i class="fa fa-circle text-light-3 mr-2"></i><?php echo json_encode($Region[4]); ?></td>
+                   <td><?php echo json_encode($Build[4]); ?></td>
+                   <td></td>
                  </tr>
                </tbody>
              </table>
            </div>
          </div>
-     </div>-->
+     </div>
+     </div>
 	</div><!--End Row-->
 	
-	<div class="row">
+	<!--<div class="row">
 	 <div class="col-12 col-lg-12">
 	   <div class="card">
 	     <div class="card-header">Pending Installation
@@ -403,10 +431,10 @@ include_once("session.php");
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void();">Separated link</a>
                </div>
-              </div>-->
+              </div>--
              </div>
 		 </div>
-     <div class="form-outline" style="alignment:left;"> 	<!--		Show Numbers Of Rows 		-->
+     <div class="form-outline" style="alignment:left;"> 	<!--		Show Numbers Of Rows 		--
 			 		<select class  ="form-control" name="state" id="maxRows">
 						 <option value="10000">Show ALL Rows</option>
 						 <option value="5">5</option>
@@ -435,7 +463,7 @@ include_once("session.php");
                    </thead>
                    <tbody><tr>
                    <?php
-    $query=mysqli_query($connection,"SELECT DISTINCT papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+   /* $query=mysqli_query($connection,"SELECT DISTINCT papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
     WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'");
     while($row=mysqli_fetch_assoc($query)){
       $id=$row['ClientID'];
@@ -458,7 +486,7 @@ include_once("session.php");
         <button class="btn-success"><a href="techie-task.php?client-id='.$id.'" class="text-bold">Assign Task</a></button>
       </td>
       </tr>';
-    }
+    }*/
     ?>
                    </tr>
 
@@ -466,20 +494,6 @@ include_once("session.php");
                  </tbody></table>
                </div>
 	   </div>
-     <div class='pagination-container'>
-				<nav>
-				  <ul class="pagination">
-            
-            <li data-page="prev" class="page-item" >
-								     <span> < <span class="page-item"></span></span>
-								    </li>
-				   <!--	Here the JS Function Will Add the Rows -->
-        <li data-page="next" id="prev" class="page-item">
-								       <span> > <span class="page-item"></span></span>
-								    </li>
-				  </ul>
-				</nav>
-			</div>
 	 </div>
 	</div><!--End Row-->
 
@@ -652,6 +666,40 @@ $("myTable").stickyTableHeaders();
 
      }
     });  
+    // chart 2
+
+		var ctx = document.getElementById("chart2").getContext('2d');
+			var myChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: {
+					labels: <?php echo json_encode($Region); ?>,
+					datasets: [{
+						backgroundColor: [
+							"#ffffff",
+							"rgba(255, 255, 255, 0.70)",
+							"rgba(255, 255, 255, 0.50)",
+							"rgba(255, 255, 255, 0.20)"
+						],
+						data: <?php echo json_encode($Build); ?>,
+						borderWidth: [0, 0, 0, 0]
+					}]
+				},
+			options: {
+				maintainAspectRatio: false,
+			   legend: {
+				 position :"bottom",	
+				 display: false,
+				    labels: {
+					  fontColor: '#ddd',  
+					  boxWidth:15
+				   }
+				}
+				,
+				tooltips: {
+				  displayColors:false
+				}
+			   }
+			});
 </script>
 <script>
     getPagination('#myTable');

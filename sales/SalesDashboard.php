@@ -1,8 +1,22 @@
+
 <?php
 include("../db/db.php");
-include_once("session.php");
+include_once("../sales/session.php");
 ?>
-
+<?php
+                                  
+if (!$connection) {
+ echo "Problem in database connection! Contact administrator!" . mysqli_error();
+     }else{
+ $sql ="SELECT DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+$result = mysqli_query($connection,$sql);
+$chart_data="";
+                                           
+while ($row = mysqli_fetch_array($result)) { 
+ $Date[]  = $row['DateSigned']  ;
+ $sales[] = $row['sales'];
+   }
+   }?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,9 +27,8 @@ include_once("session.php");
   <meta name="author" content=""/>
   <title>Sales | Dashboard</title>
   <!-- loader--
-  
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <script src="../assets/js/pace.min.js"></script>-->
   <!--favicon-->
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- Vector CSS -->
@@ -41,112 +54,115 @@ include_once("session.php");
  <div id="wrapper">
  
   <!--Start sidebar-wrapper-->
-   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-     <div class="brand-logo">
-      <a href="SalesDashboard.php">
-     <!--  <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text">Dashtreme Admin</h5>
-     </a>-->
-   </div>
-   <ul class="sidebar-menu do-nicescrol">
-      <li class="sidebar-header">MAIN NAVIGATION</li>
+  <div id="wrapper">
+ 
+ <!--Start sidebar-wrapper-->
+  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+    <div class="brand-logo">
+     <a href="SalesDashboard.php">
+    <!--  <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+      <h5 class="logo-text">Dashtreme Admin</h5>
+    </a>-->
+  </div>
+  <ul class="sidebar-menu do-nicescrol">
+     <li class="sidebar-header">MAIN NAVIGATION</li>
+     <li>
+       <a href="SalesDashboard.php">
+         <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+       </a>
+     </li>
+
+     <!--<li>
+       <a href="icons.php">
+         <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
+       </a>
+     </li>-->
+
+     <li>
+       <a href="pap-details.php">
+         <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
+       </a>
+     </li>
+
+     <li>
+       <a href="buildings.php">
+         <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
+       </a>
+     </li>
+
+     <li>
+       <a href="calendar.php">
+         <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+         <small class="badge float-right badge-light"></small>
+       </a>
+     </li>
+
+    <!-- <li>
+       <a href="profile.php">
+         <i class="zmdi zmdi-face"></i> <span>Profile</span>
+       </a>
+     </li>-->
+
+    <!-- <li>
+       <a href="login.php" target="_blank">
+         <i class="zmdi zmdi-lock"></i> <span>Login</span>
+       </a>
+     </li>-->
+
       <li>
-        <a href="SalesDashboard.php">
-          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
+       <a href="logout.php" target="_blank">
+         <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+       </a>
+     </li>
 
-      <!--<li>
-        <a href="icons.php">
-          <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-        </a>
-      </li>-->
+    <!-- <li class="sidebar-header">LABELS</li>
+     <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
+     <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
+     <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>-->
 
-      <li>
-        <a href="pap-details.php">
-          <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="buildings.php">
-          <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>
-
-     <!-- <li>
-        <a href="profile.php">
-          <i class="zmdi zmdi-face"></i> <span>Profile</span>
-        </a>
-      </li>-->
-
-     <!-- <li>
-        <a href="login.php" target="_blank">
-          <i class="zmdi zmdi-lock"></i> <span>Login</span>
-        </a>
-      </li>-->
-
-       <li>
-        <a href="logout.php" target="_blank">
-          <i class="zmdi zmdi-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-
-     <!-- <li class="sidebar-header">LABELS</li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>-->
-
-    </ul>
-   
-   </div>
-   <!--End sidebar-wrapper-->
+   </ul>
+  
+  </div>
+  <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
 <header class="topbar-nav">
- <nav class="navbar navbar-expand fixed-top">
-  <ul class="navbar-nav mr-auto align-items-center">
-    <li class="nav-item">
-      <a class="nav-link toggle-menu" href="javascript:void();">
-       <i class="icon-menu menu-icon"></i>
+<nav class="navbar navbar-expand fixed-top">
+ <ul class="navbar-nav mr-auto align-items-center">
+   <li class="nav-item">
+     <a class="nav-link toggle-menu" href="javascript:void();">
+      <i class="icon-menu menu-icon"></i>
+    </a>
+   </li>
+   <li class="nav-item">
+     <form class="search-bar">
+       <input type="text" class="form-control" placeholder="Enter keywords">
+        <a href="javascript:void();"><i class="icon-magnifier"></i></a>
+     </form>
+   </li>
+ </ul>
+   
+   <li class="nav-item">
+     <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
+       <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
      </a>
-    </li>
-    <li class="nav-item">
-      <form class="search-bar">
-        <input type="text" class="form-control" placeholder="Enter keywords">
-         <a href="javascript:void();"><i class="icon-magnifier"></i></a>
-      </form>
-    </li>
-  </ul>
-    
-    <li class="nav-item">
-      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
-        <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
-      </a>
-      <ul class="dropdown-menu dropdown-menu-right">
-       <li class="dropdown-item user-details">
-        <a href="javaScript:void();">
-           <div class="media">
-             <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
-            <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Sales'];?></p>
-            </div>
+     <ul class="dropdown-menu dropdown-menu-right">
+      <li class="dropdown-item user-details">
+       <a href="javaScript:void();">
+          <div class="media">
+            <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
+           <div class="media-body">
+           <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
+           <p class="user-subtitle"><?php echo $_SESSION['Sales'];?></p>
            </div>
-          </a>
-        </li>
-        <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2">  <a href="#" target="_blank"></i> Logout</li>
-      </ul>
-    </li>
-  </ul>
+          </div>
+         </a>
+       </li>
+       <li class="dropdown-divider"></li>
+       <li class="dropdown-item"><i class="icon-power mr-2">  <a href="#" target="_blank"></i> Logout</li>
+     </ul>
+   </li>
+ </ul>
 </nav>
 </header>
 <!--End topbar header-->
@@ -164,31 +180,31 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-         /*$query="SELECT count(*) as myBuildings from buildings where Email='".$_SESSION['Sales']."'";
+         $query="SELECT count(*) as papcon from papdailysales where `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' ";
           $data=mysqli_query($connection,$query);
           while($row=mysqli_fetch_assoc($data)){
-          echo $row['myBuildings']."<br><br>";
-    }*/
-    ?><span class="float-right"> <i class="fa fa-users"></i></span></h5>
+          echo $row['papcon']."<br><br>";
+    }
+    ?><span class="float-right"> <i class="fa fa-check"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">My Clients <span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i></span>--></p>
+                  <p class="mb-0 text-white small-font">Pap Confirmed[Last 1 week] <span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i></span>--></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-       /*   $query="SELECT count(*) as myBuildings from buildings where Email='".$_SESSION['Sales']."'";
+        $query="SELECT count(*) as today from papdailysales where DateSigned=CURDATE() AND ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."'";
           $data=mysqli_query($connection,$query);
           while($row=mysqli_fetch_assoc($data)){
-          echo $row['myBuildings']."<br><br>";
-    }*/
-    ?> <span class="float-right"><i class="fa fa-home"></i></span></h5>
+          echo $row['today']."<br><br>";
+    }
+    ?> <span class="float-right"><i class="fa fa-check"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Confirmed Building<span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i>--></span></p>
+                  <p class="mb-0 text-white small-font">Pap Signed[Today]<span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i>--></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -224,100 +240,86 @@ include_once("session.php");
             </div>
         </div>
     </div>
- </div>  
- <?php
-                                  
-                                  if (!$connection) {
-                                      # code...
-                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                          }else{
-                                           $sql ="SELECT DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1";
-                                           $result = mysqli_query($connection,$sql);
-                                           $chart_data="";
-                                            while ($row = mysqli_fetch_array($result)) { 
-                                            $Date[]  = $row['DateSigned']  ;
-                                            $sales[] = $row['sales'];
-                                                                 
-                                           }
-                                             }?>
+ </div>   
+	  
 	<div class="row">
      <div class="col-12 col-lg-8 col-xl-8">
 	    <div class="card">
-		 <div class="card-header">My Progress 
+		 <div class="card-header">My progress
 		   <div class="card-action">
 			 <div class="dropdown">
 			 <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
 			  <i class="icon-options"></i>
 			 </a>
-				<div class="dropdown-menu dropdown-menu-right">
-			<!--	<a class="dropdown-item" href="javascript:void();">Action</a>
+				<!--<div class="dropdown-menu dropdown-menu-right">
+				<a class="dropdown-item" href="javascript:void();">Action</a>
 				<a class="dropdown-item" href="javascript:void();">Another action</a>
 				<a class="dropdown-item" href="javascript:void();">Something else here</a>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="javascript:void();">Separated link</a>-->
-			   </div>
+				<a class="dropdown-item" href="javascript:void();">Separated link</a>
+			   </div>-->
 			  </div>
 		   </div>
 		 </div>
 		 <div class="card-body">
-		   <!-- <ul class="list-inline">
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>PAP Signed</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Buildings Confirmed</li>-->
+		    <ul class="list-inline">
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Pap Signed</li>
+			 <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Old Visitor</li>-->
 			</ul>
 			<div class="chart-container-1">
 			  <canvas id="chart1"></canvas>
 			</div>
 		 </div>
-	
-		<!-- <div class="row m-0 row-group text-center border-top border-light-3">
+		 
+		 <div class="row m-0 row-group text-center border-top border-light-3">
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
-		       <h5 class="mb-0">45.87M</h5>
-			   <small class="mb-0">Overall Visitor <span> <i class="fa fa-arrow-up"></i> 2.43%</span></small>
+		       <h5 class="mb-0">0</h5>
+			   <small class="mb-0"><span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
-		       <h5 class="mb-0">15:48</h5>
-			   <small class="mb-0">Visitor Duration <span> <i class="fa fa-arrow-up"></i> 12.65%</span></small>
+		       <h5 class="mb-0">0</h5>
+			   <small class="mb-0"><span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
-		       <h5 class="mb-0">245.65</h5>
-			   <small class="mb-0">Pages/Visit <span> <i class="fa fa-arrow-up"></i> 5.62%</span></small>
+		       <h5 class="mb-0">0</h5>
+			   <small class="mb-0"> <span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
-		 </div>-->
+		 </div>
 		 
 		</div>
 	 </div>
 
-    <!-- <div class="col-12 col-lg-4 col-xl-4">
-        <div class="card">
-           <div class="card-header">
+     <div class="col-12 col-lg-4 col-xl-4">
+        <!--<div class="card">
+           <div class="card-header">Weekly sales
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
               <i class="icon-options"></i>
              </a>
-              <div class="dropdown-menu dropdown-menu-right">
+            <!--  <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="javascript:void();">Action</a>
               <a class="dropdown-item" href="javascript:void();">Another action</a>
               <a class="dropdown-item" href="javascript:void();">Something else here</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>
+               </div>--
               </div>
              </div>
            </div>
-         <!--  <div class="card-body">
+           <div class="card-body">
 		     <div class="chart-container-2">
                <canvas id="chart2"></canvas>
-			  </div>-->
+			  </div>
            </div>
            <div class="table-responsive">
-            <!-- <table class="table align-items-center">
+             <table class="table align-items-center">
                <tbody>
                  <tr>
                    <td><i class="fa fa-circle text-white mr-2"></i> Direct</td>
@@ -342,14 +344,14 @@ include_once("session.php");
                </tbody>
              </table>
            </div>
-         </div>
-     </div>-->
+         </div>-->
+     </div>
 	</div><!--End Row-->
 	
 	<div class="row">
 	 <div class="col-12 col-lg-12">
-	   <div class="card">
-	    <!--S <div class="card-header">Recent Order Tables
+	 <!--  <div class="card">
+	     <div class="card-header">Recent Order Tables
 		  <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
@@ -366,7 +368,7 @@ include_once("session.php");
              </div>
 		 </div>
 	       <div class="table-responsive">
-                 <table class="table align-items-center table-flush table-borderless">
+              <!--   <table class="table align-items-center table-flush table-borderless">
                   <thead>
                    <tr>
                      <th>Product</th>
@@ -445,7 +447,7 @@ include_once("session.php");
 
                  </tbody></table>
                </div>
-	   </div>
+	   </div>-->
 	 </div>
 	</div><!--End Row-->
 
@@ -467,7 +469,7 @@ include_once("session.php");
 	<footer class="footer">
       <div class="container">
         <div class="text-center">
-          Copyright © Konnect 2022
+          Copyright © 2018 Dashtreme Admin
         </div>
       </div>
     </footer>
@@ -475,9 +477,9 @@ include_once("session.php");
 	
   <!--start color switcher-->
    <div class="right-sidebar">
-   <div class="switcher-icon">
+    <div class="switcher-icon">
       <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
-</div>
+    </div>
     <div class="right-sidebar-content">
 
       <p class="mb-0">Gaussion Texture</p>
@@ -530,18 +532,20 @@ include_once("session.php");
   
   <script src="../assets/plugins/Chart.js/Chart.min.js"></script>
  
-  <!-- Index js -->
- <!-- <script src="../assets/js/index.js"></script>-->
+  <!-- Index js --
+  <script src="../assets/js/index.js"></script>-->
 
- <script>
- var ctx = document.getElementById('chart1').getContext('2d');
+  <script>
+         // chart 1
+	 
+         var ctx = document.getElementById('chart1').getContext('2d');
 		
     var myChart = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: <?php echo json_encode($Date); ?>,
         datasets: [{
-          label: 'Signed Pap',
+          label: 'Pap Signed',
           data: <?php echo json_encode($sales); ?>,
           backgroundColor: '#fff',
           borderColor: "transparent",
@@ -594,7 +598,7 @@ include_once("session.php");
     var myChart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: <?php #echo json_encode($Region); ?>,
+        labels: ["Direct", "Affiliate", "E-mail", "Other"],
         datasets: [{
           backgroundColor: [
             "#ffffff",
@@ -602,7 +606,7 @@ include_once("session.php");
             "rgba(255, 255, 255, 0.50)",
             "rgba(255, 255, 255, 0.20)"
           ],
-          data: <?php# echo json_encode($Build); ?>,
+          data: [5856, 2602, 1802, 1105],
           borderWidth: [0, 0, 0, 0]
         }]
       },
@@ -621,8 +625,8 @@ include_once("session.php");
         displayColors:false
       }
        }
-    });	
-</script>
+    });
+  
+  </script>
 </body>
-
 </html>

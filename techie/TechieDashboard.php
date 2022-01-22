@@ -3,6 +3,20 @@ include_once("session.php");
 include("../db/db.php");
 
 ?>
+<?php
+                                  
+                                  if (!$connection) {
+                                   echo "Problem in database connection! Contact administrator!" . mysqli_error();
+                                       }else{
+                                   $sql ="SELECT DateInstalled,COUNT(DateInstalled) as pap FROM papinstalled WHERE Team_ID='".$_SESSION['TeamID']."' GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND DateInstalled >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+                                  $result = mysqli_query($connection,$sql);
+                                  $chart_data="";
+                                                                             
+                                  while ($row = mysqli_fetch_array($result)) { 
+                                   $Date[]  = $row['DateInstalled']  ;
+                                   $pap[] = $row['pap'];
+                                     }
+                                     }?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -237,7 +251,7 @@ include("../db/db.php");
 		 </div>
 		 <div class="card-body">
 		    <ul class="list-inline">
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Daily Amount</li>
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Pap Installation progress</li>
 		<!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Per Day</li>-->
 			</ul>
 			<div class="chart-container-1">
@@ -520,21 +534,14 @@ $(function() {
 			var myChart = new Chart(ctx, {
 				type: 'bar',
 				data: {
-					labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+					labels:  <?php echo json_encode($Date); ?>,
 					datasets: [{
-						label: 'New Visitor',
-						data: ,
+						label: 'Pap Installed',
+						data:  <?php echo json_encode($pap); ?>,
 						backgroundColor: '#fff',
 						borderColor: "transparent",
 						pointRadius :"0",
 						borderWidth: 3
-					}, {
-						label: 'Old Visitor',
-						data: ,
-						backgroundColor: "rgba(255, 255, 255, 0.25)",
-						borderColor: "transparent",
-						pointRadius :"0",
-						borderWidth: 1
 					}]
 				},
 			options: {
@@ -574,42 +581,6 @@ $(function() {
 
 			 }
 			});  
-		
-		
-    // chart 2
-
-		var ctx = document.getElementById("chart2").getContext('2d');
-			var myChart = new Chart(ctx, {
-				type: 'bar',
-				data: {
-					labels: ["Direct", "Affiliate", "E-mail", "Other"],
-					datasets: [{
-						backgroundColor: [
-							"#ffffff",
-							"rgba(255, 255, 255, 0.70)",
-							"rgba(255, 255, 255, 0.50)",
-							"rgba(255, 255, 255, 0.20)"
-						],
-						data: [5856, 2602, 1802, 1105],
-						borderWidth: [0, 0, 0, 0]
-					}]
-				},
-			options: {
-				maintainAspectRatio: false,
-			   legend: {
-				 position :"bottom",	
-				 display: false,
-				    labels: {
-					  fontColor: '#ddd',  
-					  boxWidth:15
-				   }
-				}
-				,
-				tooltips: {
-				  displayColors:false
-				}
-			   }
-			});
 		
 
 		

@@ -261,7 +261,6 @@ include("../db/db.php");
                       <th scope="col">Client Name</th>
                       <th scope="col">Client Contact</th>
                       <th scope="col">Floor</th>
-                      <th scope="col">PAP Code</th>
                       <th scope="col">Details</th>
 
                     </tr>
@@ -271,7 +270,7 @@ include("../db/db.php");
                     <?php
 
                                   $sql="SELECT techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                  papdailysales.BuildingCode,papdailysales.Floor,CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P') AS papcode from papdailysales LEFT JOIN 
+                                  papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
                                   techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                   $result=mysqli_query($connection,$sql);
                                   if($result){
@@ -282,7 +281,6 @@ include("../db/db.php");
                                     $cname=$row['ClientName'];
                                     $cont=$row['ClientContact'];
                                     $floor=$row['Floor'];
-                                    $papcode=$row['papcode'];
 
                                       echo ' <tr>
                                     <th scope="row">'.$id.'</th>
@@ -291,7 +289,6 @@ include("../db/db.php");
                                     <td>'.$cname.'</td>
                                     <td>'.$cont.'</td>
                                     <td>'.$floor.'</td>
-                                    <td>'.$papcode.'</td>
                                     <td>
                                     <button class="btn-primary" ><a href="papdetails.php?clientid='.$id.'" class="text-bold">Details</a></button>
                                     </td>

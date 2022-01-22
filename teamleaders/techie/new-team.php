@@ -10,8 +10,6 @@ if(isset($_POST['submit'])){
     $Email2 = $_POST['Email2'];
     $Region = $_POST['region'];
     
-    
-    
     //checking connection
     if($connection->connect_error){
         die('connection failed : '.$connection->connect_error);
@@ -48,6 +46,18 @@ include_once("session.php");
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
   <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -112,6 +122,14 @@ include_once("session.php");
       <li>
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending,papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
         </a>
       </li>
 
@@ -223,16 +241,8 @@ include_once("session.php");
             <input type="text" class="form-control" name="Email2" id="input-2" placeholder="Techie 2 Email" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Region</label>
-            <select type="text" class="form-control" name="region" id="input-1" name="Region" value="<?php echo $_SESSION['Region']?>" placeholder="Region" required>
-              <option value="" disabled selected>Select Region</option>
-              <option value="G44">G44</option>
-              <option value="G45S">G45S</option>
-              <option value="G45N">G45N</option>
-              <option value="ZMM">ZMM</option>
-              <option value="R&M">R&M</option>
-              <option value="JCR">JCR</option>
-            </select>
+            <label for="input-2">Region</label>
+            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $_SESSION['Region']?>" placeholder="Region" required>
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
@@ -243,18 +253,11 @@ include_once("session.php");
       </div>
 
      <div class="col-lg-6">
-        <div class="card">
-           <div class="card-body">
-           <center><div class="card-title">Current Techie Teams  <div class="form-outline"></center>
-          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by TeamID.." aria-label="Search" /></div>
-           </div>
-           <hr>
            <div class="card">
-           
             <div class="card-body">
-              <h5 class="card-title"></h5>
+            <center><div class="card-title">Current Techie Teams  <div class="form-outline"></center>
 			  <div class="table-responsive">
-              <table class="table table-hover" id="myTable">
+              <table class="table table-hover" id="dtBasicExample">
                 <thead>
                   <tr>
                     <th scope="col">Team ID</th>
@@ -265,6 +268,10 @@ include_once("session.php");
                 </thead>
                 <tbody>
                   <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    </tr>
                   <?php
 
                           $sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
@@ -286,7 +293,7 @@ include_once("session.php");
                        }
                          }
                        ?>
-                  </tr>
+                 
                 </tbody>
               </table>
             </div>
@@ -360,8 +367,8 @@ include_once("session.php");
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../../assets/js/jquery.min.js"></script>-->
   <script src="../../assets/js/popper.min.js"></script>
   <script src="../../assets/js/bootstrap.min.js"></script>
 	
@@ -372,29 +379,11 @@ include_once("session.php");
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
-  <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
+<script>
 $(document).ready(function () {
-$("myTable").stickyTableHeaders();
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
 });
-</script>
+</script>>
 </body>
 </html>

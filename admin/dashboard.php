@@ -2,6 +2,68 @@
 include("../db/db.php");
 include("session.php");
 ?>
+<?php
+
+#Signed Pap Graph
+ if (!$connection) {
+  # code...
+ echo "Problem in database connection! Contact administrator!" . mysqli_error();
+      }else{
+       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+       $result = mysqli_query($connection,$sql);
+       $chart_data="";
+        while ($row = mysqli_fetch_array($result)) { 
+        $Date[]  = $row['DateSigned']  ;
+        $sales[] = $row['sales'];
+                             
+       }
+         }
+
+     # Installed Pap Graph
+         if (!$connection) {
+          # code...
+         echo "Problem in database connection! Contact administrator!" . mysqli_error();
+              }else{
+               $sql ="SELECT  DateInstalled,COUNT(DateInstalled) as dailyinstallation FROM papinstalled GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+               $result = mysqli_query($connection,$sql);
+               $chart_data="";
+                while ($row = mysqli_fetch_array($result)) { 
+                #$Date[]  = $row['DateInstalled']  ;
+                $install[] = $row['dailyinstallation'];
+                                     
+               }
+                 }
+            #Turned On Graph                      
+                                  if (!$connection) {
+                                      # code...
+                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
+                                          }else{
+                                           $sql ="SELECT  DateTurnedOn,COUNT(DateTurnedOn) as turnedon FROM turnedonpap GROUP BY DateTurnedOn HAVING COUNT(DateTurnedOn)>1 OR COUNT(DateTurnedOn)=1 AND `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+                                           $result = mysqli_query($connection,$sql);
+                                           $chart_data="";
+                                            while ($row = mysqli_fetch_array($result)) { 
+                                            #$Date[]  = $row['DateTurnedOn']  ;
+                                            $turnedon[] = $row['turnedon'];
+                                                                 
+                                           }
+                                             }
+                                             
+                                             #Buildings per Region
+
+                                             if (!$connection) {
+                                              # code...
+                                            echo "Problem in database connection! Contact administrator!" . mysqli_error();
+                                                }else{
+                                                $sql ="SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
+                                                $result = mysqli_query($connection,$sql);
+                                                $chart_data="";
+                                                while ($row = mysqli_fetch_array($result)) { 
+           
+                                                $Region[]  = $row['Region']  ;
+                                                $Build[] = $row['buildings'];
+                                                 }
+                                              }
+                                             ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,13 +153,13 @@ include("session.php");
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+     <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View Teamleaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -305,21 +367,6 @@ include("session.php");
 			  </div>
 		   </div>
 		 </div>
-     <?php
-                                  
-                                  if (!$connection) {
-                                      # code...
-                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                          }else{
-                                           $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-                                           $result = mysqli_query($connection,$sql);
-                                           $chart_data="";
-                                            while ($row = mysqli_fetch_array($result)) { 
-                                            $Date[]  = $row['DateSigned']  ;
-                                            $sales[] = $row['sales'];
-                                                                 
-                                           }
-                                             }?>
 		 <div class="card-body">
 		    <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Signed Pap</li>
@@ -372,22 +419,6 @@ include("session.php");
 		 
 		</div>
 	 </div>
-
-
-   <?php
-                                  if (!$connection) {
-                                    # code...
-                                  echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                      }else{
-                                      $sql ="SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1";
-                                      $result = mysqli_query($connection,$sql);
-                                      $chart_data="";
-                                      while ($row = mysqli_fetch_array($result)) { 
- 
-                                      $Region[]  = $row['Region']  ;
-                                      $Build[] = $row['buildings'];
-                                       }
-                                    }?>
      <div class="col-12 col-lg-4 col-xl-4">
         <div class="card">
            <div class="card-header">Buildings Per Region
@@ -396,21 +427,6 @@ include("session.php");
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
               <i class="icon-options"></i>
              </a>
-             <?php
-                                  
-                                  if (!$connection) {
-                                      # code...
-                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                          }else{
-                                           $sql ="SELECT  DateInstalled,COUNT(DateInstalled) as dailyinstallation FROM papinstalled GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-                                           $result = mysqli_query($connection,$sql);
-                                           $chart_data="";
-                                            while ($row = mysqli_fetch_array($result)) { 
-                                            #$Date[]  = $row['DateInstalled']  ;
-                                            $install[] = $row['dailyinstallation'];
-                                                                 
-                                           }
-                                             }?>
             <!--  <div class="dropdown-menu dropdown-menu-right">
               <a class="dropdown-item" href="javascript:void();">Action</a>
               <a class="dropdown-item" href="javascript:void();">Another action</a>
@@ -421,21 +437,7 @@ include("session.php");
               </div>
              </div>
            </div>
-           <?php
-                                  
-                                  if (!$connection) {
-                                      # code...
-                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                          }else{
-                                           $sql ="SELECT  DateTurnedOn,COUNT(DateTurnedOn) as turnedon FROM turnedonpap GROUP BY DateTurnedOn HAVING COUNT(DateTurnedOn)>1 OR COUNT(DateTurnedOn)=1 AND `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-                                           $result = mysqli_query($connection,$sql);
-                                           $chart_data="";
-                                            while ($row = mysqli_fetch_array($result)) { 
-                                            #$Date[]  = $row['DateInstalled']  ;
-                                            $turnedon[] = $row['turnedon'];
-                                                                 
-                                           }
-                                             }?>
+           
            <div class="card-body">
 		     <div class="chart-container-2">
                <canvas id="chart2"></canvas>
@@ -622,7 +624,7 @@ include("session.php");
  
   <!-- Index js -->
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-  <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
 <script>
    var ctx = document.getElementById('chart1').getContext('2d');
 		
@@ -728,26 +730,6 @@ include("session.php");
 			   }
 			});
 		
-</script>
-<script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
 </script>
 </body>
 </html>

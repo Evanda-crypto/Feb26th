@@ -15,6 +15,7 @@ include_once("session.php");
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -105,13 +106,13 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -233,11 +234,12 @@ include_once("session.php");
                <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                    <th>ID</th>
+                    <th>No</th>
                      <th>Building Name</th>
                      <th>Building Code</th>
                      <th>Region</th>
                      <th>ChampName</th>
+                     <th>ClientID</th>
                      <th>Client Name</th>
                      <th>Client Contact</th>
                      <th>Availability</th>
@@ -259,38 +261,42 @@ include_once("session.php");
                   <td></td>
                   <td></td>
                   <td></td>
+                  <td></td>
                     </tr>
                     <?php
-    $query=mysqli_query($connection,"Select * from papdailysales where  DateSigned >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)");
-    while($row=mysqli_fetch_assoc($query)){
-      $id=$row['ClientID'];
-      $bname=$row['BuildingName'];
-      $bcode=$row['BuildingCode'];
-      $reg=$row['Region'];
-      $champ=$row['ChampName'];
-      $cname=$row['ClientName'];
-      $contact=$row['ClientContact'];
-      $avail=$row['ClientAvailability'];
-      $floor=$row['Floor'];
-      $layout=$row['AptLayout'];
-      
-      echo ' <tr>
-      <th scope="row">'.$id.'</th>
-      <td>'.$bname.'</td>
-      <td>'.$bcode.'</td>
-      <td>'.$reg.'</td>
-      <td>'.$champ.'</td>
-      <td>'.$cname.'</td>
-      <td>'.$contact.'</td>
-      <td>'.$avail.'</td>
-      <td>'.$layout.'</td>
-      <td>'.$floor.'</td>
-      <td>
-        <button class="btn-success"><a href="edit-client-info.php?client-id='.$id.'" class="text-bold">More Info</a></button>
-      </td>
-      </tr>';
-    }
-    ?>
+                        $query  = "SELECT * from papdailysales WHERE `Datesigned` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
+                        $result  = mysqli_query($connection, $query);
+
+                        $num_rows  = mysqli_num_rows($result);
+
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <th><?php echo $row['BuildingName']; ?></th>
+                                    <th><?php echo $row['BuildingCode']; ?></th>
+                                    <th><?php echo $row['Region']; ?></th>
+                                    <th><?php echo $row['ChampName']; ?></th>
+                                    <th><?php echo $row['ClientID']; ?></th>
+                                    <th><?php echo $row['ClientName']; ?></th>
+                                    <th><?php echo $row['ClientContact']; ?></th>
+                                    <th><?php echo $row['ClientAvailability']; ?></th>
+                                    <th><?php echo $row['AptLayout']; ?></th>
+                                    <th><?php echo $row['Floor']; ?></th>
+                                    <th>
+                                        <a href="edit-client-info.php?client-id=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
+                                        <a href="deleteclient.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['ClientName']; ?> from records?')"><i class="fas fa-trash"></i></a>
+                                    </th>
+
+                                </tr>
+                        <?php
+
+                            }
+                        }
+                        ?>
  </tbody>
 </table>
  </div>

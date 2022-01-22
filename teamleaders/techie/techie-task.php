@@ -29,16 +29,26 @@ if(isset($_POST['submit'])){
         die('connection failed : '.$connection->connect_error);
     }
     else
-    {      
+    {    
+      $stmt= $connection->prepare("select * from techieteams where Team_ID= ? and Region= ?");
+    $stmt->bind_param("ss",$TeamID,$Region);
+    $stmt->execute();
+    $stmt_result= $stmt->get_result();
+    if($stmt_result->num_rows>0){
+      
         $stmt= $connection->prepare("insert into techietask (TeamID,ClientID,ClientName,ClientContact,ClientAvailability,Region,BuildingName,BuildingCode,Date)
         values(?,?,?,?,?,?,?,?,?)");
         //values from the fields
         $stmt->bind_param("sssssssss",$TeamID,$ClientID,$ClientName,$ClientContact,$ClientAvailability,$Region,$BuildingName,$BuildingCode,$Date);
         $stmt->execute();
         echo "<script>alert('Successfull.');</script>";
-        header("location: dashboard.php");
+        header("location: pending-installation.php");
         $stmt->close();
         $connection->close();
+    }
+    else{
+      echo "<script>alert('Team does not exist.');</script>";
+    }
     }
 }
 ?>
@@ -119,6 +129,14 @@ if(isset($_POST['submit'])){
       <li>
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending,papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
         </a>
       </li>
 

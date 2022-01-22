@@ -131,13 +131,13 @@ else
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -287,7 +287,7 @@ else
      <div class="col-lg-6">
         <div class="card">
            <div class="card-body">
-           <div class="card-title">Emails  <div class="form-outline">
+           <div class="card-title"><center><h5>Emails</h5></center>  <div class="form-outline">
            </div>
            <hr>
           

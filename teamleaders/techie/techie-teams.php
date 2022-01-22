@@ -15,6 +15,20 @@ include_once("session.php");
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+
   <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -29,6 +43,11 @@ include_once("session.php");
   <!-- Custom Style-->
   <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
+  <style>
+    .pagination li:hover{
+    cursor: pointer;
+}
+  </style>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -38,7 +57,7 @@ include_once("session.php");
    <!-- end loader -->
 
 <!-- Start wrapper-->
- <div id="wrapper">
+<div id="wrapper">
 
   <!--Start sidebar-wrapper-->
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
@@ -78,12 +97,20 @@ include_once("session.php");
       <li>
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending,papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
         </a>
       </li>
 
       <li>
       <li>
-        <a href="">
+        <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
       </li>
@@ -126,10 +153,11 @@ include_once("session.php");
     </li>
   </ul>
      
-  <ul class="navbar-nav align-items-center right-nav-link">
-    <li class="nav-item language">
-    <i class=""><?php echo $_SESSION['Region']?></i></a>
+    <li class="nav-item dropdown-lg">
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
+      <b class=""><?php echo $_SESSION['Region']?></b></a>
     </li>
+
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
         <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
@@ -145,9 +173,15 @@ include_once("session.php");
             </div>
            </div>
           </a>
-</li>
+        </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+       <!-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>-->
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" href="logout.php"></i> Logout</li>
       </ul>
     </li>
   </ul>
@@ -162,24 +196,32 @@ include_once("session.php");
      
       <div class="row mt-3">
           <div class="card">
-          <div class="card-body">
-           <hr>   <h5 class="card-title">Techie Teams</h5><div class="form-outline"><input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div></div>
-</hr>
+            <div class="card-body">
+              
+              <center><h5 class="card-title">Techie Teams</h5></center>
 			  <div class="table-responsive">
-               <table class="table" id="myTable">
+               <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                      <!--<th scope="col">No</th>-->
-                      <th scope="col">Team ID</th>
+                    <th scope="col">Team ID</th>
                       <th scope="col">Techie 1</th>
+                      <th scope="col">Techie 1 Email</th>
                       <th scope="col">Techie 2</th>
+                      <th scope="col">Techie 2 Email</th>
                       <th scope="col">Region</th>
                       <th scope="col">Details</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                    <?php
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <?php
 
 $sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
 $result=mysqli_query($connection,$sql);
@@ -188,13 +230,17 @@ while($row=mysqli_fetch_assoc($result)){
   $id=$row['ID'];
 $tid=$row['Team_ID'];
 $tname1=$row['Techie_1'];
+$e1=$row['Email1'];
 $tname2=$row['Techie_2'];
+$e2=$row['Email2'];
 $reg=$row['Region'];
 
 echo ' <tr>
 <td>'.$tid.'</td>
 <td>'.$tname1.'</td>
+<td>'.$e1.'</td>
 <td>'.$tname2.'</td>
+<td>'.$e2.'</td>
 <td>'.$reg.'</td>
 <td>
 <button class="btn-info"  ><a href="change-team.php?teamid='.$id.'" class="text-bold">More</a></button>
@@ -205,10 +251,11 @@ echo ' <tr>
 }
 ?>
                     </tr>
-                    <tr>
                   </tbody>
                 </table>
             </div>
+
+  </div>
             </div>
           </div>
         
@@ -444,19 +491,19 @@ echo ' <tr>
     </div>
     <!-- End container-fluid-->
     
-    </div><!--End content-wrapper-->
+  </div><!--End content-wrapper-->
    <!--Start Back To Top Button-->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     <!--End Back To Top Button-->
 	
-	<!--Start footer--
-	<footer class="footer">
+	<!--Start footer-->
+	<!--<footer class="footer">
       <div class="container">
         <div class="text-center">
-          Copyright © Knnect 2022
+          Copyright © Konnect 2022
         </div>
       </div>
-    </footer>
+    </footer>-->
 	<!--End footer-->
 	
 	<!--start color switcher-->
@@ -500,8 +547,8 @@ echo ' <tr>
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../../assets/js/jquery.min.js"></script>-->
   <script src="../../assets/js/popper.min.js"></script>
   <script src="../../assets/js/bootstrap.min.js"></script>
 	
@@ -512,32 +559,73 @@ echo ' <tr>
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
-  <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
-$(document).ready(function () {
-$("myTable").stickyTableHeaders();
-});
-</script>
-<script>
-  
-</script>
+	
 </body>
+<script>
+        $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+    </script>
+<script>
+  var ctx = document.getElementById('chart1').getContext('2d');
+		
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: <?php echo json_encode($Date); ?>,
+        datasets: [{
+          label: 'New Visitor',
+          data: <?php echo json_encode($number); ?>,
+          backgroundColor: '#fff',
+          borderColor: "transparent",
+          pointRadius :"0",
+          borderWidth: 3
+        }, {
+          label: 'Old Visitor',
+          data: <?php echo json_encode($number); ?>,
+          backgroundColor: "rgba(255, 255, 255, 0.25)",
+          borderColor: "transparent",
+          pointRadius :"0",
+          borderWidth: 1
+        }]
+      },
+    options: {
+      maintainAspectRatio: false,
+      legend: {
+        display: false,
+        labels: {
+        fontColor: '#ddd',  
+        boxWidth:40
+        }
+      },
+      tooltips: {
+        displayColors:false
+      },	
+      scales: {
+        xAxes: [{
+        ticks: {
+          beginAtZero:true,
+          fontColor: '#ddd'
+        },
+        gridLines: {
+          display: true ,
+          color: "rgba(221, 221, 221, 0.08)"
+        },
+        }],
+         yAxes: [{
+        ticks: {
+          beginAtZero:true,
+          fontColor: '#ddd'
+        },
+        gridLines: {
+          display: true ,
+          color: "rgba(221, 221, 221, 0.08)"
+        },
+        }]
+       }
+
+     }
+    });  
+</script>
 </html>

@@ -3,14 +3,13 @@ include("../db/db.php");
 include("session.php");
 $id=$_GET['clientid'];
 
-$sql="SELECT papinstalled.Team_ID,papinstalled.PAPCode,papinstalled.MacAddress,papdailysales.ChampName,papdailysales.ClientName,papdailysales.ClientID,papdailysales.ClientContact,
+$sql="SELECT papinstalled.Team_ID,Upper(papinstalled.MacAddress) as Mac,papdailysales.ChampName,papdailysales.ClientName,papdailysales.ClientID,papdailysales.ClientContact,
 papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.Region FROM papinstalled INNER JOIN papdailysales on
 papinstalled.ClientID=papdailysales.ClientID where papinstalled.ClientID=$id";
 $result=mysqli_query($connection,$sql);
 $row=mysqli_fetch_assoc($result);
-$papcode=$row['PAPCode'];
 $teamid=$row['Team_ID'];
-$mac=$row['MacAddress'];
+$mac=$row['Mac'];
 $champ=$row['ChampName'];
 $cname=$row['ClientName'];
 $contact=$row['ClientContact'];
@@ -21,8 +20,7 @@ $cid=$row['ClientID'];
 
 if(isset($_POST['submit'])){
   $Team_ID = $row['Team_ID'];
-  $PapCode = $_POST['papcode'];
-  $MacAddress = $row['MacAddress'];
+  $MacAddress = $row['Mac'];
   $ChampName = $row['ChampName'];
   $Region = $row['Region'];
   $ClientName = $row['ClientName'];
@@ -33,18 +31,15 @@ if(isset($_POST['submit'])){
   $DateTurnedOn = $_POST['date'];
   $ClientID = $row['ClientID'];
 
-
-  $stmt= $connection->prepare("insert into turnedonpap(Team_ID,PapCode,MacAddress,ChampName,Region,ClientName,ClientContact,BuildingName,BuildingCode,PapStatus,DateTurnedOn,ClientID)
-values(?,?,?,?,?,?,?,?,?,?,?,?)");
+$stmt= $connection->prepare("insert into turnedonpap(Team_ID,MacAddress,ChampName,Region,ClientName,ClientContact,BuildingName,BuildingCode,PapStatus,DateTurnedOn,ClientID)
+values(?,?,?,?,?,?,?,?,?,?,?)");
 //values from the fields
-$stmt->bind_param("ssssssssssss",$Team_ID,$PapCode,$MacAddress,$ChampName,$Region,$ClientName,$ClientContact,$BuildingName,$BuildingCode,$PapStatus,$DateTurnedOn,$ClientID);
+$stmt->bind_param("sssssssssss",$Team_ID,$MacAddress,$ChampName,$Region,$ClientName,$ClientContact,$BuildingName,$BuildingCode,$PapStatus,$DateTurnedOn,$ClientID);
 $stmt->execute();
 echo "<script>alert('Successfull');</script>"; 
 header('Location: pap-daily-installation.php');
 $stmt->close();
 #$connection->close();
-}
-else{
     
 }
 ?>
@@ -141,13 +136,13 @@ else{
         </a>
       </li>
 
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+      <li>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-minus-circle"></i> <span>View TeamLeaders</span>
         </a>
       </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -267,8 +262,8 @@ else{
            <hr>
             <form method="POST">
            <div class="form-group">
-            <label for="input-1">Pap Code</label>
-            <input type="text" class="form-control" name="papcode" id="input-1" placeholder="Pap Code" value="<?php echo $papcode?>"  required>
+            <label for="input-1">Mac Address</label>
+            <input type="text" class="form-control" name="mac" id="input-1" placeholder="Mac Address" value="<?php echo $mac?>"  required>
            </div>
            <div class="form-group">
             <label for="input-2">Building Name</label>
