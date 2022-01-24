@@ -36,17 +36,16 @@ if($connection->connect_error){
     die('connection failed : '.$connection->connect_error);
 }
 else{
-    //Insert query
-    $stmt= $connection->prepare("insert into papdailysales(DateSigned,ChampName,BuildingName,BuildingCode,Region,Apt,AptLayout,Floor,ClientName,ClientAvailability,ClientContact,
-    ClientWhatsApp,ClientGender,ClientAge,ClientOccupation,HouseholdSize,Children,Teenagers,Adults,Birthday,Facebook,Instagram,Twitter,BizName,BizCat,BizDec,Note)
-    values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
-       //values from the fields
-    $stmt->bind_param("sssssssssssssssssssssssssss",$DateSigned,$ChampName,$BuildingName,$BuildingCode,$Region,$Apt,$AptLayout,$Floor,$ClientName,$ClientAvailability,$ClientContact,
-    $ClientWhatsApp,$ClientGender,$ClientAge,$ClientOccupation,$HouseholdSize,$Children,$Teenagers,$Adults,$Birthday,$Facebook,$Instagram,$Twitter,$BizName,$BizCat,$BizDec,$Note);
-    $stmt->execute();
-    echo "<script>alert('Submitted successfully.');</script>";
-    $stmt->close();
-    $connection->close();
+
+
+  $insert = $connection->query("INSERT into papdailysales (DateSigned,ChampName,BuildingName,BuildingCode,Region,Apt,AptLayout,Floor,ClientName,ClientAvailability,ClientContact,
+  ClientWhatsApp,ClientGender,ClientAge,ClientOccupation,HouseholdSize,Children,Teenagers,Adults,Birthday,Facebook,Instagram,Twitter,BizName,BizCat,BizDec,Note) VALUES ('$DateSigned','$ChampName','$BuildingName','$BuildingCode','$Region','$Apt','$AptLayout','$Floor','$ClientName','$ClientAvailability','$ClientContact',
+    '$ClientWhatsApp','$ClientGender','$ClientAge','$ClientOccupation','$HouseholdSize','$Children','$Teenagers','$Adults','$Birthday','$Facebook','$Instagram','$Twitter','$BizName','$BizCat','$BizDec','$Note')"); 
+     if($insert){ 
+      echo "<script>alert('Submitted successfully.');</script>"; 
+  }else{ 
+    echo "<script>alert('Error.');</script>"; 
+  }  
 }
 }
 ?>
