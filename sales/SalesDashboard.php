@@ -1,7 +1,7 @@
 
 <?php
 include("../db/db.php");
-include_once("../sales/session.php");
+include_once("session.php");
 ?>
 <?php
                                   

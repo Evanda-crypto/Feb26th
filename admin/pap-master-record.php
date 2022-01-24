@@ -276,7 +276,7 @@ include_once("session.php");
 
 $sql="SELECT  turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 ELSE CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
-end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
+end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE turnedonpap.MacAddress is not null order by DateTurnedOn Desc";
 $result=mysqli_query($connection,$sql);
 if($result){
 while($row=mysqli_fetch_assoc($result)){

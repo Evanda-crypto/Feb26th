@@ -108,7 +108,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <!-- The Modal -->
 <div id="myModal" class="modal">
   <span class="close">&times;</span>
-  <img class="modal-content" id="myImg" alt="<?php echo $data['Mac'];?>" src="data:Image/jpg;charset=utf8;base64,<?php echo base64_encode($data['Image']); ?>"  width="80%" height="80%" />
+  <img class="modal-content" id="myImg" alt="<?php echo $data['Mac'];?>" src="data:Image/jpg;charset=utf8;base64,<?php echo base64_encode($data['Image']); ?>"  width="50%" height="80%" />
 
   <div id="caption"><h5><?php echo $data['Mac'];?></h5></div>
 </div>

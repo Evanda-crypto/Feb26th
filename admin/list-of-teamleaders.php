@@ -593,7 +593,7 @@ include_once("session.php");
   <script src="../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>-->
+  <script src="../assets/js/app-script.js"></script>
 	<script>
         $(document).ready(function () {
 $('#dtBasicExample').DataTable();

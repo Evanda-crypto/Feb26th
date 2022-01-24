@@ -44,6 +44,7 @@ else{
     $stmt->bind_param("sssssssssssssssssssssssssss",$DateSigned,$ChampName,$BuildingName,$BuildingCode,$Region,$Apt,$AptLayout,$Floor,$ClientName,$ClientAvailability,$ClientContact,
     $ClientWhatsApp,$ClientGender,$ClientAge,$ClientOccupation,$HouseholdSize,$Children,$Teenagers,$Adults,$Birthday,$Facebook,$Instagram,$Twitter,$BizName,$BizCat,$BizDec,$Note);
     $stmt->execute();
+    echo "<script>alert('Submitted successfully.');</script>";
     $stmt->close();
     $connection->close();
 }
