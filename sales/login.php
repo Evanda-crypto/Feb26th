@@ -19,7 +19,7 @@ if($connection){
             $_SESSION['Sales']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
-            header('Location: SalesDashboard.php');
+            header("Location: SalesDashboard.php");
         }
         else{
           echo "<script>alert('Wrong Password');</script>";

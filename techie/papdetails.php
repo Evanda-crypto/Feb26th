@@ -16,7 +16,7 @@ $t1=$row['Techie_1'];
 $t2=$row['Techie_2'];
 
 
-if(isset($_POST['submit'])){
+if(isset($_POST['submit']) && !empty($_FILES["image"]["name"])) {
 $Team_ID=$_POST['teamid'];
 $MacAddress = $_POST['macaddress'];
 $SerialNumber = $_POST['serialnumber'];
@@ -26,7 +26,14 @@ $Region = $_POST['region'];
 $techie1 = $row['Techie_1'];
 $techie2 = $row['Techie_2'];
 
-
+$fileName = basename($_FILES["image"]["name"]); 
+          $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
+           
+          // Allow certain file formats 
+          $allowTypes = array('jpg','png','jpeg','gif'); 
+          if(in_array($fileType, $allowTypes)){ 
+              $image = $_FILES['image']['tmp_name']; 
+              $imgContent = addslashes(file_get_contents($image)); 
 
 //checking connection
 if($connection->connect_error){
@@ -42,18 +49,18 @@ else
     echo "<script>alert('The Macaddress Already Exists');</script>";
   }
   else{
-     //Insert query
-    $stmt= $connection->prepare("insert into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region)
-    values(?,?,?,?,?,?)");
-       //values from the fields
-    $stmt->bind_param("ssssss",$Team_ID,$ClientID,$MacAddress,$SerialNumber,$DateInstalled,$Region);
-    $stmt->execute();
-    echo "<script>alert('Information successfully submited');</script>";
-    $stmt->close();
-    $connection->close();
-    header('location: my-task.php');
+
+     // Insert image content into database 
+     $insert = $connection->query("INSERT into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region,Image) VALUES ('$Team_ID','$ClientID','$MacAddress','$SerialNumber','$DateInstalled','$Region','$imgContent')"); 
+     if($insert){ 
+      header('location: my-task.php'); 
+  }else{ 
+    echo "<script>alert('Successfull.');</script>"; 
+  }  
+    
   }
 
+}
 }
 }
 ?>
@@ -226,7 +233,7 @@ else
            <div class="card-body">
            <div class="card-title">PAP Details</div>
            <hr>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
             <label for="input-1">Client ID</label>
             <input type="text" class="form-control" id="input-1" name="ClientID" value="<?php echo $clientid?>" readonly>
@@ -242,6 +249,10 @@ else
            <div class="form-group">
             <label for="input-3">Serial Number</label>
             <input type="text" class="form-control" id="input-3" placeholder="Serial Number" name="serialnumber" maxlength="13" required>
+           </div>
+           <div class="form-group">
+            <label for="input-3">Pap Image</label>
+            <input type="file" class="form-control" id="input-3" placeholder="Pac Image" name="image" required>
            </div>
            <div class="form-group">
             <label for="input-4">Date Installed</label>

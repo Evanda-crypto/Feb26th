@@ -73,8 +73,9 @@
             <li class="nav-item"> <a style="color: black;" href="teamleaders/techie/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
             <li class="nav-item"> <a style="color: black;" href="techie/login.php" class="navbar-brand">INSTALLATION </a></li>
             <li class="nav-item"> <a style="color: black;" href="sales/login.php"class="navbar-brand">SALES</a></li>   
-         <!--<li class="nav-item"> <a style="color: black;" href="users/action.php"class="navbar-brand">pap</a></li>
-         <!-- <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">test</a></li>-->                                                                                                                                                                                                                                                       
+           <!-- <li class="nav-item"> <a style="color: black;" href="users/action.php"class="navbar-brand">image</a></li>
+            <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">test</a></li> 
+            <li class="nav-item"> <a style="color: black;" href="users/table.php"class="navbar-brand">test</a></li> -->                                                                                                                                                                                                                                                    
 </div>
     </div>
 </nav>

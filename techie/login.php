@@ -20,7 +20,7 @@ if($connection){
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
             $_SESSION['TeamID']=$data['Team_ID'];
-            header('Location: TechieDashboard.php');
+            header("Location: TechieDashboard.php");
             }
             elseif ($data['DEPARTMENT']=="Maton") {
                 $_SESSION['FName']=$data['FIRST_NAME'];

@@ -186,18 +186,22 @@ else{
         </a>
       </li>-->
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
+      <li style="margin-left:5%">
+        <a href="gallery.php">
+          <i class="fa fa-picture-o"></i> <span>Gallery</span>
+        </a>
+      </li>
       <li  style="margin-left:5%">
         <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+          <i class="fa fa-calendar"></i> <span>Calendar</span>
           <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">
         <a href="logout.php">
-          <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+          <i class="fa fa-lock"></i> <span>Logout</span>
         </a>
       </li>
-
     </ul>
    
    </div>

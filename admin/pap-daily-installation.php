@@ -150,15 +150,20 @@ include_once("session.php");
         </a>
       </li>-->
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
+      <li style="margin-left:5%">
+        <a href="gallery.php">
+          <i class="fa fa-picture-o"></i> <span>Gallery</span>
+        </a>
+      </li>
       <li  style="margin-left:5%">
         <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+          <i class="fa fa-calendar"></i> <span>Calendar</span>
           <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">
         <a href="logout.php">
-          <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+          <i class="fa fa-lock"></i> <span>Logout</span>
         </a>
       </li>
 
@@ -255,7 +260,7 @@ include_once("session.php");
                     <?php
 
                      $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
-                     FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null  and papinstalled.DateInstalled >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY papinstalled.DateInstalled ASC";
+                     FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null ORDER BY papinstalled.DateInstalled ASC";
                     $result=mysqli_query($connection,$sql);
                      if($result){
                       while($row=mysqli_fetch_assoc($result)){
@@ -582,13 +587,13 @@ include_once("session.php");
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
-  <!-- simplebar js -
+  <!-- simplebar js -->
   <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
-  <!-- sidebar-menu js --
+  <!-- sidebar-menu js -->
   <script src="../assets/js/sidebar-menu.js"></script>
   
-  <!-- Custom scripts --
-  <script src="../assets/js/app-script.js"></script>-->
+  <!-- Custom scripts -->
+  <script src="../assets/js/app-script.js"></script>
   <script>
   $(document).ready(function () {
 $('#dtBasicExample').DataTable();
@@ -596,65 +601,5 @@ $('.dataTables_length').addClass('bs-select');
 });
 </script>
 </body>
-<script>
-  var ctx = document.getElementById('chart1').getContext('2d');
-		
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: <?php echo json_encode($Date); ?>,
-        datasets: [{
-          label: 'New Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: '#fff',
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 3
-        }, {
-          label: 'Old Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: "rgba(255, 255, 255, 0.25)",
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 1
-        }]
-      },
-    options: {
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-        labels: {
-        fontColor: '#ddd',  
-        boxWidth:40
-        }
-      },
-      tooltips: {
-        displayColors:false
-      },	
-      scales: {
-        xAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }],
-         yAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }]
-       }
 
-     }
-    });  
-</script>
 </html>

@@ -10,13 +10,11 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Pap | Daily | Sales</title>
+  <title>Gallery</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
-  <!--favicon-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../assets/js/pace.min.js"></script>-->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -26,6 +24,8 @@ include_once("session.php");
 <!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+  <!--favicon-->
 
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
@@ -40,7 +40,6 @@ include_once("session.php");
   <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="../assets/css/app-style.css" rel="stylesheet"/>
-  
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -112,7 +111,7 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
+     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
         <a href="#">
           <i class="fa fa-user"></i> <span>A</span>
@@ -144,7 +143,7 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li>
+      <li>
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
@@ -166,6 +165,7 @@ include_once("session.php");
           <i class="fa fa-lock"></i> <span>Logout</span>
         </a>
       </li>
+
     </ul>
    
    </div>
@@ -224,37 +224,30 @@ include_once("session.php");
 </header>
 <!--End topbar header-->
 
-<div class="clearfix"></div>
+<div class="clearfix"> </div>
 	
   <div class="content-wrapper">
     <div class="container-fluid">
      
       <div class="row mt-3">
           <div class="card">
-            <div class="card-body">
-              
-            <center>  <h5 class="card-title">PAP DAILY SALES</h5></center>
+            <div class="card-body"> 
+            <center>  <h5 class="card-title">PAP GALLAERY</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                    <th>No</th>
-                     <th>Building Name</th>
-                     <th>Building Code</th>
-                     <th>Region</th>
-                     <th>ChampName</th>
-                     <th>ClientID</th>
-                     <th>Client Name</th>
-                     <th>Client Contact</th>
-                     <th>Availability</th>
-                     <th>Apt Layout</th>
-                     <th>Floor</th>
-                     <th>More</th>
+                    <th>Client ID</th>
+                    <th>Team ID</th>
+                    <th>Techie 1</th>
+                    <th>Techie 2</th>
+                    <th>Mac Address</th>
+                    <th>Date Installed</th>
+                    <th>Image</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr>
-                    <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -262,53 +255,37 @@ include_once("session.php");
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                    </tr>
-                    <?php
-                        $query  = "SELECT * from papdailysales WHERE `Datesigned` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
-                        $result  = mysqli_query($connection, $query);
+                  </tr>
+                  <?php
 
-                        $num_rows  = mysqli_num_rows($result);
+include "../db/db.php"; // Using database connection file here
 
-                        $num = 0;
-                        if ($num_rows > 0) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $num++;
-                        ?>
-                                <tr>
-                                    <th><?php echo $num; ?></th>
-                                    <th><?php echo $row['BuildingName']; ?></th>
-                                    <th><?php echo $row['BuildingCode']; ?></th>
-                                    <th><?php echo $row['Region']; ?></th>
-                                    <th><?php echo $row['ChampName']; ?></th>
-                                    <th><?php echo $row['ClientID']; ?></th>
-                                    <th><?php echo $row['ClientName']; ?></th>
-                                    <th><?php echo $row['ClientContact']; ?></th>
-                                    <th><?php echo $row['ClientAvailability']; ?></th>
-                                    <th><?php echo $row['AptLayout']; ?></th>
-                                    <th><?php echo $row['Floor']; ?></th>
-                                    <th>
-                                        <a href="edit-client-info.php?client-id=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
-                                        <a href="deleteclient.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['ClientName']; ?> from records?')"><i class="fas fa-trash"></i></a>
-                                    </th>
+$records = mysqli_query($connection,"SELECT  papinstalled.Image,papinstalled.ClientID,papinstalled.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled from papinstalled join techieteams on papinstalled.Team_ID=techieteams.Team_ID"); // fetch data from database
 
-                                </tr>
-                        <?php
-
-                            }
-                        }
-                        ?>
- </tbody>
-</table>
- </div>
-
-  </div>
+while($data = mysqli_fetch_array($records))
+{
+?>
+  <tr>
+    <td><?php echo $data['ClientID']; ?></td>
+    <td><?php echo $data['Team_ID']; ?></td>
+    <td><?php echo $data['Techie_1']; ?></td>
+    <td><?php echo $data['Techie_2']; ?></td>
+    <td><?php echo $data['Mac']; ?></td>
+    <td><?php echo $data['DateInstalled']; ?></td>
+    <td><a target="_self" href="img-view.php?clientid=<?php echo $data['ClientID']; ?>"><img id="myImg" alt="<?php echo $data['Mac']?>" src="data:Image/jpg;charset=utf8;base64,<?php echo base64_encode($data['Image']); ?>"  width="200" height="100" /></a></td>
+  </tr>	
+<?php
+}
+?>
+                  </tbody>
+                </table>
             </div>
           </div>
-        
+            </div>
+          </div>
+
+    
+
        <!-- <div class="col-lg-6">
           <div class="card">
             <div class="card-body">
@@ -535,7 +512,7 @@ include_once("session.php");
       </div><!--End Row-->
 	  
 	  <!--start overlay-->
-		  <div class="overlay toggle-menu"></div>
+		  <div class="overlay toggle-menu"> </div>
 		<!--end overlay-->
 
     </div>
@@ -608,74 +585,37 @@ include_once("session.php");
   <script src="../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>-->
-	<script>
-        $(document).ready(function () {
+  <script src="../assets/js/app-script.js"></script>
+
+  
+<script>
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the image and insert it inside the modal - use its "alt" text as a caption
+var img = document.getElementById("myImg");
+var modalImg = document.getElementById("img01");
+var captionText = document.getElementById("caption");
+img.onclick = function(){
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.alt;
+}
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() { 
+  modal.style.display = "none";
+}
+</script>
+
+  <script>
+  $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
-    </script>
-</body>
-<script>
-  var ctx = document.getElementById('chart1').getContext('2d');
-		
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: <?php echo json_encode($Date); ?>,
-        datasets: [{
-          label: 'New Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: '#fff',
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 3
-        }, {
-          label: 'Old Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: "rgba(255, 255, 255, 0.25)",
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 1
-        }]
-      },
-    options: {
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-        labels: {
-        fontColor: '#ddd',  
-        boxWidth:40
-        }
-      },
-      tooltips: {
-        displayColors:false
-      },	
-      scales: {
-        xAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }],
-         yAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }]
-       }
-
-     }
-    });  
 </script>
-
+</body>
 </html>
