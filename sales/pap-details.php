@@ -2,52 +2,6 @@
 <?php
 include("../db/db.php");
 include_once("session.php");
-if(isset($_POST['submit'])){
-$DateSigned = $_POST['DateSigned'];
-$ChampName = $_POST['ChampName'];
-$BuildingName = $_POST['Buildingname'];
-$BuildingCode = $_POST['BuildingCode'];
-$Region = $_POST['Region'];
-$Apt = $_POST['Apt'];
-$AptLayout = $_POST['aptlayout'];
-$Floor = $_POST['floor'];
-$ClientName = $_POST['ClientName'];
-$ClientAvailability = $_POST['Day'];
-$ClientContact = $_POST['ClientContact'];
-$ClientWhatsApp = $_POST['WhatsApp'];
-$ClientGender = $_POST['gender'];
-$ClientAge = $_POST['age'];
-$ClientOccupation = $_POST['occupation'];
-$HouseholdSize = $_POST['Householdsize'];
-$Children = $_POST['Children'];
-$Teenagers = $_POST['Teenagers'];
-$Adults = $_POST['Adults'];
-$Birthday = $_POST['Birthday'];
-$Facebook = $_POST['facebook'];
-$Instagram = $_POST['Instagram'];
-$Twitter = $_POST['twitter'];
-$BizName = $_POST['bizname'];
-$BizCat = $_POST['bizcat'];
-$BizDec = $_POST['bizdec'];
-$Note = $_POST['Note'];
-
-//checking if connection is not created successfully
-if($connection->connect_error){
-    die('connection failed : '.$connection->connect_error);
-}
-else{
-
-
-  $insert = $connection->query("INSERT into papdailysales (DateSigned,ChampName,BuildingName,BuildingCode,Region,Apt,AptLayout,Floor,ClientName,ClientAvailability,ClientContact,
-  ClientWhatsApp,ClientGender,ClientAge,ClientOccupation,HouseholdSize,Children,Teenagers,Adults,Birthday,Facebook,Instagram,Twitter,BizName,BizCat,BizDec,Note) VALUES ('$DateSigned','$ChampName','$BuildingName','$BuildingCode','$Region','$Apt','$AptLayout','$Floor','$ClientName','$ClientAvailability','$ClientContact',
-    '$ClientWhatsApp','$ClientGender','$ClientAge','$ClientOccupation','$HouseholdSize','$Children','$Teenagers','$Adults','$Birthday','$Facebook','$Instagram','$Twitter','$BizName','$BizCat','$BizDec','$Note')"); 
-     if($insert){ 
-      echo "<script>alert('Submitted successfully.');</script>"; 
-  }else{ 
-    echo "<script>alert('Error.');</script>"; 
-  }  
-}
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -232,7 +186,7 @@ $(document).ready(function(){
            <div class="card-body">
            <div class="card-title"><center><h5> NEW PAP SIGNED</h5></center></div>
            <hr>
-            <form method="POST">
+            <form method="POST" action="action.php">
            <div class="form-group">
             <label for="input-1">Date Signed</label>
             <input type="date" class="form-control" id="input-1" name="DateSigned" placeholder="Date Signed" required>
