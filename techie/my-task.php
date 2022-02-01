@@ -66,8 +66,7 @@ include("../db/db.php");
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                             papdailysales.BuildingCode from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
                                              techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){

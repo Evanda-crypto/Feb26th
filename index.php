@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head><title>KONNECT CMS</title>
+  <head><title>KONNECT PANEL CMS</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -73,7 +73,7 @@
             <li class="nav-item"> <a style="color: black;" href="teamleaders/techie/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
             <li class="nav-item"> <a style="color: black;" href="techie/login.php" class="navbar-brand">INSTALLATION </a></li>
             <li class="nav-item"> <a style="color: black;" href="sales/login.php"class="navbar-brand">SALES</a></li>   
-           <!-- <li class="nav-item"> <a style="color: black;" href="users/action.php"class="navbar-brand">image</a></li>
+           <!-- <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">image</a></li>
             <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">test</a></li> 
             <li class="nav-item"> <a style="color: black;" href="users/table.php"class="navbar-brand">test</a></li> -->                                                                                                                                                                                                                                                    
 </div>
@@ -112,13 +112,14 @@
 <!-- Page Content -->
 <section class="py-5">
     <div class="container">
-         <h1 class="font-weight-light">Objectives</h1>
-        <p class="lead">Our main obective is to ensure provision of affordable Internet Services to our customers.</p>
-        <p class="lead"></p>
+         <h1 class="font-weight-light">Objective</h1>
+        <p class="lead">To ensure efficiency in data collection,recording & presentation.</p>
+        <h1 class="font-weight-light">Mission</h1>
+        <p class="lead">Provision of affordable unlimited internet services to our customers.</p>
     </div>
 </section>
   <div class="footer">
-  <p>&copy; Konnect 2022</p>
+  <p>&copy; Konnect <?php echo date('Y')?></p>
    </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

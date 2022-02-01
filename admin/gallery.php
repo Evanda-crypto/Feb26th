@@ -247,20 +247,9 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  </tr>
                   <?php
 
-include "../db/db.php"; // Using database connection file here
-
-$records = mysqli_query($connection,"SELECT  papinstalled.Image,papinstalled.ClientID,papinstalled.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled from papinstalled join techieteams on papinstalled.Team_ID=techieteams.Team_ID"); // fetch data from database
+$records = mysqli_query($connection,"SELECT  papinstalled.Image,papinstalled.ClientID,papinstalled.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled from papinstalled join techieteams on papinstalled.Team_ID=techieteams.Team_ID order by DateInstalled asc"); // fetch data from database
 
 while($data = mysqli_fetch_array($records))
 {
@@ -273,7 +262,6 @@ while($data = mysqli_fetch_array($records))
     <td><?php echo $data['Mac']; ?></td>
     <td><?php echo $data['DateInstalled']; ?></td>
     <td><a target="_self" href="img-view.php?clientid=<?php echo $data['ClientID']; ?>"><img id="myImg" alt="<?php echo $data['Mac']?>" src="data:Image/jpg;charset=utf8;base64,<?php echo base64_encode($data['Image']); ?>"  width="200" height="100" /></a></td>
-  </tr>	
 <?php
 }
 ?>

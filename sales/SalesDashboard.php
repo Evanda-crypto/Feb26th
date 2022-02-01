@@ -3,20 +3,6 @@
 include("../db/db.php");
 include_once("session.php");
 ?>
-<?php
-                                  
-if (!$connection) {
- echo "Problem in database connection! Contact administrator!" . mysqli_error();
-     }else{
- $sql ="SELECT DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
-$result = mysqli_query($connection,$sql);
-$chart_data="";
-                                           
-while ($row = mysqli_fetch_array($result)) { 
- $Date[]  = $row['DateSigned']  ;
- $sales[] = $row['sales'];
-   }
-   }?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -313,7 +299,20 @@ while ($row = mysqli_fetch_array($result)) {
               </div>
              </div>
            </div>
-           <div class="card-body">
+           <div class="card-body"><?php
+                                  
+if (!$connection) {
+ echo "Problem in database connection! Contact administrator!" . mysqli_error();
+     }else{
+ $sql ="SELECT DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+$result = mysqli_query($connection,$sql);
+$chart_data="";
+                                           
+while ($row = mysqli_fetch_assoc($result)) { 
+ $Date[]  = $row['DateSigned']  ;
+ $sales[] = $row['sales'];
+   }
+   }?>
 		     <div class="chart-container-2">
                <canvas id="chart2"></canvas>
 			  </div>
@@ -336,8 +335,7 @@ while ($row = mysqli_fetch_array($result)) {
                    <td>$1802</td>
                    <td>+15%</td>
                  </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-3 mr-2"></i>Other</td>
+                 <tr>                   <td><i class="fa fa-circle text-light-3 mr-2"></i>Other</td>
                    <td>$1105</td>
                    <td>+5%</td>
                  </tr>
@@ -590,42 +588,6 @@ while ($row = mysqli_fetch_array($result)) {
 
      }
     });  
-  
-  
-  // chart 2
-
-  var ctx = document.getElementById("chart2").getContext('2d');
-    var myChart = new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ["Direct", "Affiliate", "E-mail", "Other"],
-        datasets: [{
-          backgroundColor: [
-            "#ffffff",
-            "rgba(255, 255, 255, 0.70)",
-            "rgba(255, 255, 255, 0.50)",
-            "rgba(255, 255, 255, 0.20)"
-          ],
-          data: [5856, 2602, 1802, 1105],
-          borderWidth: [0, 0, 0, 0]
-        }]
-      },
-    options: {
-      maintainAspectRatio: false,
-       legend: {
-       position :"bottom",	
-       display: false,
-          labels: {
-          fontColor: '#ddd',  
-          boxWidth:15
-         }
-      }
-      ,
-      tooltips: {
-        displayColors:false
-      }
-       }
-    });
   
   </script>
 </body>

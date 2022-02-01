@@ -108,7 +108,7 @@ include_once("session.php");
 
       <li>
         <a href="list-of-teamleaders.php">
-          <i class="fa fa-eye"></i> <span>Change TeamLeaders</span>
+          <i class="fa fa-eye"></i> <span>View Teamleaders</span>
         </a>
       </li>
 
@@ -145,8 +145,8 @@ include_once("session.php");
       </li>
 
     <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
+        <a href="list-of-teamleaders.php">
+          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>-->
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
@@ -248,15 +248,6 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                    <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                    </tr>
                     <?php
                         $query  = "Select * from teamleaders";
                         $result  = mysqli_query($connection, $query);
@@ -279,8 +270,6 @@ include_once("session.php");
                                         <a href="#?teamleaderid=<?php echo $row['ID']; ?>"><i class="fas fa-edit"></i></a>
                                         <a href="deleteteamleader.php?teamleaderid=<?php echo $row['ID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['FIRST_NAME']; ?> <?php  echo $row['LAST_NAME']; ?> from Teamleaders?')"><i class="fas fa-trash"></i></a>
                                     </th>
-
-                                </tr>
                         <?php
 
                             }

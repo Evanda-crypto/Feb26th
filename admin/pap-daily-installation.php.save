@@ -248,7 +248,45 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-<?php
+                    <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  </tr>
+                    <?php
+
+                     $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+                     FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null ORDER BY papinstalled.DateInstalled ASC";
+                    $result=mysqli_query($connection,$sql);
+                     if($result){
+                      while($row=mysqli_fetch_assoc($result)){
+                      $cid=$row['ClientID'];
+                      $teamid=$row['Team_ID'];
+                      $t1=$row['Techie_1'];
+                      $t2=$row['Techie_2'];
+                      $mac=$row['Mac'];
+                      $date=$row['DateInstalled'];
+                                        
+
+                      echo ' <tr>
+                      <td>'.$cid.'</td>
+                      <td>'.$teamid.'</td>
+                      <td>'.$t1.'</td>
+                      <td>'.$t2.'</td>
+                      <td>'.$mac.'</td>
+                      <td>'.$date.'</td> 
+                      <td>
+                      <button class="btn-info" ><a href="turnedon.php?clientid='.$cid.'" class="text-bold">Turn On</a></button>
+                      </td> 
+                      </tr>';
+
+                                      }
+                                      } 
+                                      ?><?php
     
     $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
     FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null ORDER BY papinstalled.DateInstalled ASC";

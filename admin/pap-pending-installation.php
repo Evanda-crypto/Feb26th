@@ -247,38 +247,22 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+<?php
+    
+    $sql="SELECT papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
+$result=$connection->query($sql);
+while($row=$result->fetch_array()){
+  ?>
+  <tr>
+    <td><?php echo $row['ClientName']?></td>
+    <td><?php echo $row['ClientContact']?></td>
+    <td><?php echo $row['BuildingName']?></td>
+    <td><?php echo $row['BuildingCode']?></td>
+    <td><?php echo $row['Region']?></td>
+    <td><?php echo $row['DateSigned']?></td>
 </tr>
-                    <?php
-
-$sql="SELECT papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
-$result=mysqli_query($connection,$sql);
-if($result){
-while($row=mysqli_fetch_assoc($result)){
-$cname=$row['ClientName'];
-$contact=$row['ClientContact'];
-$bname=$row['BuildingName'];
-$bcode=$row['BuildingCode'];
-$reg=$row['Region'];
-$dsign=$row['DateSigned'];
-
-echo ' <tr>
-<td>'.$bname.'</td>
-<td>'.$bcode.'</td>
-<td>'.$reg.'</td>
-<td>'.$cname.'</td>
-<td>'.$contact.'</td>
-<td>'.$dsign.'</td>
-</tr>';
-}}
-?>
-                    
+<?php } ?>
+            
                   </tbody>
                 </table>
             </div>

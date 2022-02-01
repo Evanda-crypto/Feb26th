@@ -197,24 +197,15 @@ $(document).ready(function(){
            </div>
            <div class="form-group">
             <label for="input-1">Building Name</label>
-            <input type="text" class="form-control" id="input-1" name="Buildingname" placeholder="Building Name" required>
+            <input type="text" class="form-control" id="bname" name="Buildingname"onkeyup="GetDetail(this.value)"  placeholder="Building Name" required>
            </div>
            <div class="form-group">
             <label for="input-1">Building Code</label>
-            <input type="text" class="form-control" id="input-1" name="BuildingCode" placeholder="Building Code" required>
+            <input type="text" class="form-control" id="bcode" name="BuildingCode" placeholder="Building Code" readonly>
            </div>
-           <div class="form-group">
+            <div class="form-group">
             <label for="input-1">Region</label>
-            <select type="text" class="form-control" id="input-1" name="Region" placeholder="Region" required>
-              <option value="" disabled selected> Select Region</option>
-              <option value="G44">G44</option>
-              <option value="G45S">G45S</option>
-              <option value="G45N">G45N</option>
-              <option value="ZMM">ZMM</option>
-              <option value="R&M">R&M</option>
-              <option value="JCR">JCR</option>
-              <option value="KWST">KWST</option>
-            </select>
+            <input type="text" class="form-control" id="region" name="Region" placeholder="Region" readonly>
            </div>
            <div class="form-group">
             <label for="input-1">Floor</label>
@@ -458,6 +449,57 @@ $(document).ready(function(){
   
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
+
+
+<script>
+
+// onkeyup event will occur when the user
+// release the key and calls the function
+// assigned to this event
+function GetDetail(str) {
+  if (str.length == 0) {
+    document.getElementById("bcode").value = "";
+    document.getElementById("region").value = "";
+    return;
+  }
+  else {
+
+    // Creates a new XMLHttpRequest object
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+
+      // Defines a function to be called when
+      // the readyState property changes
+      if (this.readyState == 4 &&
+          this.status == 200) {
+        
+        // Typical action to be performed
+        // when the document is ready
+        var myObj = JSON.parse(this.responseText);
+
+        // Returns the response data as a
+        // string and store this array in
+        // a variable assign the value
+        // received to first name input field
+        
+        document.getElementById
+          ("bcode").value = myObj[0];
+        
+        // Assign the value received to
+        // last name input field
+        document.getElementById(
+          "region").value = myObj[1];
+      }
+    };
+
+    // xhttp.open("GET", "filename", true);
+    xmlhttp.open("GET", "retrieve.php?bname=" + str, true);
+    
+    // Sends the request to the server
+    xmlhttp.send();
+  }
+}
+</script>
   <script>
  var todayDate= new Date();
  var month= todayDate.getMonth() + 1;

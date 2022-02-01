@@ -32,11 +32,13 @@ else
          $stmt->bind_param("ssssssss",$FIRST_NAME,$LAST_NAME,$EMAIL,$DEPARTMENT,$RESIDENCE,$hashpass,$GENDER,$AGE);
          $stmt->execute();
          echo "<script>alert('Registration successfull.Now you can login');</script>";
+          echo '<script>window.location.href="../index.php";</script>';
          $stmt->close();
          $connection->close();
     }
     else{
         echo "<script>alert('No matching records.Ensure email and department are correct.');</script>";
+         echo '<script>window.location.href="register.php";</script>';
     }
 }  
 }
@@ -141,9 +143,9 @@ else
 			   </div>
 			  </div>
         <div class="form-group">
-			  <label for="exampleInputName" class="sr-only">Residence</label>
+			  <label for="exampleInputName" class="sr-only">Community</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="res" placeholder="Residence" required>
+				  <input type="text" id="exampleInputName" class="form-control input-shadow" name="res" placeholder="Community" required>
 				  <div class="form-control-position">
 				
 				  </div>

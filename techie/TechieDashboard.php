@@ -8,7 +8,7 @@ include("../db/db.php");
                                   if (!$connection) {
                                    echo "Problem in database connection! Contact administrator!" . mysqli_error();
                                        }else{
-                                   $sql ="SELECT DateInstalled,COUNT(DateInstalled) as pap FROM papinstalled WHERE Team_ID='".$_SESSION['TeamID']."' GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND DateInstalled >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+                                   $sql ="SELECT DateInstalled,COUNT(DateInstalled) as pap FROM papinstalled WHERE Team_ID='".$_SESSION['TeamID']."' GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND DateInstalled >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateInstalled Asc";
                                   $result = mysqli_query($connection,$sql);
                                   $chart_data="";
                                                                              
@@ -78,8 +78,7 @@ include("../db/db.php");
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                             papdailysales.BuildingCode from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
                                              techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
@@ -202,7 +201,13 @@ include("../db/db.php");
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
-                  <h5 class="text-white mb-0">0<span class="float-right"><i class="fa fa-wifi"></i></span></h5>
+                  <h5 class="text-white mb-0"><?php
+                                             $query="SELECT COUNT(*) as installed from papinstalled where DATE(DateInstalled) = CURDATE() and Team_ID='".$_SESSION['TeamID']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['installed']."<br><br>";
+                                              }
+                                              ?> <span class="float-right"><i class="fa fa-wifi"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
@@ -212,8 +217,7 @@ include("../db/db.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light" ><a href="my-task.php" target="_blank">
                 <div class="card-body">
                   <h5 class="text-white mb-0"> <?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                             papdailysales.BuildingCode from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
                                              techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){

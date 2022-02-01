@@ -7,7 +7,7 @@ $Password= $_POST['Password'];
 $Department= $_POST['Department'];
 
 if($connection){
-    $stmt= $connection->prepare("select * from teamleaders where Email= ?");
+    $stmt= $connection->prepare("select * from teamleaders where EMAIL= ?");
     $stmt->bind_param("s",$EMAIL);
     $stmt->execute();
     $stmt_result= $stmt->get_result();

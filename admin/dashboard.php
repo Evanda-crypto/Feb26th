@@ -33,7 +33,8 @@ include("session.php");
                                      
                }
                  }
-            #Turned On Graph                      
+            #Turned On Graph         
+             
                                   if (!$connection) {
                                       # code...
                                      echo "Problem in database connection! Contact administrator!" . mysqli_error();
@@ -71,12 +72,22 @@ include("session.php");
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
+<meta http-equiv="refresh" content="60">
   <meta name="author" content=""/>
   <title>Admin | Dashboard</title>
   <!-- loader--
    <link href="../assets/css/pace.min.css" rel="stylesheet"/>
  <!-- <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
    <!--Vector CSS -->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
@@ -307,7 +318,7 @@ include("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(*)as pending,papinstalled.ClientID,papdailysales.ClientID from papdailysales LEFT JOIN papinstalled on papinstalled.ClientID=papdailysales.ClientID WHERE papinstalled.ClientID is null";
+                                             $query="SELECT COUNT(*)as pending from papdailysales LEFT JOIN papinstalled on papinstalled.ClientID=papdailysales.ClientID WHERE papinstalled.ClientID is null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -426,7 +437,7 @@ include("session.php");
 	 </div>
      <div class="col-12 col-lg-4 col-xl-4">
         <div class="card">
-           <div class="card-header">Buildings Per Region
+           <div class="card-header"><center>Buildings Per Region</center>
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
@@ -444,43 +455,43 @@ include("session.php");
            </div>
            
            <div class="card-body">
-		     <div class="chart-container-2">
-               <canvas id="chart2"></canvas>
-			  </div>
-           </div>
-           <div class="table-responsive">
-             <table class="table align-items-center">
-               <tbody>
-                 <tr>
-                   <td><i class="fa fa-circle text-white mr-2"></i> <?php echo json_encode($Region[0]); ?></td>
-                   <td><?php echo json_encode($Build[0]); ?></td>
-                   <td></td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-1 mr-2"></i><?php echo json_encode($Region[1]); ?></td>
-                   <td><?php echo json_encode($Build[1]); ?></td>
-                   <td></td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-2 mr-2"></i><?php echo json_encode($Region[2]); ?></td>
-                   <td><?php echo json_encode($Build[2]); ?></td>
-                   <td></td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-3 mr-2"></i><?php echo json_encode($Region[3]); ?></td>
-                   <td><?php echo json_encode($Build[3]); ?></td>
-                   <td></td>
-                 </tr>
-                 <tr>
-                   <td><i class="fa fa-circle text-light-3 mr-2"></i><?php echo json_encode($Region[4]); ?></td>
-                   <td><?php echo json_encode($Build[4]); ?></td>
-                   <td></td>
-                 </tr>
-               </tbody>
-             </table>
+ <div class="table-responsive">
+		     <table class="table" id="dtBasicExample">
+                  <thead>
+                    <tr>
+                    <th>No</th>
+                     <th>Region</th>
+                     <th>Buildings</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php
+                        $query  = "SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
+                        $result  = mysqli_query($connection, $query);
+
+                        $num_rows  = mysqli_num_rows($result);
+
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <th><?php echo $row['Region']; ?></th>
+                                    <th><?php echo $row['buildings']; ?></th>
+                                </tr>
+                        <?php
+
+                            }
+                        }
+                        ?>
+ </tbody>
+</table>
            </div>
          </div>
      </div>
+</div>
 	</div><!--End Row--
 	
 	<div class="row">
@@ -611,7 +622,6 @@ include("session.php");
   </div><!--End wrapper-->
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
@@ -624,11 +634,12 @@ include("session.php");
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
   <!-- Chart js -->
-  
-  <script src="../assets/plugins/Chart.js/Chart.min.js"></script>
- 
-  <!-- Index js -->
-  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script>
+ $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+</script>
 
 <script>
    var ctx = document.getElementById('chart1').getContext('2d');
@@ -700,40 +711,6 @@ include("session.php");
 			});  
 		
 		
-    // chart 2
-
-		var ctx = document.getElementById("chart2").getContext('2d');
-			var myChart = new Chart(ctx, {
-				type: 'doughnut',
-				data: {
-					labels: <?php echo json_encode($Region); ?>,
-					datasets: [{
-						backgroundColor: [
-							"#ffffff",
-							"rgba(255, 255, 255, 0.70)",
-							"rgba(255, 255, 255, 0.50)",
-							"rgba(255, 255, 255, 0.20)"
-						],
-						data: <?php echo json_encode($Build); ?>,
-						borderWidth: [0, 0, 0, 0]
-					}]
-				},
-			options: {
-				maintainAspectRatio: false,
-			   legend: {
-				 position :"bottom",	
-				 display: false,
-				    labels: {
-					  fontColor: '#ddd',  
-					  boxWidth:15
-				   }
-				}
-				,
-				tooltips: {
-				  displayColors:false
-				}
-			   }
-			});
 		
 </script>
 </body>

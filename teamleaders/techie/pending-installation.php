@@ -98,7 +98,7 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending,papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
                                              WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
@@ -214,16 +214,7 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                    <?php
+ <?php
     $query=mysqli_query($connection,"SELECT DISTINCT papdailysales.ClientID,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.ClientAvailability,papdailysales.Region,papdailysales.BuildingName,papdailysales.BuildingCode from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
     WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'");
     while($row=mysqli_fetch_assoc($query)){
@@ -249,7 +240,6 @@ include_once("session.php");
       </tr>';
     }
     ?>
-                    </tr>
                   </tbody>
                 </table>
             </div>

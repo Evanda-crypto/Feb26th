@@ -260,53 +260,28 @@ include_once("session.php");
                   </tr>
                   </thead>
                   <tbody>
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                    <?php
-
-$sql="SELECT  turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
+<?php
+    
+    $sql="SELECT  turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 ELSE CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
-end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE turnedonpap.MacAddress is not null order by DateTurnedOn Desc";
-$result=mysqli_query($connection,$sql);
-if($result){
-while($row=mysqli_fetch_assoc($result)){
-$code=$row['papcode'];
-$bname=$row['BuildingName'];
-$bcode=$row['BuildingCode'];
-$reg=$row['Region'];
-$champ=$row['ChampName'];
-$cname=$row['ClientName'];
-$contact=$row['ClientContact'];
-$mac=$row['Mac'];
-$status=$row['PapStatus'];
-$on=$row['DateTurnedOn'];
-
-echo ' <tr>
-<td>'.$code.'</td>
-<td>'.$bname.'</td>
-<td>'.$bcode.'</td>
-<td>'.$reg.'</td>
-<td>'.$champ.'</td>
-<td>'.$cname.'</td>
-<td>'.$contact.'</td>
-<td>'.$mac.'</td>
-<td>'.$status.'</td>
-<td>'.$on.'</td>
-</tr>';
-
-}
- }
-?>
+end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
+$result=$connection->query($sql);
+while($row=$result->fetch_array()){
+  ?>
+  <tr>
+    <td><?php echo $row['papcode']?></td>
+    <td><?php echo $row['BuildingName']?></td>
+    <td><?php echo $row['BuildingCode']?></td>
+    <td><?php echo $row['Region']?></td>
+    <td><?php echo $row['ChampName']?></td>
+    <td><?php echo $row['ClientName']?></td>
+    <td><?php echo $row['ClientContact']?></td>
+    <td><?php echo $row['Mac']?></td>
+    <td><?php echo $row['PapStatus']?></td>
+    <td><?php echo $row['DateTurnedOn']?></td>
+</tr>
+<?php } ?>
+          
 </tbody>
 </table>
 </div>

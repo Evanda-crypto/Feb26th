@@ -193,40 +193,21 @@ include_once("session.php");
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <?php
-
+     <?php
+    
 $sql="SELECT * from building order by DateTurnedOn Desc";
-$result=mysqli_query($connection,$sql);
-if($result){
-while($row=mysqli_fetch_assoc($result)){
-;
-$id=$row['ID'];
-$bname=$row['BuildingName'];
-$bcode=$row['BuildingCode'];
-$reg=$row['Region'];
-$bstatus=$row['BuildingStatus'];
-$floors=$row['Floors'];
-
-echo ' <tr>
-<td>'.$id.'</td>
-<td>'.$bname.'</td>
-<td>'.$bcode.'</td>
-<td>'.$reg.'</td>
-<td>'.$bstatus.'</td>
-<td>'.$floors.'</td>
-</tr>';
-
-}
- }
-?>
+$result=$connection->query($sql);
+while($row=$result->fetch_array()){
+  ?>
+  <tr>
+    <td><?php echo $row['ID']?></td>
+    <td><?php echo $row['BuildingName']?></td>
+    <td><?php echo $row['BuildingCode']?></td>
+    <td><?php echo $row['Region']?></td>
+    <td><?php echo $row['BuildingStatus']?></td>
+    <td><?php echo $row['Floors']?></td>
+</tr>
+<?php } ?>
   </tbody>
 </table>
             </div>

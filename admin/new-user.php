@@ -309,38 +309,20 @@ else
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <?php
-
-                          $sql="select * from empemails order by ID ASC";
-                          $result=mysqli_query($connection,$sql);
-                          if($result){
-                          while($row=mysqli_fetch_assoc($result)){
-                            $id=$row['ID'];   
-                          $fname=$row['FirstName'];
-                          $lname=$row['LastName'];
-                          $email=$row['Email'];
-                          $dpt=$row['Department'];
-                          
-
-                          echo ' <tr>
-                          <td>'.$id.'</td>
-                          <td>'.$fname.'</td>
-                          <td>'.$lname.'</td>
-                          <td>'.$email.'</td>
-                          <td>'.$dpt.'</td>
-                          
-                          </tr>';
-
-                       }
-                         }
-                       ?>
-                  </tr>
+   <?php
+    
+    $sql="select * from empemails order by ID ASC";
+    $result=$connection->query($sql);
+    while($row=$result->fetch_array()){
+      ?>
+      <tr>
+        <td><?php echo $row['ID']?></td>
+        <td><?php echo $row['FirstName']?></td>
+        <td><?php echo $row['LastName']?></td>
+        <td><?php echo $row['Email']?></td>
+        <td><?php echo $row['Department']?></td>
+    </tr>
+    <?php } ?>
                 </tbody>
               </table>
             </div>

@@ -247,40 +247,23 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    
-                    <?php
-
-                    $sql="SELECT employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,teamleaders.Email from employees left JOIN teamleaders on employees.EMAIL=teamleaders.Email WHERE teamleaders.EMAIL is null order by ID ASC";
-                    $result=mysqli_query($connection,$sql);
-                    if($result){
-                     while($row=mysqli_fetch_assoc($result)){
-                    $id=$row['ID'];
-                    $fname=$row['FIRST_NAME'];
-                    $lname=$row['LAST_NAME'];
-                    $email=$row['EMAIL'];
-                    $dpt=$row['DEPARTMENT'];
-
-                    echo ' <tr>
-                    <th scope="row">'.$id.'</th>
-                    <td>'.$fname.'</td>
-                    <td>'.$lname.'</td>
-                    <td>'.$email.'</td>
-                    <td>'.$dpt.'</td>
-                    <td>
-                    <button class="btn-info" name="modalbutton" onclick="openModal();" ><a href="new-teamleader.php?teamleaderid='.$id.'" class="text-bold">Add Teamleader</a></button>
-                    </td>
-                    </tr>';
-
-                    }
-                    }?>
-                    <tr>
-                    <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  </tr>
+    <?php
+    
+    $sql="SELECT employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,teamleaders.Email from employees left JOIN teamleaders on employees.EMAIL=teamleaders.Email WHERE teamleaders.EMAIL is null order by ID ASC";
+    $result=$connection->query($sql);
+    while($row=$result->fetch_array()){
+      ?>
+      <tr>
+        <td><?php echo $row['ID']?></td>
+        <td><?php echo $row['FIRST_NAME']?></td>
+        <td><?php echo $row['LAST_NAME']?></td>
+        <td><?php echo $row['EMAIL']?></td>
+        <td><?php echo $row['DEPARTMENT']?></td>
+        <td>
+         <button class="btn-info"> <a href="new-teamleader.php?teamleaderid=<?php echo $row['ID']; ?>"><i class="fa fa-user-plus">Add Teamleader</i></a></button>
+        </td>
+    </tr>
+    <?php } ?>
                   </tbody>
                 </table>
             </div>

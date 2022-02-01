@@ -253,21 +253,8 @@ include_once("session.php");
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                    <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                    </tr>
-                    <?php
+
+ <?php
                         $query  = "SELECT * from papdailysales WHERE `Datesigned` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)";
                         $result  = mysqli_query($connection, $query);
 
@@ -616,66 +603,5 @@ $('.dataTables_length').addClass('bs-select');
 });
     </script>
 </body>
-<script>
-  var ctx = document.getElementById('chart1').getContext('2d');
-		
-    var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: <?php echo json_encode($Date); ?>,
-        datasets: [{
-          label: 'New Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: '#fff',
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 3
-        }, {
-          label: 'Old Visitor',
-          data: <?php echo json_encode($number); ?>,
-          backgroundColor: "rgba(255, 255, 255, 0.25)",
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 1
-        }]
-      },
-    options: {
-      maintainAspectRatio: false,
-      legend: {
-        display: false,
-        labels: {
-        fontColor: '#ddd',  
-        boxWidth:40
-        }
-      },
-      tooltips: {
-        displayColors:false
-      },	
-      scales: {
-        xAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }],
-         yAxes: [{
-        ticks: {
-          beginAtZero:true,
-          fontColor: '#ddd'
-        },
-        gridLines: {
-          display: true ,
-          color: "rgba(221, 221, 221, 0.08)"
-        },
-        }]
-       }
-
-     }
-    });  
-</script>
 
 </html>

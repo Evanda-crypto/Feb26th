@@ -26,6 +26,11 @@ $Region = $_POST['region'];
 $techie1 = $row['Techie_1'];
 $techie2 = $row['Techie_2'];
 
+ini_set('upload_max_filesize', '60M');
+ini_set('post_max_size', '70M');
+ini_set('max_input_time', 300);
+ini_set('max_execution_time', 300);
+
 $fileName = basename($_FILES["image"]["name"]); 
           $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
            
@@ -47,15 +52,18 @@ else
   $stmt_result= $stmt->get_result();
   if($stmt_result->num_rows>0){
     echo "<script>alert('The Macaddress Already Exists');</script>";
+    echo '<script>window.location.href="my-task.php";</script>';
   }
   else{
 
      // Insert image content into database 
      $insert = $connection->query("INSERT into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region,Image) VALUES ('$Team_ID','$ClientID','$MacAddress','$SerialNumber','$DateInstalled','$Region','$imgContent')"); 
      if($insert){ 
-      header('location: my-task.php'); 
+     echo '<script>alert("Submitted!")</script>';
+      echo '<script>window.location.href="my-task.php";</script>';
   }else{ 
     echo "<script>alert('UnSuccessfull.');</script>"; 
+echo '<script>window.location.href="my-task.php";</script>';
   }  
     
   }
