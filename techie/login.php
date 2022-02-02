@@ -7,7 +7,7 @@ $Password= $_POST['Password'];
 $Department= $_POST['Department'];
 
 if($connection){
-    $stmt= $connection->prepare("select employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,employees.RESIDENCE,employees.PASSWORD,employees.AGE,employees.GENDER,techieteams.Team_ID from employees LEFT join techieteams ON techieteams.Email1=employees.EMAIL OR techieteams.Email2=employees.EMAIL WHERE techieteams.Team_ID is not null AND Email= ?");
+    $stmt= $connection->prepare("select employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,employees.PASSWORD,techieteams.Team_ID from employees LEFT join techieteams ON techieteams.Email1=employees.EMAIL OR techieteams.Email2=employees.EMAIL WHERE techieteams.Team_ID is not null AND Email= ?");
     $stmt->bind_param("s",$EMAIL);
     $stmt->execute();
     $stmt_result= $stmt->get_result();
@@ -130,7 +130,7 @@ else{
 		   </div>
 		  </div>
 		  <div class="card-footer text-center py-3">
-		    <p class="text-warning mb-0"><a href="../users/register.php">Register</a></p>
+		    <p class="text-warning mb-0"><a href="../index.php">Back</a></p>
 		  </div>
 	     </div>
     

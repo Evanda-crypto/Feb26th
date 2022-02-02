@@ -104,11 +104,11 @@ $(document).ready(function(){
         </a>
       </li>
 
-     <!-- <li>
+      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+      </li>
 
      <!-- <li>
         <a href="login.php" target="_blank">
@@ -285,7 +285,7 @@ $(document).ready(function(){
             <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note" required>
            </div>
            <div>
-       <center> <label><input type="radio" name="colorRadio" value="red"> Personal</label>
+       <center> <label><input type="radio" name="colorRadio" value="red"> Residential</label>
         <label><input type="radio" name="colorRadio" value="green"> Business</label></center>
     </div>
        <div class="red box">

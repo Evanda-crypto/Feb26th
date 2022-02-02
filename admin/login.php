@@ -7,7 +7,7 @@ if(isset($_POST['submit'])){
 
 
 if($connection){
-    $stmt= $connection->prepare("select * from admin where Username= ?");
+    $stmt= $connection->prepare("SELECT * from admin where Email= ?");
     $stmt->bind_param("s",$Username);
     $stmt->execute();
     $stmt_result= $stmt->get_result();

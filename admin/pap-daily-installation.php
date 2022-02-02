@@ -263,7 +263,7 @@ while($row=$result->fetch_array()){
     <td><?php echo $row['Mac']?></td>
     <td><?php echo $row['DateInstalled']?></td>
     <td>
-    <button class="btn-info" ><a href="turnedon.php?clientid='.$cid.'" class="text-bold">Turn On</a></button>
+    <a href="turnedon.php?clientid=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i>Turn On</a>
     </td>
 </tr>
 <?php } ?>

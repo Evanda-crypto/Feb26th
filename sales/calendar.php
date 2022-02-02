@@ -84,11 +84,11 @@ include_once("session.php");
         </a>
       </li>
 
-     <!-- <li>
+      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+</li>
 
      <!-- <li>
         <a href="login.php" target="_blank">

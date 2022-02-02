@@ -1,40 +1,34 @@
-
 <?php
 include("../db/db.php");
 if(isset($_POST['submit'])){
-session_start();
-$EMAIL= $_POST['Email'];
-$Password= $_POST['Password'];
+   session_start();
+   $Username= $_POST['Username'];
+   $Password= $_POST['Password'];
+
 
 if($connection){
-    $stmt= $connection->prepare("select * from employees where EMAIL= ?");
-    $stmt->bind_param("s",$EMAIL);
+    $stmt= $connection->prepare("SELECT * from superadmin where Username= ?");
+    $stmt->bind_param("s",$Username);
     $stmt->execute();
     $stmt_result= $stmt->get_result();
     if($stmt_result->num_rows>0){
         $data= $stmt_result->fetch_assoc();
-        if($data['DEPARTMENT']=="Sales"){
-        if(password_verify($Password, $data['PASSWORD'])){
+        if($data['Password']==$Password){
 
-            $_SESSION['Sales']=$EMAIL;
-            $_SESSION['FName']=$data['FIRST_NAME'];
-            $_SESSION['LName']=$data['LAST_NAME'];
-            header("Location: SalesDashboard.php");
+           $_SESSION['superadmin']=$Username;
+           header("Location: new-user.php");
         }
         else{
-          echo "<script>alert('Wrong Password');</script>";
+            echo "<script>alert('Wrong Password.Please try again.');</script>";
         }
-      }
-      else{
-        echo "<script>alert('No records');</script>";
-      }
     }
     else{
-      echo "<script>alert('No records');</script>";
+        echo "<script>alert('Invalid Details');</script>";
+        
     }
 }
 else{
-  echo " connection failed";
+    echo "<script>alert('Connection failed.');</script>";
 }
 }
 ?>
@@ -46,7 +40,7 @@ else{
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Champs | Login</title>
+  <title>Super | Admin | Login</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
@@ -73,20 +67,18 @@ else{
  <div id="wrapper">
 
  <div class="loader-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
-	<div class="card card-authentication1 mx-auto my-5">
+	<div class="card card-authentication1 mx-auto my-5 ">
 		<div class="card-body">
 		 <div class="card-content p-2">
-		 	<div class="text-center">
-		 		<img src="../assets/login.png" alt="logo icon">
-		 	</div>
+		 	
 		  <div class="card-title text-uppercase text-center py-3"></div>
-		    <form method="POST" autocomplete="off">
+		    <form method="POST">
 			  <div class="form-group">
 			  <label for="exampleInputUsername" class="sr-only">Username</label>
 			   <div class="position-relative has-icon-right">
-				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Email" placeholder="Enter Username">
+				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Username" placeholder="Enter Username">
 				  <div class="form-control-position">
-					  
+					 
 				  </div>
 			   </div>
 			  </div>
@@ -95,7 +87,7 @@ else{
 			   <div class="position-relative has-icon-right">
 				  <input type="password" id="exampleInputPassword" name="Password" class="form-control input-shadow" placeholder="Enter Password">
 				  <div class="form-control-position">
-					 
+					  
 				  </div>
 			   </div>
 			  </div>
@@ -108,13 +100,8 @@ else{
 			 </div>
 			</div>
 			 <button type="submit" name="submit" class="btn btn-light btn-block">Sign In</button>
-
-			 
 			 </form>
 		   </div>
-		  </div>
-		  <div class="card-footer text-center py-3">
-		    <p class="text-warning mb-0"><a href="../index.php">Back</a></p>
 		  </div>
 	     </div>
     

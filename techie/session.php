@@ -2,6 +2,6 @@
 session_start();
 if(!isset($_SESSION['Techie']) && $_SESSION['Techie']==false )
 {
-    header("location: ../index.php");
+    header("location: login.php");
 }
 ?>

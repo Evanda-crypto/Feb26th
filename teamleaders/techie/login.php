@@ -67,7 +67,6 @@ else{
   <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Custom Style-->
   <link href="../../assets/css/app-style.css" rel="stylesheet"/>
-  
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -97,14 +96,14 @@ else{
 				  </div>
 			   </div>
 			  </div>
-              			  <div class="form-group">
+        <div class="form-group">
 			  <label for="exampleInputUsername" class="sr-only">Department</label>
 			   <div class="position-relative has-icon-right">
 				  <select type="text" id="input-1" class="form-control input-shadow" name="Department">
                   <option value="" disabled selected>Select Department</option>
                   <option value="Sales">Sales</option>
                    <option value="Techie">Techie</option>
-                  </select>
+          </select>
 			   </div>
 			  </div>
 			  <div class="form-group">

@@ -3,7 +3,7 @@ include_once("session.php");
 include("../db/db.php");
 $id=$_GET['clientid'];
 
-$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
+$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.AptLayout,papdailysales.Floor,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
 papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
 techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
 $result=mysqli_query($connection,$sql);
@@ -14,6 +14,8 @@ $date=$row['Date'];
 $reg=$row['Region'];
 $t1=$row['Techie_1'];
 $t2=$row['Techie_2'];
+$floor=$row['Floor'];
+$layout=$row['AptLayout'];
 
 
 if(isset($_POST['submit']) && !empty($_FILES["image"]["name"])) {
@@ -25,6 +27,9 @@ $ClientID = $_POST['ClientID'];
 $Region = $_POST['region'];
 $techie1 = $row['Techie_1'];
 $techie2 = $row['Techie_2'];
+$Floor = $_POST['floor'];
+$Note = $_POST['note'];
+$layout = $_POST['layout'];
 
 ini_set('upload_max_filesize', '60M');
 ini_set('post_max_size', '70M');
@@ -56,9 +61,12 @@ else
   }
   else{
 
-     // Insert image content into database 
-     $insert = $connection->query("INSERT into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region,Image) VALUES ('$Team_ID','$ClientID','$MacAddress','$SerialNumber','$DateInstalled','$Region','$imgContent')"); 
-     if($insert){ 
+     // Insert records into database 
+     $sql="update papdailysales set ClientID=$id,Floor='$Floor',AptLayout='$layout' where ClientID=$id";
+     $result=mysqli_query($connection,$sql);
+     $insert = $connection->query("INSERT into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region,Image,Note,Floor,AptLayout) VALUES ('$Team_ID','$ClientID','$MacAddress','$SerialNumber','$DateInstalled','$Region','$imgContent','$Note','$Floor','$layout')"); 
+    
+     if($insert && $result){ 
      echo '<script>alert("Submitted!")</script>';
       echo '<script>window.location.href="my-task.php";</script>';
   }else{ 
@@ -251,6 +259,14 @@ echo '<script>window.location.href="my-task.php";</script>';
             <input type="text" class="form-control" id="input-1" name="teamid" value="<?php echo $teamid?>" readonly>
            </div>
            <div class="form-group">
+            <label for="input-4">Floor</label>
+            <input type="text" class="form-control" id="input-4" value="<?php echo $floor?>" name="floor" required>
+           </div>
+           <div class="form-group">
+            <label for="input-4">Apt Layout</label>
+            <input type="text" class="form-control" id="input-4" value="<?php echo $layout?>" name="layout" required>
+           </div>
+           <div class="form-group">
             <label for="input-3">MAC Address</label>
             <input type="text" class="form-control" id="input-3" name="macaddress" placeholder="Format:AB-CD-EF-GH-IJ-KL" maxlength="17" required>
            </div>
@@ -269,6 +285,10 @@ echo '<script>window.location.href="my-task.php";</script>';
            <div class="form-group">
             <label for="input-4">Region</label>
             <input type="text" class="form-control" id="input-4" value="<?php echo $reg?>" name="region" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-4">Note</label>
+            <input type="text" class="form-control" id="input-4"  name="note" placeholder="Comments/Suggestion/Observations" required>
            </div>
            <div class="form-group">
             <button type="submit" name="submit"  class="btn btn-light px-5"><i class="icon-check"></i> Submit</button>

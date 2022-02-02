@@ -27,9 +27,9 @@ include("session.php");
                $sql ="SELECT  DateInstalled,COUNT(DateInstalled) as dailyinstallation FROM papinstalled GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
                $result = mysqli_query($connection,$sql);
                $chart_data="";
-                while ($row = mysqli_fetch_array($result)) { 
+                while ($data = mysqli_fetch_array($result)) { 
                 #$Date[]  = $row['DateInstalled']  ;
-                $install[] = $row['dailyinstallation'];
+                $install[] = $data['dailyinstallation'];
                                      
                }
                  }
@@ -42,9 +42,9 @@ include("session.php");
                                            $sql ="SELECT  DateTurnedOn,COUNT(DateTurnedOn) as turnedon FROM turnedonpap GROUP BY DateTurnedOn HAVING COUNT(DateTurnedOn)>1 OR COUNT(DateTurnedOn)=1 AND `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
                                            $result = mysqli_query($connection,$sql);
                                            $chart_data="";
-                                            while ($row = mysqli_fetch_array($result)) { 
+                                            while ($res = mysqli_fetch_array($result)) { 
                                             #$Date[]  = $row['DateTurnedOn']  ;
-                                            $turnedon[] = $row['turnedon'];
+                                            $turnedon[] = $res['turnedon'];
                                                                  
                                            }
                                              }
@@ -622,6 +622,7 @@ include("session.php");
   </div><!--End wrapper-->
 
   <!-- Bootstrap core JavaScript-->
+  
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
@@ -634,6 +635,7 @@ include("session.php");
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
   <!-- Chart js -->
+  <script src="../assets/plugins/Chart.js/Chart.min.js"></script>
   <script>
  $(document).ready(function () {
 $('#dtBasicExample').DataTable();

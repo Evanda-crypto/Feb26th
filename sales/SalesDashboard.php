@@ -12,6 +12,7 @@ include_once("session.php");
   <meta name="description" content=""/>
   <meta name="author" content=""/>
   <title>Sales | Dashboard</title>
+  
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>-->
@@ -31,6 +32,7 @@ include_once("session.php");
   <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="../assets/css/app-style.css" rel="stylesheet"/>
+
   
 </head>
 
@@ -83,11 +85,11 @@ include_once("session.php");
        </a>
      </li>
 
-    <!-- <li>
-       <a href="profile.php">
+    <li>
+       <a href="profile.php" >
          <i class="zmdi zmdi-face"></i> <span>Profile</span>
        </a>
-     </li>-->
+     </li>
 
     <!-- <li>
        <a href="login.php" target="_blank">
@@ -175,7 +177,7 @@ include_once("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Pap Confirmed[Last 1 week] <span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i></span>--></p>
+                  <p class="mb-0 text-white small-font">Pap Signed[Last 1 week] <span class="float-right"><!--<i class="zmdi zmdi-long-arrow-up"></i></span>--></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -345,7 +347,6 @@ while ($row = mysqli_fetch_assoc($result)) {
          </div>-->
      </div>
 	</div><!--End Row-->
-	
 	<div class="row">
 	 <div class="col-12 col-lg-12">
 	 <!--  <div class="card">
@@ -471,7 +472,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         </div>
       </div>
     </footer>
-	<!--End footer-->
+	End footer-->
 	
   <!--start color switcher-->
    <div class="right-sidebar">
@@ -502,7 +503,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <li id="theme10"></li>
         <li id="theme11"></li>
         <li id="theme12"></li>
-		<li id="theme13"></li>
+		    <li id="theme13"></li>
         <li id="theme14"></li>
         <li id="theme15"></li>
       </ul>
