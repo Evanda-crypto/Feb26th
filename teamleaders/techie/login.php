@@ -19,6 +19,7 @@ if($connection){
             $_SESSION['teamleader']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
+           $_SESSION['ID']=$data['ID'];
             $_SESSION['Region']=$data['REGION'];
             header("Location: dashboard.php");
             }
@@ -26,7 +27,9 @@ if($connection){
                 $_SESSION['FName']=$data['FIRST_NAME'];
                 $_SESSION['LName']=$data['LAST_NAME'];
                 $_SESSION['Sales']=$EMAIL;
-                header('Location: ');
+               $_SESSION['ID']=$data['ID'];
+                 $_SESSION['Region']=$data['REGION'];
+                header('Location: ../sales/pap-daily-sales.php ');
             }
             else {
                 echo "<script>alert('Please provide correct credentials!!');</script>";

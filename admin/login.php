@@ -1,34 +1,39 @@
 <?php
 include("../db/db.php");
 if(isset($_POST['submit'])){
-   session_start();
-   $Username= $_POST['Username'];
-   $Password= $_POST['Password'];
-
+session_start();
+$EMAIL= $_POST['Username'];
+$Password= $_POST['Password'];
 
 if($connection){
-    $stmt= $connection->prepare("SELECT * from admin where Email= ?");
-    $stmt->bind_param("s",$Username);
+    $stmt= $connection->prepare("select * from employees where EMAIL= ?");
+    $stmt->bind_param("s",$EMAIL);
     $stmt->execute();
     $stmt_result= $stmt->get_result();
     if($stmt_result->num_rows>0){
         $data= $stmt_result->fetch_assoc();
-        if($data['Password']==$Password){
+        if($data['DEPARTMENT']=="Nats" || $data['DEPARTMENT']=="Executive" || $data['DEPARTMENT']=="Maton"){
+        if(password_verify($Password, $data['PASSWORD'])){
 
-           $_SESSION['Admin']=$Username;
-           header("Location: dashboard.php");
+            $_SESSION['Admin']=$EMAIL;
+            $_SESSION['FName']=$data['FIRST_NAME'];
+            $_SESSION['LName']=$data['LAST_NAME'];
+            header("Location: dashboard.php");
         }
         else{
-            echo "<script>alert('Wrong Password.Please try again.');</script>";
+          echo "<script>alert('Wrong Password');</script>";
         }
+      }
+      else{
+        echo "<script>alert('No records');</script>";
+      }
     }
     else{
-        echo "<script>alert('Invalid Details');</script>";
-        
+      echo "<script>alert('No records');</script>";
     }
 }
 else{
-    echo "<script>alert('Connection failed.');</script>";
+  echo " connection failed";
 }
 }
 ?>

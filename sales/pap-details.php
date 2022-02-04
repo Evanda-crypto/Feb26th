@@ -87,7 +87,7 @@ $(document).ready(function(){
 
       <li>
         <a href="pap-details.php">
-          <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
+          <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</spsn>
         </a>
       </li>
 
@@ -184,35 +184,35 @@ $(document).ready(function(){
       <div class="col-lg-6">
          <div class="card">
            <div class="card-body">
-           <div class="card-title"><center><h5> NEW PAP SIGNED</h5></center></div>
+           <div class="card-title"><center><h5> NEW PAP CLIENT</h5></center></div>
            <hr>
             <form method="POST" action="action.php">
            <div class="form-group">
-            <label for="input-1">Date Signed</label>
+            <label for="input-1">Date Signed<i style="color:red;">*</i></label></label>
             <input type="date" class="form-control" id="input-1" name="DateSigned" placeholder="Date Signed" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Champs</label>
+            <label for="input-1">Champs<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?> <?php echo $_SESSION['LName'];?>" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Building Name</label>
+            <label for="input-1">Building Name<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="bname" name="Buildingname"onkeyup="GetDetail(this.value)"  placeholder="Building Name" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Building Code</label>
-            <input type="text" class="form-control" id="bcode" name="BuildingCode" placeholder="Building Code" readonly>
+            <label for="input-1">Building Code<i style="color:red">*</i></label>
+            <input type="text" class="form-control" id="bcode" name="BuildingCode" placeholder="Building Code" required>
            </div>
             <div class="form-group">
-            <label for="input-1">Region</label>
-            <input type="text" class="form-control" id="region" name="Region" placeholder="Region" readonly>
+            <label for="input-1">Region<i style="color:red">*</i></label>
+            <input type="text" class="form-control" id="region" name="Region" placeholder="Region" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Floor</label>
+            <label for="input-1">Floor<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-1" name="floor" placeholder="Floor" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Apt Layout</label>
+            <label for="input-1">Apt Layout<i style="color:red;">*</i></label></label>
             <select type="text" class="form-control" id="input-1" name="aptlayout" placeholder="Enter Your Name">
               <option value="" disabled selected> Select Layout</option>
               <option value="Single">Single</option>
@@ -222,26 +222,27 @@ $(document).ready(function(){
               <option value="2 BR">2 BR</option>
               <option value="3 BR">3 BR</option>
               <option value="4 BR and above">4 BR and above</option>
+              <option value="Bungalow">Bungalow</option>
             </select>
            </div>
            <div class="form-group">
-            <label for="input-2">Client Name</label>
+            <label for="input-2">Client Name<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-2" name="ClientName" placeholder="Client Name" required>
            </div>
            <div class="form-group">
-            <label for="input-4">Contact</label>
+            <label for="input-4">Contact<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-4" name="ClientContact" placeholder="Contact" required>
            </div>
            <div class="form-group">
-            <label for="input-5">WhatsApp</label>
+            <label for="input-5">WhatsApp<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-5" name="WhatsApp" placeholder="WhatsApp" required>
            </div>
            <div class="form-group">
-            <label for="input-5">Availability</label>
-            <input type="text" class="form-control" id="input-5" name="Day" placeholder="Availability" required>
+            <label for="input-5">Availability<i style="color:red;">*</i></label></label>
+            <input type="date" class="form-control" id="avail" name="Day" placeholder="Availability" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Client Gender</label>
+            <label for="input-1">Client Gender<i style="color:red;">*</i></label></label>
             <select type="text" class="form-control" id="input-1" name="gender"  required>
               <option value="" disabled selected> Select Gender</option>
               <option value="Male">Male</option>  
@@ -249,7 +250,7 @@ $(document).ready(function(){
               <option value="Other">Other</option>
              </select>
            <div class="form-group">
-            <label for="input-1">Age</label>
+            <label for="input-1">Age<i style="color:red;">*</i></label></label>
             <select type="text" class="form-control" id="input-1" name="age" required>
               <option value="" disabled selected> Select Age</option>
               <option value="Below 17">Below 17</option>  
@@ -261,7 +262,7 @@ $(document).ready(function(){
             </select>
            </div>
            <div class="form-group">
-            <label for="input-5">Occupation</label>
+            <label for="input-5">Occupation<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-5" name="occupation" placeholder="Client Occupation" required>
            </div>
            <div class="form-group">
@@ -281,7 +282,7 @@ $(document).ready(function(){
             <input type="text" class="form-control" id="input-5" name="twitter" placeholder="Twitter">
            </div>
            <div class="form-group">
-            <label for="input-5">Suggestions/Observations/Remarks</label>
+            <label for="input-5">Suggestions/Observations/Remarks<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note" required>
            </div>
            <div>
@@ -539,4 +540,20 @@ $(document).ready(function(){
     });
 });
 </script>
+
+
+<script>
+ var tDate= new Date();
+ var mm= todayDate.getMonth() + 1;
+ var yyyy= todayDate.getFullYear();
+ var dd=todayDate.getDate();
+if(dd<10){
+  dd= "0"+ dd;
+}
+if(mm<10){
+  mm= "0"+ mm;
+}
+ mindate= yyyy +"-" + mm + "-" + dd;
+ document.getElementById("avail").setAttribute("min",mindate);
+ </script>
 </html>

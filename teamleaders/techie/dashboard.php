@@ -78,12 +78,12 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="new-team.php">
@@ -91,11 +91,11 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="pending-installation.php">
@@ -112,16 +112,20 @@ include_once("session.php");
       </li>
 
       <li>
-      <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>      <li>
+     <!-- <li>
         <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
-      </li>
-    <!--  <li>
+      </li>-->
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+      </li>
 
       <li>
         <a href="logout.php" target="_blank">
@@ -584,6 +588,7 @@ include_once("session.php");
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
   <!-- Chart js -->
+<script src="../../assets/plugins/Chart.js/Chart.min.js"></script>
   <script>
  $(document).ready(function () {
 $('#dtBasicExample').DataTable();

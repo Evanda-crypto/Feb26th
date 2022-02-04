@@ -19,6 +19,7 @@ if($connection){
             $_SESSION['Sales']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
+            $_SESSION['ID']=$data['ID'];
             header("Location: SalesDashboard.php");
         }
         else{

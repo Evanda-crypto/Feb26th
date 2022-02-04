@@ -1,5 +1,5 @@
 <?php
-include("../db/db.php");
+include("../../db/db.php");
 include_once("session.php");
 ?>
 <!DOCTYPE html>
@@ -12,22 +12,22 @@ include_once("session.php");
   <meta name="author" content=""/>
   <title>Profile</title>
   <!-- loader--
-  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
+  <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
-  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
+  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
 </head>
 
@@ -38,72 +38,83 @@ include_once("session.php");
    <!-- end loader -->
 
 <!-- Start wrapper-->
-<div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
-    <div class="brand-logo">
-     <a href="SalesDashboard.php">
-    <!--  <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-      <h5 class="logo-text">Dashtreme Admin</h5>
-    </a>-->
-  </div>
-  <ul class="sidebar-menu do-nicescrol">
-     <li class="sidebar-header">MAIN NAVIGATION</li>
-     <li>
-       <a href="SalesDashboard.php">
-         <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-       </a>
-     </li>
 
-     <!--<li>
-       <a href="icons.php">
-         <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-       </a>
-     </li>-->
 
-     <li>
-       <a href="pap-details.php">
-         <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</span>
-       </a>
-     </li>
+  <!--Start sidebar-wrapper-->
+   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+     <div class="brand-logo">
+      <a href="dashboard.php">
+       <img src="../../assets/logo.png" class="logo-icon" alt="logo icon" style="width: 80px; height: 60px;">
+       <h5 class="logo-text"></h5>
+     </a>
+   </div>
+   <ul class="sidebar-menu do-nicescrol">
+      <li class="sidebar-header">MAIN NAVIGATION</li>
+      <li>
+        <a href="dashboard.php">
+          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+        </a>
+      </li>
 
-     <li>
-       <a href="buildings.php">
-         <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
-       </a>
-     </li>
-
-     <li>
-       <a href="calendar.php">
-         <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-         <small class="badge float-right badge-light"></small>
-       </a>
-     </li>
-
-    <li>
-       <a href="profile.php" >
-         <i class="zmdi zmdi-face"></i> <span>Profile</span>
-       </a>
-     </li>
-
-    <!-- <li>
-       <a href="login.php" target="_blank">
-         <i class="zmdi zmdi-lock"></i> <span>Login</span>
-       </a>
-     </li>-->
+     <!-- <li>
+        <a href="calendar.php">
+          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
+          <small class="badge float-right badge-light"></small>
+        </a>
+      </li>-->
 
       <li>
-       <a href="logout.php" target="_blank">
-         <i class="zmdi zmdi-lock"></i> <span>Logout</span>
-       </a>
-     </li>
+        <a href="new-team.php">
+          <i class="zmdi zmdi-account-add"></i> <span>New Team</span>
+        </a>
+      </li>
 
-    <!-- <li class="sidebar-header">LABELS</li>
-     <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-     <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-     <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>-->
+      <!--<li>
+        <a href="techie-teams.php">
+          <i class="fa fa-pencil"></i> <span>Change Team</span>
+        </a>
+      </li>-->
 
-   </ul>
-  
-  </div>
+      <li>
+        <a href="pending-installation.php">
+          <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
+        </a>
+      </li>
+
+      <li>
+      <!--<li>
+        <a href="#">
+          <i class="fa fa-check"></i> <span>Work Report</span>
+        </a>
+      </li>-->
+     <li>
+        <a href="profile.php">
+          <i class="zmdi zmdi-face"></i> <span>Profile</span>
+        </a>
+      </li>
+
+      <li>
+        <a href="logout.php" target="_blank">
+          <i class="zmdi zmdi-lock"></i> <span>Logout</span>
+        </a>
+      </li>
+
+     <!--  <li>
+        <a href="register.php" target="_blank">
+          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
+        </a>
+      </li>-->
+    </ul>
+   
+   </div>
    <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
@@ -173,7 +184,7 @@ include_once("session.php");
             <div class="card-body border-top border-light">
                  <div class="media align-items-center">
                    <div>
-                       <img src="../assets/images/timeline/html5.svg" class="skill-img" alt="skill img">
+                       <img src="../../assets/images/timeline/html5.svg" class="skill-img" alt="skill img">
                    </div>
                      <div class="media-body text-left ml-3">
                        <div class="progress-wrapper">
@@ -186,7 +197,7 @@ include_once("session.php");
                   </div>
                   <hr>
                   <div class="media align-items-center">
-                   <div><img src="../assets/images/timeline/bootstrap-4.svg" class="skill-img" alt="skill img"></div>
+                   <div><img src="../../assets/images/timeline/bootstrap-4.svg" class="skill-img" alt="skill img"></div>
                      <div class="media-body text-left ml-3">
                        <div class="progress-wrapper">
                          <p>Bootstrap 4 <span class="float-right">50%</span></p>
@@ -198,7 +209,7 @@ include_once("session.php");
                   </div>
                    <hr>
                   <div class="media align-items-center">
-                   <div><img src="../assets/images/timeline/angular-icon.svg" class="skill-img" alt="skill img"></div>
+                   <div><img src="../../assets/images/timeline/angular-icon.svg" class="skill-img" alt="skill img"></div>
                      <div class="media-body text-left ml-3">
                        <div class="progress-wrapper">
                          <p>AngularJS <span class="float-right">70%</span></p>
@@ -210,7 +221,7 @@ include_once("session.php");
                   </div>
                     <hr>
                   <div class="media align-items-center">
-                   <div><img src="../assets/images/timeline/react.svg" class="skill-img" alt="skill img"></div>
+                   <div><img src="../../assets/images/timeline/react.svg" class="skill-img" alt="skill img"></div>
                      <div class="media-body text-left ml-3">
                        <div class="progress-wrapper">
                          <p>React JS <span class="float-right">35%</span></p>
@@ -365,7 +376,7 @@ include_once("session.php");
                         <div class="form-group row">
                             <label class="col-lg-3 col-form-label form-control-label">Email</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="email" value=" <?php echo $_SESSION['Sales'];?>" readonly>
+                                <input class="form-control" type="email" value=" <?php echo $_SESSION['teamleader'];?>" readonly>
                             </div>
                         </div>
 
@@ -461,17 +472,17 @@ include_once("session.php");
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
 	
   <!-- simplebar js -->
-  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="../../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
+  <script src="../../assets/js/app-script.js"></script>
   <script>
        var check = function (){
         if(document.getElementById('exampleInputNam').value==

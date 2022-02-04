@@ -1,5 +1,5 @@
 <?php
-include("../db/db.php");
+include("../../db/db.php");
 include("session.php");
 $id=$_GET['client-id'];
 
@@ -33,24 +33,24 @@ $Bizcat=$row['BizCat'];
 $Bizdec=$row['BizDec'];
 
 if(isset($_POST['submit'])){
-$ChampName = $row['ChampName'];
+$ChampName = $_POST['ChampName'];
 $ClientName = $_POST['ClientName'];
 $ClientContact = $_POST['ClientContact'];
-$ClientGender = $row['ClientGender'];
-$ClientAge = $row['ClientAge'];
-$ClientOccupation = $row['ClientOccupation'];
-$ClientAvailability = $row['ClientAvailability'];
-$Region = $row['Region'];
-$BuildingName = $row['BuildingName'];
-$BuildingCode = $row['BuildingCode'];
-$Apt = $row['Apt'];
-$Floor = $row['Floor'];
-$AptLayout = $row['AptLayout'];
+$ClientGender = $_POST['gender'];
+$ClientAge = $_POST['age'];
+$ClientOccupation = $_POST['occupation'];
+$ClientAvailability = $_POST['Day'];
+$Region = $_POST['Region'];
+$BuildingName = $_POST['BuildingName'];
+$BuildingCode = $_POST['BuildingCode'];
+$Apt = $_POST['apt'];
+$Floor = $_POST['floor'];
+$AptLayout = $_POST['aptlayout'];
 $HouseholdSize = $_POST['HouseholdSize'];
 $Children = $_POST['Children'];
 $Teenagers = $_POST['Teenagers'];
 $Adults = $_POST['Adults'];
-$Birthday = $row['Birthday'];
+$Birthday = $_POST['Birthday'];
 $ClientWhatsApp = $_POST['whatsapp'];
 $Facebook = $_POST['facebook'];
 $Instagram = $_POST['instagram'];
@@ -85,23 +85,23 @@ if ($result) {
   <title>Edit | Client | Info</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
+  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
   
 </head>
@@ -119,32 +119,36 @@ if ($result) {
  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
+       <img src="../../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
        <h5 class="logo-text">   </h5>
      </a>
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <li>
+     <!-- <li>
         <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
-      </li>
+      </li>-->
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TABLES</span></li>
       <li  style="margin-left:5%">
         <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales</span>
+        </a>
+      </li>
+         <!--  <li  style="margin-left:5%">
+        <a href="daily-target.php">
+          <i class="zmdi zmdi-grid"></i> <span>Daily target</span>
+        </a>
+      </li>-->
+
+      <li  style="margin-left:5%">
+        <a href="profile.php">
+          <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
       </li>
 
-      <li  style="margin-left:5%">
-        <a href="pap-daily-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Installation</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="pap-pending-installation.php">
           <i class="zmdi zmdi-grid"></i> <span>Pending Pap Installation</span>
         </a>
@@ -211,7 +215,7 @@ if ($result) {
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>-->
+      </li>--
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">
@@ -223,7 +227,7 @@ if ($result) {
           <i class="fa fa-calendar"></i> <span>Calendar</span>
           <small class="badge float-right badge-light">New</small>
         </a>
-      </li>
+      </li>-->
       <li  style="margin-left:5%">
         <a href="logout.php">
           <i class="fa fa-lock"></i> <span>Logout</span>
@@ -267,8 +271,8 @@ if ($result) {
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php## echo $_SESSION['FName']?> <?php #echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
+            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
+            <p class="user-subtitle"><?php echo $_SESSION['sales']?></p>
             </div>
            </div>
           </a>
@@ -299,6 +303,44 @@ if ($result) {
            <div class="card-title"<center><h5>Update Client Info</h5></center></div>
            <hr>
             <form method="POST">
+
+              <div class="form-group">
+            <label for="input-1">Champs</label>
+            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $ChampName?>" required>
+           </div>
+            <div class="form-group">
+            <label for="input-1">Building Name </label>
+            <input type="text" class="form-control" id="bname" name="Buildingname"value="<?php echo $BuildingName?>"   placeholder="Building Name" required>
+           </div>
+           <div class="form-group">
+            <label for="input-1">Building Code</label>
+            <input type="text" class="form-control" id="bcode" name="BuildingCode" placeholder="Building Code" value="<?php echo $BuildingCode?>" required>
+           </div>
+            <div class="form-group">
+            <label for="input-1">Region</label>
+            <input type="text" class="form-control" id="region" name="Region" placeholder="Region" value="<?php echo $Region?>"  required>
+           </div>
+           <div class="form-group">
+            <label for="input-1">Apt</label>
+            <input type="text" class="form-control"value="<?php echo $Apt?>" id="input-1" name="apt" placeholder="Apartment">
+           </div>
+            <div class="form-group">
+            <label for="input-1">Floor</label>
+            <input type="text" class="form-control" id="input-1" name="floor" placeholder="Floor"value="<?php echo $Floors?>" required>
+           </div>
+           <div class="form-group">
+            <label for="input-1">Apt Layout</label>
+            <select type="text" class="form-control" id="input-1" name="aptlayout" placeholder="Enter Your Name">
+              <option value="<?php echo $AplLayout?>" disabled selected><?php echo $AptLayout?></option>
+              <option value="Single">Single</option>
+              <option value="Double">Double</option>
+              <option value="Bedsitter">Bedsitter</option>
+              <option value="1 BR">1 BR</option>
+              <option value="2 BR">2 BR</option>
+              <option value="3 BR">3 BR</option>
+              <option value="4 BR and above">4 BR and above</option>
+            </select>
+           </div>
            <div class="form-group">
             <label for="input-1">Client Name</label>
             <input type="text" class="form-control" name="ClientName" value="<?php echo $ClientName?>" id="input-1" placeholder="Client Name" required>
@@ -315,6 +357,15 @@ if ($result) {
               <option value="Above 60">Above 60</option>
             </select>
            </div>
+          <div class="form-group">
+            <label for="input-1">Client Gender</label>
+            <select type="text" class="form-control" id="input-1" name="gender"  required>
+              <option value="<?php echo $ClientGender?>"  disabled selected><?php echo $ClientAge?></option>
+              <option value="Male">Male</option>  
+              <option value="Female">Female</option>  
+              <option value="Other">Other</option>
+             </select>
+             </div>
            <div class="form-group">
             <label for="input-2">Contact</label>
             <input type="text" class="form-control" name="ClientContact" id="input-2" value="<?php echo $ClientContact?>" placeholder="Client Contact" required>
@@ -323,6 +374,19 @@ if ($result) {
             <label for="input-2">WhatsApp</label>
             <input type="text" class="form-control" name="whatsapp" id="input-2" value="<?php echo $WhatsApp?>" placeholder="Client WhatsApp" required>
            </div>
+                         <div class="form-group">
+            <label for="input-5">Occupation</label>
+            <input type="text" class="form-control" id="input-5" name="occupation" value="<?php echo $ClientOccupation?>"  placeholder="Client Occupation" required>
+           </div>
+                      <div class="form-group">
+            <label for="input-5">Availability</label>
+            <input type="text" class="form-control" id="input-5" name="Day"value="<?php echo $availability?>"  placeholder="Availability" required>
+           </div>
+            <div class="form-group">
+            <label for="input-1">Birthday</label>
+            <input type="text" class="form-control" id="input-5"value="<?php echo $Birthday?>"   name="Birthday" placeholder="Birthday" >
+           </div>
+
            <div class="form-group">
             <label for="input-1">Facebook</label>
             <input type="text" class="form-control" name="facebook" id="input-1" value="<?php echo $facebook?>" placeholder="Client Facebook" >
@@ -509,192 +573,17 @@ if ($result) {
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
 	
  <!-- simplebar js -->
-  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="../../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
-  <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
-$(document).ready(function () {
-$("myTable").stickyTableHeaders();
-});
-</script>
-<script>
-    getPagination('#myTable');
-					//getPagination('.table-class');
-					//getPagination('table');
-
-		  /*					PAGINATION 
-		  - on change max rows select options fade out all rows gt option value mx = 5
-		  - append pagination list as per numbers of rows / max rows option (20row/5= 4pages )
-		  - each pagination li on click -> fade out all tr gt max rows * li num and (5*pagenum 2 = 10 rows)
-		  - fade out all tr lt max rows * li num - max rows ((5*pagenum 2 = 10) - 5)
-		  - fade in all tr between (maxRows*PageNum) and (maxRows*pageNum)- MaxRows 
-		  */
-		 
-
-function getPagination(table) {
-  var lastPage = 1;
-
-  $('#maxRows')
-    .on('change', function(evt) {
-      //$('.paginationprev').html('');						// reset pagination
-
-     lastPage = 1;
-      $('.pagination')
-        .find('li')
-        .slice(1, -1)
-        .remove();
-      var trnum = 0; // reset tr counter
-      var maxRows = parseInt($(this).val()); // get Max Rows from select option
-
-      if (maxRows == 5000) {
-        $('.pagination').hide();
-      } else {
-        $('.pagination').show();
-      }
-
-      var totalRows = $(table + ' tbody tr').length; // numbers of rows
-      $(table + ' tr:gt(0)').each(function() {
-        // each TR in  table and not the header
-        trnum++; // Start Counter
-        if (trnum > maxRows) {
-          // if tr number gt maxRows
-
-          $(this).hide(); // fade it out
-        }
-        if (trnum <= maxRows) {
-          $(this).show();
-        } // else fade in Important in case if it ..
-      }); //  was fade out to fade it in
-      if (totalRows > maxRows) {
-        // if tr total rows gt max rows option
-        var pagenum = Math.ceil(totalRows / maxRows); // ceil total(rows/maxrows) to get ..
-        //	numbers of pages
-        for (var i = 1; i <= pagenum; ) {
-          // for each page append pagination li
-          $('.pagination #prev')
-            .before(
-              '<li data-page="' +
-                i +
-                '">\
-								  <span>' +
-                i++ +
-                '<span class="sr-only">(current)</span></span>\
-								</li>'
-            )
-            .show();
-        } // end for i
-      } // end if row count > max rows
-      $('.pagination [data-page="1"]').addClass('active'); // add active class to the first li
-      $('.pagination li').on('click', function(evt) {
-        // on click each page
-        evt.stopImmediatePropagation();
-        evt.preventDefault();
-        var pageNum = $(this).attr('data-page'); // get it's number
-
-        var maxRows = parseInt($('#maxRows').val()); // get Max Rows from select option
-
-        if (pageNum == 'prev') {
-          if (lastPage == 1) {
-            return;
-          }
-          pageNum = --lastPage;
-        }
-        if (pageNum == 'next') {
-          if (lastPage == $('.pagination li').length - 2) {
-            return;
-          }
-          pageNum = ++lastPage;
-        }
-
-        lastPage = pageNum;
-        var trIndex = 0; // reset tr counter
-        $('.pagination li').removeClass('active'); // remove active class from all li
-        $('.pagination [data-page="' + lastPage + '"]').addClass('active'); // add active class to the clicked
-        // $(this).addClass('active');					// add active class to the clicked
-	  	limitPagging();
-        $(table + ' tr:gt(0)').each(function() {
-          // each tr in table not the header
-          trIndex++; // tr index counter
-          // if tr index gt maxRows*pageNum or lt maxRows*pageNum-maxRows fade if out
-          if (
-            trIndex > maxRows * pageNum ||
-            trIndex <= maxRows * pageNum - maxRows
-          ) {
-            $(this).hide();
-          } else {
-            $(this).show();
-          } //else fade in
-        }); // end of for each tr in table
-      }); // end of on click pagination list
-	  limitPagging();
-    })
-    .val(5)
-    .change();
-
-  // end of on select change
-
-  // END OF PAGINATION
-}
-
-function limitPagging(){
-	// alert($('.pagination li').length)
-
-	if($('.pagination li').length > 7 ){
-			if( $('.pagination li.active').attr('data-page') <= 3 ){
-			$('.pagination li:gt(5)').hide();
-			$('.pagination li:lt(5)').show();
-			$('.pagination [data-page="next"]').show();
-		}if ($('.pagination li.active').attr('data-page') > 3){
-			$('.pagination li:gt(0)').hide();
-			$('.pagination [data-page="next"]').show();
-			for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
-				$('.pagination [data-page="'+i+'"]').show();
-
-			}
-
-		}
-	}
-}
-
-$(function() {
-  // Just to append id number for each row
-  $('table tr:eq(0)').prepend('<th> ID </th>');
-
-  var id = 0;
-
-  $('table tr:gt(0)').each(function() {
-    id++;
-    $(this).prepend('<td>' + id + '</td>');
-  });
-});
-
-</script>
+  <script src="../../assets/js/app-script.js"></script>
+ 
 </body>
 </html>

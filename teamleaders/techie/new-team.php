@@ -100,12 +100,12 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="new-team.php">
@@ -113,11 +113,11 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
-        <a href="techie-teams.php">
+     <!-- <li>
+       <!-- <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="pending-installation.php">
@@ -133,17 +133,21 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
-      <li>
+            <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>
+     <!-- <li>
         <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
-      </li>
-    <!--  <li>
+      </li>-->
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+      </li>
 
       <li>
         <a href="logout.php" target="_blank">
@@ -226,19 +230,19 @@ include_once("session.php");
            </div>
            <div class="form-group">
             <label for="input-2">Techie 1</label>
-            <input type="text" class="form-control" name="Techie1" id="input-2" placeholder="Techie 1" required>
+            <input type="text" class="form-control" name="Techie1" id="techie1"  onkeyup="GetDetail(this.value)" placeholder="Techie 1" required>
            </div>
            <div class="form-group">
             <label for="input-2">Techie 1 Email</label>
-            <input type="text" class="form-control" name="Email1" id="input-2" placeholder="Techie 1 Email" required>
+            <input type="text" class="form-control" name="Email1" id="Email1" placeholder="Techie 1 Email" required>
            </div>
            <div class="form-group">
             <label for="input-2">Techie 2</label>
-            <input type="text" class="form-control" name="Techie2" id="input-2" placeholder="Techie 2" required>
+            <input type="text" class="form-control" name="Techie2" id="techie2"  onkeyup="GetDetaila(this.value)" placeholder="Techie 2" required>
            </div>
            <div class="form-group">
             <label for="input-2">Techie 2 Email</label>
-            <input type="text" class="form-control" name="Email2" id="input-2" placeholder="Techie 2 Email" required>
+            <input type="text" class="form-control" name="Email2" id="Email2" placeholder="Techie 2 Email" required>
            </div>
            <div class="form-group">
             <label for="input-2">Region</label>
@@ -380,5 +384,101 @@ $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
 </script>>
+<script>
+
+// onkeyup event will occur when the user
+// release the key and calls the function
+// assigned to this event
+function GetDetail(str) {
+  if (str.length == 0) {
+    document.getElementById("Email1").value = "";
+    return;
+  }
+  else {
+
+    // Creates a new XMLHttpRequest object
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+
+      // Defines a function to be called when
+      // the readyState property changes
+      if (this.readyState == 4 &&
+          this.status == 200) {
+        
+        // Typical action to be performed
+        // when the document is ready
+        var myObj = JSON.parse(this.responseText);
+
+        // Returns the response data as a
+        // string and store this array in
+        // a variable assign the value
+        // received to first name input field
+        
+        document.getElementById
+          ("Email1").value = myObj[0];
+        
+        // Assign the value received to
+        // last name input field
+        
+      }
+    };
+
+    // xhttp.open("GET", "filename", true);
+    xmlhttp.open("GET", "retrieve.php?techie1=" + str, true);
+    
+    // Sends the request to the server
+    xmlhttp.send();
+  }
+}
+</script>
+
+
+<script>
+
+// onkeyup event will occur when the user
+// release the key and calls the function
+// assigned to this event
+function GetDetaila(str) {
+  if (str.length == 0) {
+    document.getElementById("Email2").value = "";
+    return;
+  }
+  else {
+
+    // Creates a new XMLHttpRequest object
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+
+      // Defines a function to be called when
+      // the readyState property changes
+      if (this.readyState == 4 &&
+          this.status == 200) {
+        
+        // Typical action to be performed
+        // when the document is ready
+        var myObj = JSON.parse(this.responseText);
+
+        // Returns the response data as a
+        // string and store this array in
+        // a variable assign the value
+        // received to first name input field
+        
+        document.getElementById
+          ("Email2").value = myObj[0];
+        
+        // Assign the value received to
+        // last name input field
+        
+      }
+    };
+
+    // xhttp.open("GET", "filename", true);
+    xmlhttp.open("GET", "retriev.php?techie2=" + str, true);
+    
+    // Sends the request to the server
+    xmlhttp.send();
+  }
+}
+</script>
 </body>
 </html>

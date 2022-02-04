@@ -107,12 +107,12 @@ if(isset($_POST['submit'])){
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="new-team.php">
@@ -120,11 +120,11 @@ if(isset($_POST['submit'])){
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="pending-installation.php">
@@ -140,17 +140,21 @@ if(isset($_POST['submit'])){
         </a>
       </li>
 
-      <li>
-      <li>
+            <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>
+     <!-- <li>
         <a href="">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
-      </li>
-    <!--  <li>
+      </li>-->
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+      </li>
 
       <li>
         <a href="logout.php" target="_blank">

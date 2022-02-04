@@ -94,11 +94,11 @@ include_once("session.php");
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
+      <!-- <li  style="margin-left:5%">
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>
+      </li>-->
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -249,6 +249,7 @@ include_once("session.php");
                      <th>Availability</th>
                      <th>Apt Layout</th>
                      <th>Floor</th>
+                     <th>Date Signed</th>
                      <th>More</th>
                     </tr>
                   </thead>
@@ -277,6 +278,7 @@ include_once("session.php");
                                     <th><?php echo $row['ClientAvailability']; ?></th>
                                     <th><?php echo $row['AptLayout']; ?></th>
                                     <th><?php echo $row['Floor']; ?></th>
+                                    <th><?php echo $row['DateSigned']; ?></th>
                                     <th>
                                         <a href="edit-client-info.php?client-id=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
                                         <a href="deleteclient.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['ClientName']; ?> from records?')"><i class="fas fa-trash"></i></a>

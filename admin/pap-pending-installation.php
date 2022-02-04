@@ -93,11 +93,11 @@ include_once("session.php");
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>
+      </li>-->
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -254,11 +254,11 @@ $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
   <tr>
-    <td><?php echo $row['ClientName']?></td>
-    <td><?php echo $row['ClientContact']?></td>
     <td><?php echo $row['BuildingName']?></td>
     <td><?php echo $row['BuildingCode']?></td>
     <td><?php echo $row['Region']?></td>
+    <td><?php echo $row['ClientName']?></td>
+    <td><?php echo $row['ClientContact']?></td>
     <td><?php echo $row['DateSigned']?></td>
 </tr>
 <?php } ?>

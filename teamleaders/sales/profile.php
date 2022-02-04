@@ -1,5 +1,5 @@
 <?php
-include("../db/db.php");
+include("../../db/db.php");
 include_once("session.php");
 ?>
 <!DOCTYPE html>
@@ -12,22 +12,22 @@ include_once("session.php");
   <meta name="author" content=""/>
   <title>Profile</title>
   <!-- loader--
-  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
+  <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
+  <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
-  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
+  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
 </head>
 
@@ -40,14 +40,14 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
     <div class="brand-logo">
-     <a href="SalesDashboard.php">
-    <!--  <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-      <h5 class="logo-text">Dashtreme Admin</h5>
-    </a>-->
-  </div>
+      <a href="dashboard.php">
+       <img src="../../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
+       <h5 class="logo-text">   </h5>
+     </a>
+   </div>
   <ul class="sidebar-menu do-nicescrol">
      <li class="sidebar-header">MAIN NAVIGATION</li>
-     <li>
+     <!--<li>
        <a href="SalesDashboard.php">
          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
        </a>
@@ -57,11 +57,11 @@ include_once("session.php");
        <a href="icons.php">
          <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
        </a>
-     </li>-->
+     </li>--
 
      <li>
        <a href="pap-details.php">
-         <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</span>
+         <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
        </a>
      </li>
 
@@ -76,7 +76,12 @@ include_once("session.php");
          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
          <small class="badge float-right badge-light"></small>
        </a>
-     </li>
+     </li>-->
+     <li  style="margin-left:5%">
+        <a href="pap-daily-sales.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
+        </a>
+      </li>
 
     <li>
        <a href="profile.php" >
@@ -461,17 +466,17 @@ include_once("session.php");
 
 
   <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/jquery.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
 	
   <!-- simplebar js -->
-  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="../../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
+  <script src="../../assets/js/app-script.js"></script>
   <script>
        var check = function (){
         if(document.getElementById('exampleInputNam').value==

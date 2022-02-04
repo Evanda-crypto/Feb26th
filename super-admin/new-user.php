@@ -24,6 +24,7 @@ else
     $stmt->bind_param("sssss",$FirstName,$LastName,$Email,$Department,$hashpass);
     $stmt->execute();
     echo "<script>alert('Successfull.');</script>";
+    echo '<script>window.location.href="new-user.php";</script>';
     $stmt->close();
    # $connection->close();
    
@@ -128,7 +129,7 @@ else
         </a>
       </li>
 
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="add-teamleader.php">
           <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
         </a>
@@ -263,7 +264,7 @@ else
            <div class="card-body">
            <div class="card-title">New User</div>
            <hr>
-            <form method="POST">
+            <form method="POST" autocomplete="off">
            <div class="form-group">
             <label for="input-1">First Name</label>
             <input type="text" class="form-control" name="FName" id="input-1" placeholder="Enter First Name" required>

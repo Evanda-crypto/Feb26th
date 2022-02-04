@@ -71,11 +71,11 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="pending-installation.php">
@@ -91,17 +91,17 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
-      <li>
+     
+     <!-- <li>
         <a href="">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
-      </li>
-    <!--  <li>
+      </li>-->
+      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
-      </li>-->
+      </li>
 
       <li>
         <a href="logout.php" target="_blank">

@@ -68,7 +68,7 @@ include_once("session.php");
 
      <li>
        <a href="pap-details.php">
-         <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
+         <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</span>
        </a>
      </li>
 

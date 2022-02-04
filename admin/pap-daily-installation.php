@@ -40,6 +40,8 @@ include_once("session.php");
   <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
   <link href="../assets/css/app-style.css" rel="stylesheet"/>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWH>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
   
 </head>
 
@@ -94,11 +96,11 @@ include_once("session.php");
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>
+      </li>-->
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -239,6 +241,7 @@ include_once("session.php");
                   <thead>
                     <tr>
                     <th>Client ID</th>
+                   <th>Contact</th>
                     <th>Team ID</th>
                     <th>Techie 1</th>
                     <th>Techie 2</th>
@@ -250,13 +253,14 @@ include_once("session.php");
                   <tbody>
 <?php
     
-    $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
-    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null ORDER BY papinstalled.DateInstalled ASC";
+    $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID,papdailysales.ClientContact  
+    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID JOIN papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null ORDER BY papinstalled.DateInstalled ASC";
 $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
   <tr>
     <td><?php echo $row['ClientID']?></td>
+   <td><?php echo $row['ClientContact']?></td>
     <td><?php echo $row['Team_ID']?></td>
     <td><?php echo $row['Techie_1']?></td>
     <td><?php echo $row['Techie_2']?></td>

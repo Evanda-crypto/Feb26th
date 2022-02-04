@@ -9,7 +9,7 @@ include("session.php");
   # code...
  echo "Problem in database connection! Contact administrator!" . mysqli_error();
       }else{
-       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) ORDER BY Datesigned Asc";
        $result = mysqli_query($connection,$sql);
        $chart_data="";
         while ($row = mysqli_fetch_array($result)) { 
@@ -29,7 +29,7 @@ include("session.php");
                $chart_data="";
                 while ($data = mysqli_fetch_array($result)) { 
                 #$Date[]  = $row['DateInstalled']  ;
-                $install[] = $data['dailyinstallation'];
+               # $install[] = $data['dailyinstallation'];
                                      
                }
                  }
@@ -44,7 +44,7 @@ include("session.php");
                                            $chart_data="";
                                             while ($res = mysqli_fetch_array($result)) { 
                                             #$Date[]  = $row['DateTurnedOn']  ;
-                                            $turnedon[] = $res['turnedon'];
+                                           # $turnedon[] = $res['turnedon'];
                                                                  
                                            }
                                              }
@@ -152,11 +152,11 @@ include("session.php");
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>
+      </li>-->
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -386,8 +386,8 @@ include("session.php");
 		 <div class="card-body">
 		    <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Signed Pap</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed pap</li>
-        <li class="list-inline-item"><i class="fa fa-circle mr-2 text-black"></i>Turned On Pap</li>
+			 <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed pap</li>-->
+       <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-black"></i>Turned On Pap</li>-->
 			</ul>
 			<div class="chart-container-1">
 			  <canvas id="chart1"></canvas>

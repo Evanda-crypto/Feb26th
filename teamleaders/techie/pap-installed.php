@@ -1,5 +1,5 @@
 <?php
-include("../db/db.php");
+include('../../db/db.php');
 include_once("session.php");
 ?>
 <!DOCTYPE html>
@@ -10,9 +10,11 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Buildings | Ref</title>
-  <!-- loader-->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <title>Pap | Installed</title>
+  <!-- loader--
+  <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
+  <script src="../../assets/js/pace.min.js"></script>-->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -23,22 +25,21 @@ include_once("session.php");
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
- <!-- <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
-  <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
+
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
+  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
 </head>
 
@@ -49,39 +50,21 @@ include_once("session.php");
    <!-- end loader -->
 
 <!-- Start wrapper-->
- <div id="wrapper">
+<div id="wrapper">
 
   <!--Start sidebar-wrapper-->
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
-      <a href="SalesDashboard.php">
-     <!--  <img src="../assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text">Dashtreme Admin</h5>
-     </a>-->
+      <a href="dashboard.php">
+       <img src="../../assets/logo.png" class="logo-icon" alt="logo icon" style="width: 80px; height: 60px;">
+       <h5 class="logo-text"></h5>
+     </a>
    </div>
    <ul class="sidebar-menu do-nicescrol">
       <li class="sidebar-header">MAIN NAVIGATION</li>
       <li>
-        <a href="SalesDashboard.php">
+        <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
-
-      <!--<li>
-        <a href="icons.php">
-          <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-        </a>
-      </li>-->
-
-      <li>
-        <a href="pap-details.php">
-          <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="buildings.php">
-          <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
         </a>
       </li>
 
@@ -93,28 +76,54 @@ include_once("session.php");
       </li>
 
       <li>
+        <a href="new-team.php">
+          <i class="zmdi zmdi-account-add"></i> <span>New Team</span>
+        </a>
+      </li>
+
+      <!--<li>
+        <a href="techie-teams.php">
+          <i class="fa fa-pencil"></i> <span>Change Team</span>
+        </a>
+      </li>-->
+
+      <li>
+        <a href="pending-installation.php">
+          <i class="fa fa-tasks"></i> <span>Assign Task</span>
+          <small class="badge float-right badge-light"><?php
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['pending']."<br><br>";
+                                              }
+                                              ?></small>
+        </a>
+      </li>
+
+      <li>
+      <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
       </li>
 
-     <!-- <li>
-        <a href="login.php" target="_blank">
-          <i class="zmdi zmdi-lock"></i> <span>Login</span>
-        </a>
-      </li>-->
-
-       <li>
+      <li>
         <a href="logout.php" target="_blank">
           <i class="zmdi zmdi-lock"></i> <span>Logout</span>
         </a>
       </li>
 
-     <!-- <li class="sidebar-header">LABELS</li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-coffee text-danger"></i> <span>Important</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-chart-donut text-success"></i> <span>Warning</span></a></li>
-      <li><a href="javaScript:void();"><i class="zmdi zmdi-share text-info"></i> <span>Information</span></a></li>-->
-
+     <!--  <li>
+        <a href="register.php" target="_blank">
+          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
+        </a>
+      </li>-->
     </ul>
    
    </div>
@@ -136,7 +145,12 @@ include_once("session.php");
       </form>
     </li>
   </ul>
-    
+     
+   <li class="nav-item dropdown-lg">
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
+      <i class=""><?php echo $_SESSION['Region']?></i></a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
         <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
@@ -147,15 +161,20 @@ include_once("session.php");
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Sales'];?></p>
-            <p class="user-subtitle"></p>
+            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
+            <p class="user-subtitle"><?php echo $_SESSION['teamleader']?></p>
             </div>
            </div>
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+       <!-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>-->
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" href="logout.php"></i> Logout</li>
       </ul>
     </li>
   </ul>
@@ -169,53 +188,47 @@ include_once("session.php");
     <div class="container-fluid">
      
       <div class="row mt-3">
-        
           <div class="card">
-          <center> <h5 class="card-title">Buildings Ref</h5></center>
-            <div class="card-body">
-
+            <div class="card-body"> 
+            <center>  <h5 class="card-title">PAP DAILY INSTALLATION</h5></center>
 			  <div class="table-responsive">
-        <table id="dtBasicExample" class="table" cellspacing="0" width="100%">
-  <thead>
-    <tr>
-      <th class="th-sm">ID
-      </th>
-      <th class="th-sm">Building Name
-      </th>
-      <th class="th-sm">Building Code
-      </th>
-      <th class="th-sm">Region
-      </th>
-      <th class="th-sm">Building Status
-      </th>
-      <th class="th-sm">Floors
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-     <?php
+               <table class="table" id="dtBasicExample">
+                  <thead>
+                    <tr>
+                    <th>Client ID</th>
+                    <th>Team ID</th>
+                    <th>Techie 1</th>
+                    <th>Techie 2</th>
+                    <th>Mac Address</th>
+                    <th>Date Installed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+<?php
     
-$sql="SELECT * from building order by DateTurnedOn Desc";
+    $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
 $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
   <tr>
-    <td><?php echo $row['ID']?></td>
-    <td><?php echo $row['BuildingName']?></td>
-    <td><?php echo $row['BuildingCode']?></td>
-    <td><?php echo $row['Region']?></td>
-    <td><?php echo $row['BuildingStatus']?></td>
-    <td><?php echo $row['Floors']?></td>
+    <td><?php echo $row['ClientID']?></td>
+    <td><?php echo $row['Team_ID']?></td>
+    <td><?php echo $row['Techie_1']?></td>
+    <td><?php echo $row['Techie_2']?></td>
+    <td><?php echo $row['Mac']?></td>
+    <td><?php echo $row['DateInstalled']?></td>
 </tr>
 <?php } ?>
-  </tbody>
-</table>
+                  </tbody>
+                </table>
             </div>
+          </div>
             </div>
           </div>
         
-        <div class="col-lg-6">
-        <!--  <div class="card">
+       <!-- <div class="col-lg-6">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Bordered Table</h5>
 			  <div class="table-responsive">
@@ -250,14 +263,14 @@ while($row=$result->fetch_array()){
               </table>
             </div>
             </div>
-          </div>-->
+          </div>
         </div>
-      </div><!--End Row-->
+      </div><!--End Row
 
 
       <div class="row">
         <div class="col-lg-6">
-        <!--  <div class="card">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Striped Table</h5>
 			  <div class="table-responsive">
@@ -293,10 +306,10 @@ while($row=$result->fetch_array()){
                 </table>
             </div>
             </div>
-          </div>-->
+          </div>
         </div>
         <div class="col-lg-6">
-         <!-- <div class="card">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Hover Table</h5>
 			  <div class="table-responsive">
@@ -331,13 +344,13 @@ while($row=$result->fetch_array()){
               </table>
             </div>
             </div>
-          </div>-->
+          </div>
         </div>
-      </div><!--End Row-->
+      </div><!--End Row
 
       <div class="row">
         <div class="col-lg-6">
-        <!--  <div class="card">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Small Table</h5>
 			  <div class="table-responsive">
@@ -372,10 +385,10 @@ while($row=$result->fetch_array()){
               </table>
             </div>
             </div>
-          </div>-->
+          </div>
         </div>
         <div class="col-lg-6">
-        <!--  <div class="card">
+          <div class="card">
             <div class="card-body">
               <h5 class="card-title">Responsive Table</h5>
               <div class="table-responsive">
@@ -446,19 +459,19 @@ while($row=$result->fetch_array()){
     </div>
     <!-- End container-fluid-->
     
-    </div><!--End content-wrapper-->
+  </div><!--End content-wrapper-->
    <!--Start Back To Top Button-->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     <!--End Back To Top Button-->
 	
-	<!--Start footer--
-	<footer class="footer">
+	<!--Start footer-->
+	<!--<footer class="footer">
       <div class="container">
         <div class="text-center">
-          Copyright © 2018 Dashtreme Admin
+          Copyright © Konnect 2022
         </div>
       </div>
-    </footer>
+    </footer>-->
 	<!--End footer-->
 	
 	<!--start color switcher-->
@@ -504,18 +517,18 @@ while($row=$result->fetch_array()){
 
   <!-- Bootstrap core JavaScript--
   <script src="../assets/js/jquery.min.js"></script>-->
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
 	
   <!-- simplebar js -->
-  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="../../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>-->
+  <script src="../../assets/js/app-script.js"></script>
   <script>
- $(document).ready(function () {
+  $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });

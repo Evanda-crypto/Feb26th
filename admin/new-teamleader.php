@@ -301,7 +301,7 @@ else{
               <option value="G45N">G45N</option>
               <option value="R&M">R&M</option>
               <option value="JCR">JCR</option>
-              <option value="KWST">KWST</option>
+              <option value="KWT">KWT</option>
             </select>
            </div>
            <div class="form-group">
@@ -341,13 +341,7 @@ else{
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+ 
                     <?php
                         $query  = "SELECT * FROM teamleaders";
                         $result  = mysqli_query($connection, $query);
@@ -374,7 +368,6 @@ else{
                             }
                         }
                         ?>
-                  </tr>
                 </tbody>
               </table>
             </div>
