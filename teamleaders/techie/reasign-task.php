@@ -1,5 +1,5 @@
 <?php
-include("../../db/db.php");
+include('../../db/db.php');
 include_once("session.php");
 ?>
 <!DOCTYPE html>
@@ -10,14 +10,26 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Calendar</title>
+  <title>Reasign | Task</title>
   <!-- loader--
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
+
   <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
-  <!--Full Calendar Css-->
-  <link href="../../assets/plugins/fullcalendar/css/fullcalendar.min.css" rel='stylesheet'/>
   <!-- simplebar CSS-->
   <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
@@ -31,19 +43,24 @@ include_once("session.php");
   <!-- Custom Style-->
   <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
+  <style>
+    .pagination li:hover{
+    cursor: pointer;
+}
+  </style>
 </head>
 
 <body class="bg-theme bg-theme11">
 
-   <!-- start loader -->
+<!-- start loader -->
    <div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner" ><div class="loader"></div></div></div></div>
    <!-- end loader -->
 
 <!-- Start wrapper-->
- <div id="wrapper">
- 
-   <!--Start sidebar-wrapper-->
-   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+<div id="wrapper">
+
+  <!--Start sidebar-wrapper-->
+  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="dashboard.php">
        <img src="../../assets/logo.png" class="logo-icon" alt="logo icon" style="width: 80px; height: 60px;">
@@ -58,12 +75,12 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+    <!--  <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="new-team.php">
@@ -81,8 +98,8 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
-                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -90,14 +107,22 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-
-     
+      <li>
+        <a href="reasign-task.php">
+          <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
+        </a>
+      </li>
+        <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>
      <!-- <li>
-        <a href="">
+        <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>
         </a>
       </li>-->
-      <li>
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
@@ -136,7 +161,11 @@ include_once("session.php");
     </li>
   </ul>
      
-  <ul class="navbar-nav align-items-center right-nav-link">
+    <li class="nav-item dropdown-lg">
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
+      <b class=""><?php echo $_SESSION['Region']?></b></a>
+    </li>
+
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
         <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
@@ -154,7 +183,13 @@ include_once("session.php");
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+       <!-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>-->
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" href="logout.php"></i> Logout</li>
       </ul>
     </li>
   </ul>
@@ -166,31 +201,86 @@ include_once("session.php");
 	
   <div class="content-wrapper">
     <div class="container-fluid">
-    
-    <div class="mt-3">
-      <div id='calendar'></div>
-    </div>
-			
-		<!--start overlay-->
+     
+      <div class="row mt-3">
+          <div class="card">
+            <div class="card-body">
+              
+              <center><h5 class="card-title">Current Tasks</h5></center>
+			  <div class="table-responsive">
+               <table class="table" id="dtBasicExample">
+                  <thead>
+                    <tr>
+                    <th>Team ID</th>
+                    <th>ClientID</th>
+                     <th>Building Name</th>
+                     <th>Building Code</th>
+                     <th>Region</th>
+                     <th>Client Name</th>
+                     <th>Client Contact</th>
+                     <th>Availability</th>
+                     <th>More</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+ <?php
+    $query=mysqli_query($connection,"SELECT techietask.TeamID,techietask.ClientID,techietask.ClientName,techietask.ClientContact,techietask.TeamID,techietask.Region,techietask.ClientAvailability,techietask.BuildingCode,techietask.BuildingName,techietask.Date from techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID where papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."'");
+    while($row=mysqli_fetch_assoc($query)){
+      $tid=$row['TeamID'];
+      $id=$row['ClientID'];
+      $cname=$row['ClientName'];
+      $contact=$row['ClientContact'];
+      $availD=$row['ClientAvailability'];
+      $reg=$row['Region'];
+      $bname=$row['BuildingName'];
+      $bcode=$row['BuildingCode'];
+      
+      echo ' <tr>
+      <th scope="row">'.$tid.'</th>
+      <td>'.$id.'</td>
+      <td>'.$bname.'</td>
+      <td>'.$bcode.'</td>
+      <td>'.$reg.'</td>
+      <td>'.$cname.'</td>
+      <td>'.$contact.'</td>
+      <td>'.$availD.'</td>
+      <td>
+        <button class="btn-success"><a href="change-task.php?client-id='.$id.'" class="text-bold">Reasign Task</a></button>
+      </td>
+      </tr>';
+    }
+    ?>
+                  </tbody>
+                </table>
+            </div>
+
+  </div>
+            </div>
+          </div>
+        
+        </div>
+      </div><!--End Row-->
+	  
+	  <!--start overlay-->
 		  <div class="overlay toggle-menu"></div>
-		<!--end overlay-->	
-			
+		<!--end overlay-->
+
     </div>
     <!-- End container-fluid-->
-   </div><!--End content-wrapper-->
-   
-  <!--Start Back To Top Button-->
+    
+  </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     <!--End Back To Top Button-->
 	
-	<!--Start footer--
-	<footer class="footer">
+	<!--Start footer-->
+	<!--<footer class="footer">
       <div class="container">
         <div class="text-center">
-          Copyright © 2018 Dashtreme Admin
+          Copyright © Konnect 2022
         </div>
       </div>
-    </footer>
+    </footer>-->
 	<!--End footer-->
 	
 	<!--start color switcher-->
@@ -234,9 +324,8 @@ include_once("session.php");
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  
-  <script src="../../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../../assets/js/jquery.min.js"></script>-->
   <script src="../../assets/js/popper.min.js"></script>
   <script src="../../assets/js/bootstrap.min.js"></script>
 	
@@ -247,11 +336,12 @@ include_once("session.php");
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
-  
-  <!-- Full Calendar -->
-  <script src='../../assets/plugins/fullcalendar/js/moment.min.js'></script>
-  <script src='../../assets/plugins/fullcalendar/js/fullcalendar.min.js'></script>
-  <script src="../../assets/plugins/fullcalendar/js/fullcalendar-custom-script.js"></script>
-	
+ <script>
+ $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+</script>	
 </body>
+
 </html>

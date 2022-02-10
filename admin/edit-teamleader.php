@@ -2,15 +2,23 @@
 
 include("../db/db.php");
 include("session.php");
+$id=$_GET['teamleaderid'];
+
+$sql="select * from teamleaders where ID=$id";
+$result=mysqli_query($connection,$sql);
+$row=mysqli_fetch_assoc($result);
+$fname=$row['FIRST_NAME'];
+$lname=$row['LAST_NAME'];
+$email=$row['EMAIL'];
+$dpt=$row['DEPARTMENT'];
+$reg=$row['REGION'];
 
 if(isset($_POST['submit'])){
 $FirstName = $_POST['FName'];
 $LastName = $_POST['LName'];
 $Email = $_POST['email'];
 $Department = $_POST['Department'];
-$Password = $_POST['password'];
-
-$hashpass= password_hash($Password, PASSWORD_DEFAULT);
+$Region = $_POST['Region'];
 
 //checking if connection is not created successfully
 if($connection->connect_error){
@@ -18,15 +26,16 @@ if($connection->connect_error){
 }
 else
 {
-    $stmt= $connection->prepare("insert into employees (FIRST_NAME,LAST_NAME,EMAIL,DEPARTMENT,PASSWORD)
-    values(?,?,?,?,?)");
-       //values from the fields
-    $stmt->bind_param("sssss",$FirstName,$LastName,$Email,$Department,$hashpass);
-    $stmt->execute();
-    echo "<script>alert('Successfull.');</script>";
-    echo '<script>window.location.href="new-user.php";</script>';
-    $stmt->close();
-   # $connection->close();
+  $sql="update teamleaders set ID=$id,FIRST_NAME='$FirstName',LAST_NAME='$LastName',EMAIL='$Email',DEPARTMENT='$Department',REGION='$Region' where ID=$id";
+  
+  $result=mysqli_query($connection,$sql);
+  if ($result) {
+    echo '<script>alert("Update Successfull!")</script>';
+      echo '<script>window.location.href="list-of-teamleaders.php";</script>';
+  } else {
+    echo '<script>alert("Not submitted try again!")</script>';
+      echo '<script>window.location.href="edit-teamleader.php";</script>';
+  }
    
 }
 }
@@ -39,7 +48,7 @@ else
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>New | User</title>
+  <title>Edit | Teamleader</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
@@ -49,8 +58,6 @@ else
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Bootstrap core JavaScript-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -93,7 +100,7 @@ else
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <!--<li>
+      <li>
         <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
@@ -122,22 +129,15 @@ else
         <a href="pap-master-record.php">
           <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
         </a>
-      </li>-->
-
+      </li>
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
       <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
-      </li>
-
-     <!-- <li  style="margin-left:5%">
         <a href="add-teamleader.php">
           <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
         </a>
       </li>
 
-     <!-- <li>
+      <li style="margin-left:5%">
         <a href="list-of-teamleaders.php">
           <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
@@ -179,19 +179,13 @@ else
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>--
+      </li>-->
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
         </a>
       </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>-->
       <li  style="margin-left:5%">
         <a href="logout.php">
           <i class="fa fa-lock"></i> <span>Logout</span>
@@ -236,7 +230,7 @@ else
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-2 user-title"><?php## echo $_SESSION['FName']?> <?php #echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['superadmin']?></p>
+            <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
             </div>
            </div>
           </a>
@@ -264,41 +258,45 @@ else
       <div class="col-lg-3">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">New User</div>
+           <div class="card-title"></div>
            <hr>
-            <form method="POST" autocomplete="off">
+            <form method="POST">
            <div class="form-group">
             <label for="input-1">First Name</label>
-            <input type="text" class="form-control" name="FName" id="input-1" placeholder="Enter First Name" required>
+            <input type="text" class="form-control" name="FName" value="<?php echo $fname?>" id="input-1" placeholder="Enter First Name" required>
            </div>
            <div class="form-group">
             <label for="input-2">Last Name</label>
-            <input type="text" class="form-control" name="LName" id="input-2" placeholder="Enter Last Name" required>
+            <input type="text" class="form-control" name="LName" value="<?php echo $lname?>" id="input-2" placeholder="Enter Last Name" required>
            </div>
            <div class="form-group">
             <label for="input-2">Email</label>
-            <input type="text" class="form-control" name="email" id="input-2" placeholder="Enter Email" required>
+            <input type="text" class="form-control" name="email" value="<?php echo $email?>" id="input-2" placeholder="Enter Email" required>
            </div>
            <div class="form-group">
             <label for="input-1">Department</label>
-            <select type="text" class="form-control" name="Department" id="input-1" name="Region" placeholder="Region" required>
-              <option value="" disabled selected> Select Deprtment</option>
-              <option value="Executive">Executive</option>
-              <option value="HR">HR</option>
-              <option value="Nats">Nats</option>
-              <option value="Maton">Maton</option>
-              <option value="Hub">Hub</option>
-              <option value="Media">Media</option>
+            <select type="text" class="form-control" name="Department" id="input-1" placeholder="Region" required>
+              <option value="<?php echo $dpt?>" disabled selected><?php echo $dpt?></option>
               <option value="Sales">Sales</option>
               <option value="Techie">Techie</option>
             </select>
            </div>
            <div class="form-group">
-            <label for="input-2">Password</label>
-            <input type="text" class="form-control" name="password" id="input-2" value="123456" placeholder="Password" required>
+            <label for="input-1">Region</label>
+            <select type="text" class="form-control" id="input-1" name="Region" placeholder="Region" required>
+              <option value="<?php echo $reg?>" disabled selected><?php echo $reg?></option>
+              <option value="ZMM">ZMM</option>
+              <option value="G44">G44</option>
+              <option value="G45S">G45S</option>
+              <option value="G45N">G45N</option>
+              <option value="R&M">R&M</option>
+              <option value="JCR">JCR</option>
+              <option value="KWT">KWT</option>
+               <option value="admin">admin</option>
+            </select>
            </div>
            <div class="form-group">
-            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
+            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Update</button>
           </div>
           </form>
          </div>
@@ -308,7 +306,7 @@ else
      <div class="col-lg-9">
         <div class="card">
            <div class="card-body">
-           <div class="card-title"><center><h5>Emails</h5></center>  <div class="form-outline">
+           <div class="card-title"><center><h5>Teamleaders</h5></center>  <div class="form-outline">
            </div>
            <hr>
           
@@ -321,13 +319,14 @@ else
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Department</th>
-                    <th scope="col">More</th>
+                    <th scope="col">DepaRegionrtment</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
    <?php
     
-    $sql="select * from employees order by ID ASC";
+    $sql="select * from teamleaders";
     $result=$connection->query($sql);
     while($row=$result->fetch_array()){
       ?>
@@ -337,10 +336,7 @@ else
         <td><?php echo $row['LAST_NAME']?></td>
         <td><?php echo $row['EMAIL']?></td>
         <td><?php echo $row['DEPARTMENT']?></td>
-       <th>
-        <a href="edit-user.php?userid=<?php echo $row['ID']; ?>"><i class="fas fa-edit"></i></a>
-        <a href="delete-user.php?userid=<?php echo $row['ID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['FIRST_NAME']; ?> <?php  echo $row['LAST_NAME']; ?> from Users?')"><i class="fas fa-trash"></i></a>
-        </th>
+        <td><?php echo $row['REGION']?></td>
     </tr>
     <?php } ?>
                 </tbody>

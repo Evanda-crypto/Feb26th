@@ -130,11 +130,6 @@ else{
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
-      </li>
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -189,12 +184,6 @@ else{
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">
@@ -302,6 +291,7 @@ else{
               <option value="R&M">R&M</option>
               <option value="JCR">JCR</option>
               <option value="KWT">KWT</option>
+              <option value="admin">admin</option>
             </select>
            </div>
            <div class="form-group">

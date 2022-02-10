@@ -105,7 +105,7 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+      <li style="margin-left:5%">
         <a href="list-of-teamleaders.php">
           <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
@@ -152,12 +152,6 @@ include_once("session.php");
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">

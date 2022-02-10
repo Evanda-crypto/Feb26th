@@ -17,13 +17,8 @@ $bcode=$row['BuildingCode'];
 if(isset($_POST['submit'])){
     $TeamID = $_POST['teamid'];
     $ClientID = $_POST['ClientID'];
-    $ClientName = $_POST['cname'];
-    $ClientContact = $_POST['contact'];
-    $ClientAvailability = $_POST['availD'];
-    $Region = $_POST['reg'];
-    $BuildingName = $_POST['bname'];
-    $BuildingCode = $_POST['bcode'];
     $Date = $_POST['date'];
+    $Region = $_POST['Region'];
 
     if($connection->connect_error){
         die('connection failed : '.$connection->connect_error);
@@ -31,23 +26,25 @@ if(isset($_POST['submit'])){
     else
     {    
       $stmt= $connection->prepare("select * from techieteams where Team_ID= ? and Region= ?");
-    $stmt->bind_param("ss",$TeamID,$Region);
-    $stmt->execute();
-    $stmt_result= $stmt->get_result();
+      $stmt->bind_param("ss",$TeamID,$Region);
+      $stmt->execute();
+      $stmt_result= $stmt->get_result();
     if($stmt_result->num_rows>0){
-      
-        $stmt= $connection->prepare("insert into techietask (TeamID,ClientID,ClientName,ClientContact,ClientAvailability,Region,BuildingName,BuildingCode,Date)
-        values(?,?,?,?,?,?,?,?,?)");
-        //values from the fields
-        $stmt->bind_param("sssssssss",$TeamID,$ClientID,$ClientName,$ClientContact,$ClientAvailability,$Region,$BuildingName,$BuildingCode,$Date);
-        $stmt->execute();
-        echo "<script>alert('Successfull.');</script>";
-        header("location: pending-installation.php");
-        $stmt->close();
-        $connection->close();
+        $sql="update techietask set ClientID=$id,TeamID='$TeamID',Date='$Date' where ClientID=$id";
+  
+        $result=mysqli_query($connection,$sql);
+        if ($result) {
+          echo '<script>alert("Successfully easigned!")</script>';
+            echo '<script>window.location.href="reasign-task.php";</script>';
+        } else {
+          echo '<script>alert("Not submitted try again!")</script>';
+            echo '<script>window.location.href="change-task.php";</script>';
+        }
+    
     }
     else{
       echo "<script>alert('Team does not exist.');</script>";
+      echo '<script>window.location.href="reasign-task.php";</script>';
     }
     }
 }
@@ -60,7 +57,7 @@ if(isset($_POST['submit'])){
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Techie | Task</title>
+  <title> Change | Techie | Task</title>
   <!-- loader--
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
@@ -79,7 +76,14 @@ if(isset($_POST['submit'])){
   <!-- Custom Style-->
   <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
-  
+  <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -139,12 +143,12 @@ if(isset($_POST['submit'])){
                                               ?></small>
         </a>
       </li>
-            <li>
+      <li>
         <a href="reasign-task.php">
           <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
         </a>
       </li>
-            <li>
+    <li>
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
         </a>
@@ -229,10 +233,10 @@ if(isset($_POST['submit'])){
     <div class="container-fluid">
 
     <div class="row mt-3">
-      <div class="col-lg-6">
+      <div class="col-lg-4">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">New Task</div>
+           <div class="card-title">Change Task</div>
            <hr>
             <form method="POST">
            <div class="form-group">
@@ -240,98 +244,89 @@ if(isset($_POST['submit'])){
             <input type="text" class="form-control" name="teamid" id="input-1" placeholder="Enter Team ID" value="<?php echo $_SESSION['Region']?>-" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Client ID</label>
-            <input type="text" class="form-control" name="ClientID" value="<?php echo $id?>" id="input-2" placeholder="Client ID">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Client Name</label>
-            <input type="text" class="form-control" name="cname" value="<?php echo $cname?>" id="input-2" placeholder="Client Name">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Contact</label>
-            <input type="text" class="form-control" name="contact" id="input-2" value="<?php echo $contact?>" placeholder="Client Contact">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Region</label>
-            <input type="text" class="form-control" name="reg" id="input-2" value="<?php echo $reg?>" placeholder="Region">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Availability</label>
-            <input type="text" class="form-control" name="availD" id="input-2" value="<?php echo $availD?>" placeholder="Client Availability">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Building Name</label>
-            <input type="text" class="form-control" name="bname" id="input-2" value="<?php echo $bname?>" placeholder="Building Name">
-           </div>
-           <div class="form-group">
-            <label for="input-2">Building Code</label>
-            <input type="text" class="form-control" name="bcode" id="input-2" value="<?php echo $bcode?>" placeholder="Building Code">
-           </div>
-           <div class="form-group">
             <label for="input-2">Date of Work</label>
             <input type="date" class="form-control" name="date" id="input-2" placeholder="Date of Work" required>
            </div>
            <div class="form-group">
-            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
+            <label for="input-2">Client ID</label>
+            <input type="text" class="form-control" name="ClientID" value="<?php echo $id?>" id="input-2" placeholder="Client ID" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Client Name</label>
+            <input type="text" class="form-control" name="cname" value="<?php echo $cname?>" id="input-2" placeholder="Client Name"readonly >
+           </div>
+           <div class="form-group">
+            <label for="input-2">Availability</label>
+            <input type="text" class="form-control" name="availD" id="input-2" value="<?php echo $availD?>" placeholder="Client Availability" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Building Name</label>
+            <input type="text" class="form-control" name="bname" id="input-2" value="<?php echo $bname?>" placeholder="Building Name" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Building Code</label>
+            <input type="text" class="form-control" name="bcode" id="input-2" value="<?php echo $bcode?>" placeholder="Building Code" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Region</label>
+            <input type="text" class="form-control" name="Region" value="<?php echo $reg?>" id="input-2" placeholder="Client ID" readonly>
+           </div>
+           <div class="form-group">
+            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Change Task</button>
           </div>
           </form>
          </div>
          </div>
       </div>
 
-     <div class="col-lg-6">
+     <div class="col-lg-8">
         <div class="card">
            <div class="card-body">
-           <div class="card-title">Pending Tasks for Teams <div class="form-outline">
-          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
+           <div class="card-title">Pending Tasks for Teams
            </div>
            <hr>
-           <div class="card">
-           
-            <div class="card-body">
               <h5 class="card-title"></h5>
 			  <div class="table-responsive">
-              <table class="table table-hover" id="myTable">
+              <table class="table table-hover"id="dtBasicExample">
                 <thead>
                   <tr>
+                  <th scope="col">No</th>
                     <th scope="col">Team ID</th>
                     <th scope="col">Techie 1</th>
                     <th scope="col">Techie 2</th>
                     <th scope="col">Pending Tasks</th>
-
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                  <?php
+                <?php
+                        $query  = "SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,techieteams.Techie_1,techieteams.Techie_2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
+                        left join techieteams on techietask.TeamID=techieteams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
+                        GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1";
+                        $result  = mysqli_query($connection, $query);
 
-                          $sql="SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,techieteams.Techie_1,techieteams.Techie_2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
-                          left join techieteams on techietask.TeamID=techieteams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
-                          GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1";
-                          $result=mysqli_query($connection,$sql);
-                          if($result){
-                          while($row=mysqli_fetch_assoc($result)){
-                          $tid=$row['TeamID'];
-                          $t1=$row['Techie_1'];
-                          $t2=$row['Techie_2'];
-                          $task=$row['tasks'];
+                        $num_rows  = mysqli_num_rows($result);
 
-                          echo ' <tr>
-                          <td>'.$tid.'</td>
-                          <td>'.$t1.'</td>
-                          <td>'.$t2.'</td>
-                          <td>'.$task.'</td>
-                          </tr>';
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <th><?php echo $row['TeamID']; ?></th>
+                                    <th><?php echo $row['Techie_1']; ?></th>
+                                    <th><?php echo $row['Techie_2']; ?></th>
+                                    <th><?php echo $row['tasks']; ?></th>
+                                </tr>
+                        <?php
 
-                       }
-                         }
-                       ?>
-                  </tr>
+                            }
+                        }
+                        ?>
                 </tbody>
               </table>
             </div>
-            </div>
-          </div>
+           
          </div>
          </div>
       </div>
@@ -400,8 +395,8 @@ if(isset($_POST['submit'])){
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../../assets/js/jquery.min.js"></script>-->
   <script src="../../assets/js/popper.min.js"></script>
   <script src="../../assets/js/bootstrap.min.js"></script>
 	
@@ -413,27 +408,9 @@ if(isset($_POST['submit'])){
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
   <script>
-function myFunction() {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }       
-  }
-}
-
-$(document).ready(function () {
-$("myTable").stickyTableHeaders();
+ $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
 });
 </script>
 <script>
@@ -451,15 +428,4 @@ if(month<10){
  document.getElementById("input-2").setAttribute("max",maxdate);
 </script>
 </body>
-<!--SELECT count(techietask.TeamID) as task,papinstalled.Team_ID from techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID WHERE papinstalled.ClientID is null and techietask.TeamID="1000"
-
-
-
-SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID WHERE papinstalled.ClientID is null  and techietask.Region="G44" GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1 
-
-
-
-
-
--->
 </html>

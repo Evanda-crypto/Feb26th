@@ -26,7 +26,8 @@ include_once("session.php");
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
   <!--favicon-->
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
   <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -91,8 +92,8 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
-                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -100,7 +101,11 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-
+           <li>
+        <a href="reasign-task.php">
+          <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
+        </a>
+      </li>
       <li>
       <li>
         <a href="pap-installed.php">
@@ -186,8 +191,9 @@ include_once("session.php");
 	
   <div class="content-wrapper">
     <div class="container-fluid">
-     
       <div class="row mt-3">
+<div class="col-12 col-lg-8 col-xl-12">
+
           <div class="card">
             <div class="card-body"> 
             <center>  <h5 class="card-title">PAP DAILY INSTALLATION</h5></center>
@@ -201,6 +207,7 @@ include_once("session.php");
                     <th>Techie 2</th>
                     <th>Mac Address</th>
                     <th>Date Installed</th>
+                   <th>More</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -218,6 +225,9 @@ while($row=$result->fetch_array()){
     <td><?php echo $row['Techie_2']?></td>
     <td><?php echo $row['Mac']?></td>
     <td><?php echo $row['DateInstalled']?></td>
+    <td>
+    <a href="edit-pap.php?clientid=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
+    </td>
 </tr>
 <?php } ?>
                   </tbody>
@@ -226,7 +236,7 @@ while($row=$result->fetch_array()){
           </div>
             </div>
           </div>
-        
+</div>        
        <!-- <div class="col-lg-6">
           <div class="card">
             <div class="card-body">

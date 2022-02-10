@@ -47,43 +47,34 @@ include_once("session.php");
    </div>
   <ul class="sidebar-menu do-nicescrol">
      <li class="sidebar-header">MAIN NAVIGATION</li>
-     <!--<li>
-       <a href="SalesDashboard.php">
+     <li style="margin-left:5%">
+       <a href="dashboard.php">
          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
        </a>
      </li>
-
-     <!--<li>
-       <a href="icons.php">
-         <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-       </a>
-     </li>--
-
-     <li>
-       <a href="pap-details.php">
-         <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
-       </a>
-     </li>
-
-     <li>
-       <a href="buildings.php">
-         <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
-       </a>
-     </li>
-
-     <li>
-       <a href="calendar.php">
-         <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-         <small class="badge float-right badge-light"></small>
-       </a>
-     </li>-->
      <li  style="margin-left:5%">
         <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales[<?php echo $_SESSION['Region']?>]</span>
         </a>
       </li>
 
-    <li>
+     <li  style="margin-left:5%">
+        <a href="all-pap.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap all records</span>
+        </a>
+      </li>
+           <li  style="margin-left:5%">
+        <a href="pap-restituted.php">
+          <i class="zmdi zmdi-alert-triangle"></i> <span>Pap restituted</span>
+        </a>
+      </li>
+<li  style="margin-left:5%">
+        <a href="pap-turnedon.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap turnedon</span>
+        </a>
+      </li>
+
+    <li style="margin-left:5%">
        <a href="profile.php" >
          <i class="zmdi zmdi-face"></i> <span>Profile</span>
        </a>
@@ -95,7 +86,7 @@ include_once("session.php");
        </a>
      </li>-->
 
-      <li>
+      <li style="margin-left:5%">
        <a href="logout.php" target="_blank">
          <i class="zmdi zmdi-lock"></i> <span>Logout</span>
        </a>

@@ -125,15 +125,26 @@ if ($result) {
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-     <!-- <li>
+        <li style="margin-left:5%">
         <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
-      </li>-->
+      </li>
 
       <li  style="margin-left:5%">
         <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales[<?php echo $_SESSION['Region']?>]</span>
+        </a>
+      </li>
+       <li  style="margin-left:5%">
+        <a href="all-pap.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap all records</span>
+        </a>
+      </li>
+
+<li  style="margin-left:5%">
+        <a href="pap-turnedon.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap turnedon</span>
         </a>
       </li>
          <!--  <li  style="margin-left:5%">
@@ -310,7 +321,7 @@ if ($result) {
            </div>
             <div class="form-group">
             <label for="input-1">Building Name </label>
-            <input type="text" class="form-control" id="bname" name="Buildingname"value="<?php echo $BuildingName?>"   placeholder="Building Name" required>
+            <input type="text" class="form-control" id="bname" name="BuildingName"value="<?php echo $BuildingName?>"   placeholder="Building Name" required>
            </div>
            <div class="form-group">
             <label for="input-1">Building Code</label>

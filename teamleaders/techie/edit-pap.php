@@ -1,37 +1,41 @@
 <?php
-include('../../db/db.php');
-include_once("session.php");
+
+include("../../db/db.php");
+include("session.php");
+$id=$_GET['clientid'];
+
+$sql="select MacAddress,SerialNumber,DateInstalled from papinstalled where ClientID=$id";
+$result=mysqli_query($connection,$sql);
+$row=mysqli_fetch_assoc($result);
+$mac=$row['MacAddress'];
+$serial=$row['SerialNumber'];
+$date=$row['DateInstalled'];
+
 
 if(isset($_POST['submit'])){
-    $Team_ID=$_POST['teamid'];
-    $Techie_1 = $_POST['Techie1'];
-    $Techie_2 = $_POST['Techie2'];
-    $Email1 = $_POST['Email1'];
-    $Email2 = $_POST['Email2'];
-    $Region = $_POST['region'];
-    
-    //checking connection
-    if($connection->connect_error){
-        die('connection failed : '.$connection->connect_error);
-    }
-    else
-    {
-         //Insert query
-        $stmt= $connection->prepare("insert into techieteams (Team_ID,Techie_1,Techie_2,Region,Email1,Email2)
-        values(?,?,?,?,?,?)");
-           //values from the fields
-        $stmt->bind_param("ssssss",$Team_ID,$Techie_1,$Techie_2,$Region,$Email1,$Email2);
-        $stmt->execute();
-        echo "<script>alert('Information successfully submited');</script>";
-        $stmt->close();
-        $connection->close();
-    
-    }
-    }
-?>
-<?php
-include("../../db/db.php");
-include_once("session.php");
+$Mac = $_POST['mac'];
+$Serial = $_POST['serial'];
+$Dateinstalled = $_POST['date'];
+
+//checking if connection is not created successfully
+if($connection->connect_error){
+    die('connection failed : '.$connection->connect_error);
+}
+else
+{
+  $sql="update papinstalled set ClientID=$id,MacAddress='$Mac',SerialNumber='$Serial',DateInstalled='$Dateinstalled' where ClientID=$id";
+  
+  $result=mysqli_query($connection,$sql);
+  if ($result) {
+    echo '<script>alert("Update Successfull!")</script>';
+      echo '<script>window.location.href="pap-installed.php";</script>';
+  } else {
+    echo '<script>alert("Not submitted try again!")</script>';
+      echo '<script>window.location.href="edit-pap.php";</script>';
+  }
+   
+}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -41,11 +45,12 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>New | Team</title>
+  <title>Edit | Pap</title>
   <!-- loader--
   <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../../assets/js/pace.min.js"></script>
   <!--favicon-->
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
 
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
@@ -57,8 +62,6 @@ include_once("session.php");
 <!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-
-  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
@@ -100,21 +103,14 @@ include_once("session.php");
         </a>
       </li>
 
-     <!-- <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>-->
-
       <li>
         <a href="new-team.php">
           <i class="zmdi zmdi-account-add"></i> <span>New Team</span>
         </a>
       </li>
 
-     <!-- <li>
-       <!-- <a href="techie-teams.php">
+      <!--<li>
+        <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
       </li>-->
@@ -123,8 +119,8 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
-                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -132,21 +128,13 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-        <li>
-        <a href="reasign-task.php">
-          <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
-        </a>
-      </li>
-            <li>
+
+      <li>
+      <li>
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
         </a>
       </li>
-     <!-- <li>
-        <a href="#">
-          <i class="fa fa-check"></i> <span>Work Report</span>
-        </a>
-      </li>-->
      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
@@ -159,16 +147,10 @@ include_once("session.php");
         </a>
       </li>
 
-     <!--  <li>
-        <a href="register.php" target="_blank">
-          <i class="zmdi zmdi-account-circle"></i> <span>Registration</span>
-        </a>
-      </li>-->
     </ul>
    
    </div>
    <!--End sidebar-wrapper-->
-  
 
 <!--Start topbar header-->
 <header class="topbar-nav">
@@ -187,11 +169,11 @@ include_once("session.php");
     </li>
   </ul>
      
-  <ul class="navbar-nav align-items-center right-nav-link">
-  <li class="nav-item dropdown-lg">
+   <!-- <li class="nav-item dropdown-lg">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-      <b class=""><?php echo $_SESSION['Region']?></b></a>
-    </li>
+      <i class=""></i></a>
+    </li>-->
+
     <li class="nav-item">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
         <span class="user-profile"><img src="https://via.placeholder.com/110x110" class="img-circle" alt="user avatar"></span>
@@ -202,14 +184,20 @@ include_once("session.php");
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['teamleader']?></p>
+            <h6 class="mt-2 user-title"><?php## echo $_SESSION['FName']?> <?php #echo $_SESSION['LName']?></h6>
+            <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
             </div>
            </div>
           </a>
-       </li>
+        </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+       <!-- <li class="dropdown-item"><i class="icon-envelope mr-2"></i> Inbox</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-wallet mr-2"></i> Account</li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item"><i class="icon-settings mr-2"></i> Setting</li>-->
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" href="logout.php"></i> Logout</li>
       </ul>
     </li>
   </ul>
@@ -222,86 +210,81 @@ include_once("session.php");
     <div class="container-fluid">
 
     <div class="row mt-3">
-      <div class="col-lg-4">
+      <div class="col-lg-3">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">New Team</div>
+           <div class="card-title"></div>
            <hr>
             <form method="POST">
            <div class="form-group">
-            <label for="input-1">Team ID</label>
-            <input type="text" class="form-control" name="teamid" value="<?php echo $_SESSION['Region']?>-" id="input-1" placeholder="Enter Team ID" required>
+            <label for="input-1">Mac Address</label>
+            <input type="text" class="form-control" name="mac" value="<?php echo $mac?>" id="input-1" placeholder="Mac Address" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Techie 1</label>
-            <input type="text" class="form-control" name="Techie1" id="techie1"  onkeyup="GetDetail(this.value)" placeholder="Techie 1" required>
+            <label for="input-2">Serial Number</label>
+            <input type="text" class="form-control" name="serial" value="<?php echo $serial?>" id="input-2" placeholder="Serial Nmber" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Techie 1 Email</label>
-            <input type="text" class="form-control" name="Email1" id="Email1" placeholder="Techie 1 Email" required>
+            <label for="input-2">Date Installed</label>
+            <input type="text" class="form-control" name="date" value="<?php echo $date?>" id="input-2" placeholder="Date Installed" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Techie 2</label>
-            <input type="text" class="form-control" name="Techie2" id="techie2"  onkeyup="GetDetaila(this.value)" placeholder="Techie 2" required>
-           </div>
-           <div class="form-group">
-            <label for="input-2">Techie 2 Email</label>
-            <input type="text" class="form-control" name="Email2" id="Email2" placeholder="Techie 2 Email" required>
-           </div>
-           <div class="form-group">
-            <label for="input-2">Region</label>
-            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $_SESSION['Region']?>" placeholder="Region" required>
-           </div>
-           <div class="form-group">
-            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
+            <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Update</button>
           </div>
           </form>
          </div>
          </div>
       </div>
 
-     <div class="col-lg-8">
-           <div class="card">
-            <div class="card-body">
-            <center><div class="card-title">Current Techie Teams  <div class="form-outline"></center>
+     <div class="col-lg-9">
+        <div class="card">
+           <div class="card-body">
+           <div class="card-title"><center><h5>Pap Installed</h5></center>  <div class="form-outline">
+           </div>
+           <hr>
+          
 			  <div class="table-responsive">
               <table class="table table-hover" id="dtBasicExample">
                 <thead>
                   <tr>
-                    <th scope="col">Team ID</th>
-                    <th scope="col">Techie 1</th>
-                    <th scope="col">Techie 2</th>
-                    
+                    <th scope="col">No</th>
+                    <th>Team ID</th>
+                    <th>Techie 1</th>
+                    <th>Techie 2</th>
+                    <th>Mac Address</th>
+                    <th>Date Installed</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php
+                <?php
+                        $query  = "SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+                        FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
+                        $result  = mysqli_query($connection, $query);
 
-                          $sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
-                          $result=mysqli_query($connection,$sql);
-                          if($result){
-                          while($row=mysqli_fetch_assoc($result)){
-                          $tid=$row['Team_ID'];
-                          $tname1=$row['Techie_1'];
-                          $tname2=$row['Techie_2'];
-                          
+                        $num_rows  = mysqli_num_rows($result);
 
-                          echo ' <tr>
-                          <td>'.$tid.'</td>
-                          <td>'.$tname1.'</td>
-                          <td>'.$tname2.'</td>
-                          
-                          </tr>';
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <td><?php echo $row['Team_ID']?></td>
+                                    <td><?php echo $row['Techie_1']?></td>
+                                    <td><?php echo $row['Techie_2']?></td>
+                                    <td><?php echo $row['Mac']?></td>
+                                    <td><?php echo $row['DateInstalled']?></td>
+                                </tr>
+                        <?php
 
-                       }
-                         }
-                       ?>
-                 
+                            }
+                        }
+                        ?>
                 </tbody>
               </table>
             </div>
             </div>
-          </div>
          </div>
          </div>
       </div>
@@ -382,107 +365,11 @@ include_once("session.php");
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
-<script>
-$(document).ready(function () {
+  <script>
+        $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
-</script>>
-<script>
-
-// onkeyup event will occur when the user
-// release the key and calls the function
-// assigned to this event
-function GetDetail(str) {
-  if (str.length == 0) {
-    document.getElementById("Email1").value = "";
-    return;
-  }
-  else {
-
-    // Creates a new XMLHttpRequest object
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-
-      // Defines a function to be called when
-      // the readyState property changes
-      if (this.readyState == 4 &&
-          this.status == 200) {
-        
-        // Typical action to be performed
-        // when the document is ready
-        var myObj = JSON.parse(this.responseText);
-
-        // Returns the response data as a
-        // string and store this array in
-        // a variable assign the value
-        // received to first name input field
-        
-        document.getElementById
-          ("Email1").value = myObj[0];
-        
-        // Assign the value received to
-        // last name input field
-        
-      }
-    };
-
-    // xhttp.open("GET", "filename", true);
-    xmlhttp.open("GET", "retrieve.php?techie1=" + str, true);
-    
-    // Sends the request to the server
-    xmlhttp.send();
-  }
-}
-</script>
-
-
-<script>
-
-// onkeyup event will occur when the user
-// release the key and calls the function
-// assigned to this event
-function GetDetaila(str) {
-  if (str.length == 0) {
-    document.getElementById("Email2").value = "";
-    return;
-  }
-  else {
-
-    // Creates a new XMLHttpRequest object
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
-
-      // Defines a function to be called when
-      // the readyState property changes
-      if (this.readyState == 4 &&
-          this.status == 200) {
-        
-        // Typical action to be performed
-        // when the document is ready
-        var myObj = JSON.parse(this.responseText);
-
-        // Returns the response data as a
-        // string and store this array in
-        // a variable assign the value
-        // received to first name input field
-        
-        document.getElementById
-          ("Email2").value = myObj[0];
-        
-        // Assign the value received to
-        // last name input field
-        
-      }
-    };
-
-    // xhttp.open("GET", "filename", true);
-    xmlhttp.open("GET", "retriev.php?techie2=" + str, true);
-    
-    // Sends the request to the server
-    xmlhttp.send();
-  }
-}
-</script>
+    </script>
 </body>
 </html>

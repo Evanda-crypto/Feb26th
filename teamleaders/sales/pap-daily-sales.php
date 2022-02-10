@@ -53,7 +53,7 @@ include_once("session.php");
 <div id="wrapper">
 
   <!--Start sidebar-wrapper-->
-  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
+    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
        <img src="../../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
@@ -62,14 +62,30 @@ include_once("session.php");
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <!--<li>
-        <a href="">
+      <li style="margin-left:5%">
+        <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
-      </li>-->
+      </li>
       <li  style="margin-left:5%">
         <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales[<?php echo $_SESSION['Region']?>]</span>
+        </a>
+      </li>
+
+      <li  style="margin-left:5%">
+        <a href="all-pap.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap all records</span>
+        </a>
+       </li>
+      <li  style="margin-left:5%">
+        <a href="pap-restituted.php">
+          <i class="zmdi zmdi-alert-triangle"></i> <span>Pap restituted</span>
+        </a>
+      </li>
+      <li  style="margin-left:5%">
+        <a href="pap-turnedon.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap turnedon</span>
         </a>
       </li>
       <!-- <li  style="margin-left:5%">
@@ -179,7 +195,7 @@ include_once("session.php");
     </ul>
    
    </div>
-   <!--End sidebar-wrapper-->
+<!-- End of Sidebar-->
 
 <!--Start topbar header-->
 <header class="topbar-nav">
@@ -243,7 +259,7 @@ include_once("session.php");
           <div class="card">
             <div class="card-body">
               
-            <center>  <h5 class="card-title">PAP DAILY SALES</h5></center>
+            <center>  <h5 class="card-title">PAP DAILY SALES[<?php echo $_SESSION['Region']?>]</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>
@@ -266,7 +282,7 @@ include_once("session.php");
                   <tbody>
 
  <?php
-                        $query  = "SELECT * from papdailysales WHERE `Datesigned` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND Region='".$_SESSION['Region']."'";
+                        $query  = "SELECT * from papdailysales WHERE `Datesigned` >= DATE_SUB(CURDATE(), INTERVAL 30 DAY) AND Region='".$_SESSION['Region']."' ORDER BY DateSigned DESC";
                         $result  = mysqli_query($connection, $query);
 
                         $num_rows  = mysqli_num_rows($result);

@@ -155,12 +155,6 @@ include_once("session.php");
         </a>
       </li>
       <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
         <a href="logout.php">
           <i class="fa fa-lock"></i> <span>Logout</span>
         </a>

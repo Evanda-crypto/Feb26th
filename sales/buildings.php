@@ -67,12 +67,6 @@ include_once("session.php");
         </a>
       </li>
 
-      <!--<li>
-        <a href="icons.php">
-          <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-        </a>
-      </li>-->
-
       <li>
         <a href="pap-details.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</span>
@@ -84,14 +78,16 @@ include_once("session.php");
           <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
         </a>
       </li>
-
-      <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>
-
+           <li>
+       <a href="my-clients.php">
+         <i class="zmdi zmdi-wifi"></i> <span>My turned on pap</span>
+       </a>
+     </li>
+     <li>
+       <a href="pap-not-installed.php">
+         <i class="zmdi zmdi-alert-triangle"></i> <span>Pap not installed</span>
+       </a>
+     </li>
       <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
@@ -169,7 +165,8 @@ include_once("session.php");
     <div class="container-fluid">
      
       <div class="row mt-3">
-        
+      <div class="col-12 col-lg-8 col-xl-12">
+  
           <div class="card">
           <center> <h5 class="card-title">Buildings Ref</h5></center>
             <div class="card-body">
@@ -187,8 +184,8 @@ include_once("session.php");
       <th class="th-sm">Region
       </th>
       <th class="th-sm">Building Status
-      </th>
-      <th class="th-sm">Floors
+      </th>    
+        <th class="th-sm">Floors
       </th>
     </tr>
   </thead>
@@ -213,7 +210,7 @@ while($row=$result->fetch_array()){
             </div>
             </div>
           </div>
-        
+</div>        
         <div class="col-lg-6">
         <!--  <div class="card">
             <div class="card-body">

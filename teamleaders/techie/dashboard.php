@@ -101,8 +101,8 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
-                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -110,7 +110,11 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-
+ <li>
+        <a href="reasign-task.php">
+          <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
+        </a>
+      </li>
       <li>
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
@@ -271,7 +275,7 @@ include_once("session.php");
  </div>  
 	  
 	<div class="row">
-     <div class="col-12 col-lg-8 col-xl-8"  style="width:100%;">
+     <div class="col-12 col-lg-8 col-xl-7"  style="width:100%;">
 	    <div class="card">
 		 <div class="card-header">Installation Progress
 		   <div class="card-action">
@@ -300,15 +304,15 @@ include_once("session.php");
                                      $result = mysqli_query($connection,$sql);# All Region installation
                                      $chart_data="";
                                       while ($row = mysqli_fetch_array($result)) { 
-                                      $Date[]  = $row['DateInstalled']  ;
-                                      $number[] = $row['installed'];
+                                     # $Date[]  = $row['DateInstalled']  ;
+                                     #$number[] = $row['installed'];
                                       
                                       }
                                    }?>
 		 <div class="card-body">
 		    <ul class="list-inline">
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>PAP Installation[All Regions]</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Installation[<?php echo $_SESSION['Region']?>]</li>
+			 <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>PAP Installation[All Regions]</li>-->
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>PAP Installation[<?php echo $_SESSION['Region']?>]</li>
 			</ul>
       <?php
                                   
@@ -320,7 +324,7 @@ include_once("session.php");
                                      $result = mysqli_query($connection,$sql);# individual region installation
                                      $chart_data="";
                                       while ($row = mysqli_fetch_array($result)) { 
-                                      #$Date[]  = $row['DateInstalled']  ;
+                                      $Date[]  = $row['DateInstalled']  ;
                                       $reginstallation[] = $row['reginstallation'];
                                       
                                       }
@@ -352,7 +356,7 @@ include_once("session.php");
                                              echo $row['installed']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Weekely Installation[<?php echo $_SESSION['Region']?>] <span> <i class="fa fa-arrow-"></i> </span></small>
+			   <small class="mb-0">Weekly Installation[<?php echo $_SESSION['Region']?>] <span> <i class="fa fa-arrow-"></i> </span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
@@ -364,7 +368,7 @@ include_once("session.php");
                                              echo $row['installed']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Weekely Installation[All Regions] <span> <i class="fa fa-arrow-"></i></span></small>
+			   <small class="mb-0">Weekly Installation[All Regions] <span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
 		 </div>
@@ -372,9 +376,9 @@ include_once("session.php");
 		</div>
 	 </div>
 
-   <div class="col-12 col-lg-4 col-xl-4">
+   <div class="col-12 col-lg-4 col-xl-5">
         <div class="card">
-           <div class="card-header">Buildings Per Region
+           <div class="card-header"><center><h5>Pap Installation Per Team[<?php echo $_SESSION['Region']?>]</h5></center>
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
@@ -397,13 +401,15 @@ include_once("session.php");
                   <thead>
                     <tr>
                     <th>No</th>
-                     <th>Region</th>
-                     <th>Buildings</th>
+                     <th>Techie 1</th>
+                     <th>Techie 2</th>
+                     <th>Pap Installed</th>
+
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                        $query  = "SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
+                        $query  = "SELECT techieteams.Techie_1,techieteams.Techie_2,COUNT(papinstalled.Team_ID) as task FROM papinstalled LEFT JOIN techieteams ON techieteams.Team_ID=papinstalled.Team_ID WHERE papinstalled.Region='".$_SESSION['Region']."' and  papinstalled.DateInstalled BETWEEN subdate(curdate(), WEEKDAY(curdate())) AND  subdate(curdate(), WEEKDAY(curdate())-13) GROUP BY techieteams.Team_ID";
                         $result  = mysqli_query($connection, $query);
 
                         $num_rows  = mysqli_num_rows($result);
@@ -415,8 +421,10 @@ include_once("session.php");
                         ?>
                                 <tr>
                                     <th><?php echo $num; ?></th>
-                                    <th><?php echo $row['Region']; ?></th>
-                                    <th><?php echo $row['buildings']; ?></th>
+                                    <th><?php echo $row['Techie_1']; ?></th>
+                                    <th><?php echo $row['Techie_2']; ?></th>
+                                    <th><?php echo $row['task']; ?></th>
+
                                 </tr>
                         <?php
 
@@ -605,19 +613,12 @@ $('.dataTables_length').addClass('bs-select');
       data: {
         labels: <?php echo json_encode($Date); ?>,
         datasets: [{
-          label: 'Pap Installed[All Regions]',
-          data: <?php echo json_encode($number); ?>,
+          label: 'Pap Installed[<?php echo $_SESSION['Region']?>]',
+          data: <?php echo json_encode($reginstallation); ?>,
           backgroundColor: '#fff',
           borderColor: "transparent",
           pointRadius :"0",
           borderWidth: 3
-        }, {
-          label: 'Pap Installed[<?php echo $_SESSION['Region']?>]',
-          data: <?php echo json_encode($reginstallation); ?>,
-          backgroundColor: "rgba(255, 255, 255, 0.25)",
-          borderColor: "transparent",
-          pointRadius :"0",
-          borderWidth: 1
         }]
       },
     options: {

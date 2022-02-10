@@ -124,11 +124,6 @@ $stmt->close();
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
-      </li>
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -136,7 +131,7 @@ $stmt->close();
         </a>
       </li>
 
-      <li>
+      <li  style="margin-left:5%">
         <a href="list-of-teamleaders.php">
           <i class="fa fa-minus-circle"></i> <span>View TeamLeaders</span>
         </a>

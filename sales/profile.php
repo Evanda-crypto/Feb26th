@@ -70,14 +70,16 @@ include_once("session.php");
          <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
        </a>
      </li>
-
-     <li>
-       <a href="calendar.php">
-         <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-         <small class="badge float-right badge-light"></small>
+          <li>
+       <a href="my-clients.php">
+         <i class="zmdi zmdi-wifi"></i> <span>My turned on pap</span>
        </a>
      </li>
-
+     <li>
+       <a href="pap-not-installed.php">
+         <i class="zmdi zmdi-alert-triangle"></i> <span>Pap not installed</span>
+       </a>
+     </li>
     <li>
        <a href="profile.php" >
          <i class="zmdi zmdi-face"></i> <span>Profile</span>

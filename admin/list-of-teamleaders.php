@@ -94,11 +94,11 @@ include_once("session.php");
       </li>
 
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
+     <!-- <li  style="margin-left:5%">
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>
+      </li>-->
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -153,12 +153,6 @@ include_once("session.php");
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">
@@ -267,7 +261,7 @@ include_once("session.php");
                                     <th><?php echo $row['DEPARTMENT']; ?></th>
                                     <th><?php echo $row['REGION']; ?></th>
                                     <th>
-                                        <a href="#?teamleaderid=<?php echo $row['ID']; ?>"><i class="fas fa-edit"></i></a>
+                                        <a href="edit-teamleader.php?teamleaderid=<?php echo $row['ID']; ?>"><i class="fas fa-edit"></i></a>
                                         <a href="deleteteamleader.php?teamleaderid=<?php echo $row['ID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['FIRST_NAME']; ?> <?php  echo $row['LAST_NAME']; ?> from Teamleaders?')"><i class="fas fa-trash"></i></a>
                                     </th>
                         <?php

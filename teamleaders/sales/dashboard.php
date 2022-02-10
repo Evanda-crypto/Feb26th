@@ -1,5 +1,5 @@
 <?php
-include("../db/db.php");
+include("../../db/db.php");
 include("session.php");
 ?>
 <?php
@@ -9,7 +9,7 @@ include("session.php");
   # code...
  echo "Problem in database connection! Contact administrator!" . mysqli_error();
       }else{
-       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE DateSigned>=DATE_ADD(CURDATE(), INTERVAL -5 DAY) GROUP BY DateSigned ORDER BY DateSigned ASC";
+       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales Where `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) and Region='".$_SESSION['Region']."' GROUP BY DateSigned  ORDER BY Datesigned Asc";
        $result = mysqli_query($connection,$sql);
        $chart_data="";
         while ($row = mysqli_fetch_array($result)) { 
@@ -18,51 +18,7 @@ include("session.php");
                              
        }
          }
-
-     # Installed Pap Graph
-         if (!$connection) {
-          # code...
-         echo "Problem in database connection! Contact administrator!" . mysqli_error();
-              }else{
-               $sql ="SELECT  COUNT(DateInstalled) as dailyinstallation FROM papinstalled WHERE `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)GROUP BY DateInstalled order by DateInstalled Asc";
-               $result = mysqli_query($connection,$sql);
-               $chart_data="";
-                while ($data = mysqli_fetch_array($result)) { 
-                $install[] = $data['dailyinstallation'];
-                                     
-               }
-                 }
-            #Turned On Graph         
-             
-                                  if (!$connection) {
-                                      # code...
-                                     echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                          }else{
-                                           $sql ="SELECT COUNT(DateTurnedOn) as turnedon FROM turnedonpap WHERE `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) GROUP BY DateTurnedOn order by DateTurnedOn Asc";
-                                           $result = mysqli_query($connection,$sql);
-                                           $chart_data="";
-                                            while ($res = mysqli_fetch_array($result)) { 
-                                            $turnedon[] = $res['turnedon'];
-                                                                 
-                                           }
-                                             }
-                                             
-                                             #Buildings per Region
-
-                                             if (!$connection) {
-                                              # code...
-                                            echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                                }else{
-                                                $sql ="SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
-                                                $result = mysqli_query($connection,$sql);
-                                                $chart_data="";
-                                                while ($row = mysqli_fetch_array($result)) { 
-           
-                                                $Region[]  = $row['Region']  ;
-                                                $Build[] = $row['buildings'];
-                                                 }
-                                              }
-                                             ?>
+        ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,10 +28,10 @@ include("session.php");
   <meta name="description" content=""/>
 <meta http-equiv="refresh" content="60">
   <meta name="author" content=""/>
-  <title>Admin | Dashboard</title>
+  <title>Teamleaders | Dashboard</title>
   <!-- loader--
-   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
- <!-- <script src="../assets/js/pace.min.js"></script>
+   <link href="../../../assets/css/pace.min.css" rel="stylesheet"/>
+ <!-- <script src="../../../assets/js/pace.min.js"></script>
   <!--favicon-->
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -86,21 +42,21 @@ include("session.php");
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
    <!--Vector CSS -->
-  <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
   <!-- simplebar CS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
+  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -109,106 +65,50 @@ include("session.php");
  <div id="wrapper" >
  
   <!--Start sidebar-wrapper-->
-   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
+  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
+       <img src="../../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
        <h5 class="logo-text">   </h5>
      </a>
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <li>
+      <li style="margin-left:5%">
         <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
       </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TABLES</span></li>
       <li  style="margin-left:5%">
         <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales[<?php echo $_SESSION['Region']?>]</span>
+        </a>
+      </li>
+        <li  style="margin-left:5%">
+        <a href="all-pap.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap all records</span>
+        </a>
+      </li>
+           <li  style="margin-left:5%">
+        <a href="pap-restituted.php">
+          <i class="zmdi zmdi-alert-triangle"></i> <span>Pap restituted</span>
+        </a>
+      </li>
+        <li  style="margin-left:5%">
+        <a href="pap-turnedon.php">
+          <i class="zmdi zmdi-grid"></i> <span>Pap turnedon</span>
         </a>
       </li>
 
-      <li  style="margin-left:5%">
-        <a href="pap-daily-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Installation</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
-        <a href="pap-pending-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pending Pap Installation</span>
-        </a>
-      </li>
-
-      <li style="margin-left:5%">
-        <a href="pap-master-record.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-     <!-- <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
+   <!--  <li  style="margin-left:5%">
+        <a href="daily-target.php">
+          <i class="zmdi zmdi-grid"></i> <span>Daily target</span>
         </a>
       </li>-->
 
       <li  style="margin-left:5%">
-        <a href="add-teamleader.php">
-          <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
-        </a>
-      </li>
-
-     <li style="margin-left:5%">
-        <a href="list-of-teamleaders.php">
-          <i class="fa fa-eye"></i> <span>View Teamleaders</span>
-        </a>
-      </li>
-
-    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>A</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>B</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>C</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TECHIE</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>Material Usage</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>Payment</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
-        </a>
-      </li>-->
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
-      <li style="margin-left:5%">
-        <a href="gallery.php">
-          <i class="fa fa-picture-o"></i> <span>Gallery</span>
+        <a href="profile.php">
+          <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
       </li>
       <li  style="margin-left:5%">
@@ -267,8 +167,8 @@ include("session.php");
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-             <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Admin']; ?></p>
+            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
+            <p class="user-subtitle"><?php echo $_SESSION['Sales']; ?></p>
             </div>
            </div>
           </a>
@@ -304,7 +204,7 @@ include("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Signed PAP <span class="float-right"> <i class="zmdi zmdi-"></i></span></p>
+                  <p class="mb-0 text-white small-font">Signed Pap <span class="float-right"> <i class="zmdi zmdi-"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -319,7 +219,7 @@ include("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Pending Installation <span class="float-right"><i class="zmdi zmdi-lon-up"></i></span></p>
+                  <p class="mb-0 text-white small-font">Pending Installation<span class="float-right"><i class="zmdi zmdi-lon-up"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -334,7 +234,7 @@ include("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Installed PAP <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
+                  <p class="mb-0 text-white small-font">Installed Pap <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -349,7 +249,7 @@ include("session.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Turned On <span class="float-right"><i class="zmdi zmdi-up"></i></span></p>
+                  <p class="mb-0 text-white small-font">Turned On<span class="float-right"><i class="zmdi zmdi-up"></i></span></p>
                 </div>
             </div>
         </div>
@@ -359,7 +259,7 @@ include("session.php");
 	<div class="row">
      <div class="col-12 col-lg-8 col-xl-8">
 	    <div class="card">
-		 <div class="card-header">Progress
+		 <div class="card-header">Signing Progress[<?php echo $_SESSION['Region']?>]
 		   <div class="card-action">
 			 <div class="dropdown">
 			 <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
@@ -378,8 +278,8 @@ include("session.php");
 		 <div class="card-body">
 		    <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Signed Pap</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed pap</li>
-                          <li class="list-inline-item"><i class="fa fa-circle mr-2 text-black"></i>Turned On Pap</li>
+			 <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed pap</li>-->
+       <!-- <li class="list-inline-item"><i class="fa fa-circle mr-2 text-black"></i>Turned On Pap</li>-->
 			</ul>
 			<div class="chart-container-1">
 			  <canvas id="chart1"></canvas>
@@ -390,37 +290,37 @@ include("session.php");
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
 		       <h5 class="mb-0"><?php
-                                             $query="SELECT COUNT(*) as SignedPaP from papdailysales where DATE(DateSigned) = CURDATE()";
+                                             $query="SELECT COUNT(*) as SignedPaP from papdailysales where DATE(DateSigned) = CURDATE() and Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['SignedPaP']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Signing <span> <i class="fa fa-arrow"></i></span></small>
+			   <small class="mb-0">Pap Signed Today[<?php echo $_SESSION['Region']?>] <span> <i class="fa fa-arrow"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
 		       <h5 class="mb-0"><?php
-                                             $query="SELECT COUNT(*) as dailyinstalled from papinstalled where DATE(DateInstalled) = CURDATE()";
+                                             $query="SELECT COUNT(*) as dailyinstalled from papinstalled where DATE(DateInstalled) = CURDATE() and Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['dailyinstalled']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Installation <span> <i class="fa fa-arrow"></i></span></small>
+			   <small class="mb-0">Pap Installed Today[<?php echo $_SESSION['Region']?>]<span> <i class="fa fa-arrow"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
 		       <h5 class="mb-0"><?php
-                                            $query="SELECT COUNT(*) as dailyturnedon from turnedonpap where DATE(DateTurnedOn) = CURDATE()";
+                                            $query="SELECT COUNT(*) as dailyturnedon from turnedonpap where DATE(DateTurnedOn) = CURDATE() and Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['dailyturnedon']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Turned On <span> <i class="fa fa-arrow-"></i></span></small>
+			   <small class="mb-0">Pap Turned On Today[<?php echo $_SESSION['Region']?>] <span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
 		 </div>
@@ -429,19 +329,12 @@ include("session.php");
 	 </div>
      <div class="col-12 col-lg-4 col-xl-4">
         <div class="card">
-           <div class="card-header"><center>Buildings Per Region</center>
+           <div class="card-header"><center>Pap Signed Today Per Champ[<?php echo $_SESSION['Region']?>]</center>
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
               <i class="icon-options"></i>
-             </a>
-            <!--  <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="javascript:void();">Action</a>
-              <a class="dropdown-item" href="javascript:void();">Another action</a>
-              <a class="dropdown-item" href="javascript:void();">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>-->
+            </a>
               </div>
              </div>
            </div>
@@ -451,14 +344,16 @@ include("session.php");
 		     <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
+                    <tr>
                     <th>No</th>
-                     <th>Region</th>
-                     <th>Buildings</th>
+                    <th>Champ Name</th>
+                    <th>Pap Signed</th>
+                    </tr>
                     </tr>
                   </thead>
-                  <tbody>
-                    <?php
-                        $query  = "SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
+                     <tbody>
+<?php
+                      $query  = "SELECT ChampName,COUNT(ChampName) as signed from papdailysales WHERE DateSigned=CURRENT_DATE() and Region='".$_SESSION['Region']."' GROUP BY ChampName order by signed DESC";
                         $result  = mysqli_query($connection, $query);
 
                         $num_rows  = mysqli_num_rows($result);
@@ -470,82 +365,23 @@ include("session.php");
                         ?>
                                 <tr>
                                     <th><?php echo $num; ?></th>
-                                    <th><?php echo $row['Region']; ?></th>
-                                    <th><?php echo $row['buildings']; ?></th>
+                                    <th><?php echo $row['ChampName']; ?></th>
+                                    <th><?php echo $row['signed']; ?></th>
                                 </tr>
                         <?php
 
                             }
                         }
                         ?>
- </tbody>
+                  </tbody>
+
 </table>
            </div>
          </div>
      </div>
 </div>
 	</div><!--End Row--
-	
-	<div class="row">
-	 <div class="col-12 col-lg-12">
-	   <div class="card">
-	     <div class="card-header">PAP MASTER RECORD
-		  <div class="card-action">
-     <div class="form-outline"><input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
-             <div class="dropdown">
-             <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
-              <i class="icon-options"></i>
-             </a>
-             <!-- <div class="dropdown-menu dropdown-menu-right">
-              <a class="dropdown-item" href="javascript:void();">Action</a>
-              <a class="dropdown-item" href="javascript:void();">Another action</a>
-              <a class="dropdown-item" href="javascript:void();">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="javascript:void();">Separated link</a>
-               </div>--
-              </div>
-             </div>
-		 </div>
-	       <div class="table-responsive">
-                 <table class="table align-items-center table-flush table-borderless" id="myTable">
-                  <thead>
-                   <tr>
-                   <th>PAP Code</th>
-                   <th>Building Name</th>
-                   <th>Building Code</th>
-                   <th>Region</th>
-                   <th>Champ Name</th>
-                   <th>Client Name</th>
-                   <th>Client Contact</th>
-                   <th>MAC Address</th>
-                   <th>Pap Status</th>
-                   <th>Date Turned On</th>
-                   </tr>
-                   </thead>
-                   <tbody><tr>
-                   <?php
-   
-  /* $query=mysqli_query($connection,"SELECT PapCode,BuildingName,BuildingCode,Region,ChampName,ClientName,ClientContact,Upper(MacAddress) as Mac,PapStatus,DateTurnedOn from turnedonpap WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc ");
-   while($row=mysqli_fetch_assoc($query)){
-       echo "<tr>";
-      # echo "<td>",$row['No'],"</td>";
-       echo "<td>",$row['PapCode'],"</td>";
-       echo "<td>",$row['BuildingName'],"</td>";
-       echo "<td>",$row['BuildingCode'],"</td>";
-       echo "<td>",$row['Region'],"</td>";
-       echo "<td>",$row['ChampName'],"</td>";
-       echo "<td>",$row['ClientName'],"</td>";
-       echo "<td>",$row['ClientContact'],"</td>";
-       echo "<td>",$row['Mac'],"</td>";
-       echo "<td>",$row['PapStatus'],"</td>";
-       echo "<td>",$row['DateTurnedOn'],"</td>";
-       echo "</tr>";
-   }*/
-   ?>
-                   </tr>
-                 </tbody></table>
-               </div>
-	   </div>
+              
 	 </div>
 	</div><!--End Row-->
 
@@ -615,19 +451,19 @@ include("session.php");
 
   <!-- Bootstrap core JavaScript-->
   
-  <script src="../assets/js/popper.min.js"></script>
-  <script src="../assets/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/popper.min.js"></script>
+  <script src="../../assets/js/bootstrap.min.js"></script>
 	
  <!-- simplebar js -->
-  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../assets/js/sidebar-menu.js"></script>
+  <script src="../../assets/js/sidebar-menu.js"></script>
   <!-- loader scripts -->
-  <script src="../assets/js/jquery.loading-indicator.js"></script>
+  <script src="../../assets/js/jquery.loading-indicator.js"></script>
   <!-- Custom scripts -->
-  <script src="../assets/js/app-script.js"></script>
+  <script src="../../assets/js/app-script.js"></script>
   <!-- Chart js -->
-  <script src="../assets/plugins/Chart.js/Chart.min.js"></script>
+  <script src="../../assets/plugins/Chart.js/Chart.min.js"></script>
   <script>
  $(document).ready(function () {
 $('#dtBasicExample').DataTable();
@@ -649,20 +485,6 @@ $('.dataTables_length').addClass('bs-select');
 						borderColor: "transparent",
 						pointRadius :"0",
 						borderWidth: 3
-					}, {
-						label: 'Installed Pap',
-						data: <?php echo json_encode($install); ?>,
-						backgroundColor: "rgba(255, 255, 255, 0.25)",
-						borderColor: "transparent",
-						pointRadius :"0",
-						borderWidth: 1
-					},{
-						label: 'Turned On Pap',
-						data: <?php echo json_encode($turnedon); ?>,
-						backgroundColor: "rgba(191, 191, 191)",
-						borderColor: "transparent",
-						pointRadius :"0",
-						borderWidth: 1
 					}
           ]
 				},

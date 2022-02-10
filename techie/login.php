@@ -27,7 +27,8 @@ if($connection){
                 $_SESSION['FName']=$data['FIRST_NAME'];
                 $_SESSION['LName']=$data['LAST_NAME'];
                 $_SESSION['Maton']=$EMAIL;
-                header('Location: ');
+                $_SESSION['ID']=$data['ID'];
+                header('Location: ../maton/turn-on.php');
             }
             else {
                 echo "<script>alert('Please provide correct credentials!!');</script>";
@@ -104,6 +105,8 @@ else{
 				  <select type="text" id="input-1" class="form-control input-shadow" name="Department">
                   <option value="" disabled selected>Select Department</option>
                    <option value="Techie">Techie</option>
+                   <option value="Maton">Maton</option>
+
                   </select>
 			   </div>
 			  </div>

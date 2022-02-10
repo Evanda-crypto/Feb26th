@@ -70,7 +70,7 @@
     <div class="collapse navbar-collapse" id="navLinks">
         <ul class="navbar-nav">
             <li class="nav-item"> <a style="color: black;" href="admin/login.php" class="navbar-brand">ADMIN</a> </li>
-            <li class="nav-item"> <a style="color: black;" href="teamleaders/techie/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
+            <li class="nav-item"> <a style="color: black;" href="teamleaders/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
             <li class="nav-item"> <a style="color: black;" href="techie/login.php" class="navbar-brand">INSTALLATION </a></li>
             <li class="nav-item"> <a style="color: black;" href="sales/login.php"class="navbar-brand">SALES</a></li>   
            <!-- <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">image</a></li>

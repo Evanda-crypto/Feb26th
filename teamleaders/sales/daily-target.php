@@ -72,11 +72,11 @@ include_once("session.php");
         </a>
       </li>
 
-   <!--  <li  style="margin-left:5%">
+   <li  style="margin-left:5%">
         <a href="daily-target.php">
           <i class="zmdi zmdi-grid"></i> <span>Daily target</span>
         </a>
-      </li>-->
+      </li>
 
       <li  style="margin-left:5%">
         <a href="profile.php">
@@ -231,27 +231,40 @@ include_once("session.php");
           <div class="card">
             <div class="card-body">
               
-              <center><h5 class="card-title">Pap Signed Today</h5></center>
+              <center><h5 class="card-title">Pap Signed Today per Champ</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
+                    <th>No</th>
                     <th>Champ Name</th>
+                    <th>Region</th>
                     <th>Pap Signed</th>
                     </tr>
                   </thead>
                   <tbody>
 <?php
-    
-    $sql="SELECT ChampName,COUNT(ClientID) as signed from papdailysales WHERE DateSigned=CURRENT_DATE() GROUP BY ChampName";
-while($row=$result->fetch_array()){
-  ?>
-  <tr>
-    <td><?php echo $row['ChampName']?></td>
-    <td><?php echo $row['signed']?></td>
-</tr>
-<?php } ?>
-            
+                        $query  = "SELECT ChampName,Region,COUNT(ChampName) as signed from papdailysales WHERE DateSigned=CURRENT_DATE()and Region='".$_SESSION['Region']."' GROUP BY ChampName order by Signed DESC";
+                        $result  = mysqli_query($connection, $query);
+
+                        $num_rows  = mysqli_num_rows($result);
+
+                        $num = 0;
+                        if ($num_rows > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $num++;
+                        ?>
+                                <tr>
+                                    <th><?php echo $num; ?></th>
+                                    <th><?php echo $row['ChampName']; ?></th>
+                                   <th><?php echo $row['Region']; ?></th>
+                                    <th><?php echo $row['signed']; ?></th>
+                                </tr>
+                        <?php
+
+                            }
+                        }
+                        ?>
                   </tbody>
                 </table>
             </div>

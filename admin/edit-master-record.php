@@ -1,33 +1,37 @@
 <?php
-
 include("../db/db.php");
 include("session.php");
+$id=$_GET['client-id'];
+
+$sql="select * from turnedonpap where ClientID=$id";
+$result=mysqli_query($connection,$sql);
+$row=mysqli_fetch_assoc($result);
+$ClientName=$row['ClientName'];
+$ClientContact=$row['ClientContact'];
+$mac=$row['MacAddress'];
+$Region=$row['Region'];
+$BuildingName=$row['BuildingName'];
+$BuildingCode=$row['BuildingCode'];
+
 
 if(isset($_POST['submit'])){
-$FirstName = $_POST['FName'];
-$LastName = $_POST['LName'];
-$Email = $_POST['email'];
-$Department = $_POST['Department'];
-$Password = $_POST['password'];
+$ClientName = $_POST['ClientName'];
+$ClientContact = $_POST['ClientContact'];
+$region = $_POST['region'];
+$BuildingName = $_POST['bname'];
+$BuildingCode = $_POST['bcode'];
+$MAC = $_POST['mac'];
 
-$hashpass= password_hash($Password, PASSWORD_DEFAULT);
+$sql="update turnedonpap set ClientID=$id,Region='$region',ClientName='$ClientName',ClientContact='$ClientContact'
+,BuildingName='$BuildingName',BuildingCode='$BuildingCode',MacAddress='$MAC' where ClientID=$id";
 
-//checking if connection is not created successfully
-if($connection->connect_error){
-    die('connection failed : '.$connection->connect_error);
-}
-else
-{
-    $stmt= $connection->prepare("insert into employees (FIRST_NAME,LAST_NAME,EMAIL,DEPARTMENT,PASSWORD)
-    values(?,?,?,?,?)");
-       //values from the fields
-    $stmt->bind_param("sssss",$FirstName,$LastName,$Email,$Department,$hashpass);
-    $stmt->execute();
-    echo "<script>alert('Successfull.');</script>";
-    echo '<script>window.location.href="new-user.php";</script>';
-    $stmt->close();
-   # $connection->close();
-   
+$result=mysqli_query($connection,$sql);
+if ($result) {
+    echo "<script>alert('Update Successfull');</script>";
+    echo '<script>window.location.href="pap-master-record.php";</script>';
+} else {
+    echo "<script>alert('An error occurred please try again');</script>";
+    echo '<script>window.location.href="edit-mastr-record.php";</script>';
 }
 }
 ?>
@@ -39,25 +43,14 @@ else
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>New | User</title>
+  <title>Edit | Client | Info</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
-
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-
-<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- Bootstrap core JavaScript-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-
-<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
   <!-- simplebar CSS-->
   <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
@@ -93,7 +86,7 @@ else
    </div>
    <ul class="sidebar-menu do-nicescrol" >
       <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <!--<li>
+      <li>
         <a href="dashboard.php">
           <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
         </a>
@@ -122,76 +115,27 @@ else
         <a href="pap-master-record.php">
           <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
         </a>
-      </li>-->
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-      <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
       </li>
 
-     <!-- <li  style="margin-left:5%">
+      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
+
+      <li  style="margin-left:5%">
         <a href="add-teamleader.php">
           <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
         </a>
       </li>
 
-     <!-- <li>
+      <li style="margin-left:5%">
         <a href="list-of-teamleaders.php">
           <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
       </li>
-
-     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>A</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>B</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>C</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TECHIE</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>Material Usage</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>Payment</span>
-        </a>
-      </li>
-
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
-        </a>
-      </li>--
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
         </a>
       </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>-->
       <li  style="margin-left:5%">
         <a href="logout.php">
           <i class="fa fa-lock"></i> <span>Logout</span>
@@ -236,7 +180,7 @@ else
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-2 user-title"><?php## echo $_SESSION['FName']?> <?php #echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['superadmin']?></p>
+            <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
             </div>
            </div>
           </a>
@@ -261,41 +205,35 @@ else
     <div class="container-fluid">
 
     <div class="row mt-3">
-      <div class="col-lg-3">
+      <div class="col-lg-6">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">New User</div>
+           <div class="card-title"<center><h5>Update Pap Info</h5></center></div>
            <hr>
-            <form method="POST" autocomplete="off">
+            <form method="POST">
            <div class="form-group">
-            <label for="input-1">First Name</label>
-            <input type="text" class="form-control" name="FName" id="input-1" placeholder="Enter First Name" required>
+            <label for="input-1">Client Name</label>
+            <input type="text" class="form-control" name="ClientName" value="<?php echo $ClientName?>" id="input-1" placeholder="Client Name" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Last Name</label>
-            <input type="text" class="form-control" name="LName" id="input-2" placeholder="Enter Last Name" required>
+            <label for="input-2">Contact</label>
+            <input type="text" class="form-control" name="ClientContact" id="input-2" value="<?php echo $ClientContact?>" placeholder="Client Contact" required>
            </div>
            <div class="form-group">
-            <label for="input-2">Email</label>
-            <input type="text" class="form-control" name="email" id="input-2" placeholder="Enter Email" required>
+            <label for="input-1">Building Name</label>
+            <input type="text" class="form-control" name="bname" id="input-1" value="<?php echo $BuildingName?>" placeholder="Building Name" >
            </div>
            <div class="form-group">
-            <label for="input-1">Department</label>
-            <select type="text" class="form-control" name="Department" id="input-1" name="Region" placeholder="Region" required>
-              <option value="" disabled selected> Select Deprtment</option>
-              <option value="Executive">Executive</option>
-              <option value="HR">HR</option>
-              <option value="Nats">Nats</option>
-              <option value="Maton">Maton</option>
-              <option value="Hub">Hub</option>
-              <option value="Media">Media</option>
-              <option value="Sales">Sales</option>
-              <option value="Techie">Techie</option>
-            </select>
+            <label for="input-2">Building Code</label>
+            <input type="text" class="form-control" name="bcode" id="input-2" value="<?php echo $BuildingCode?>" placeholder="Client Twitter" >
            </div>
            <div class="form-group">
-            <label for="input-2">Password</label>
-            <input type="text" class="form-control" name="password" id="input-2" value="123456" placeholder="Password" required>
+            <label for="input-2">Region</label>
+            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $Region?>" placeholder="Region">
+           </div>
+           <div class="form-group">
+            <label for="input-1">Mac Address</label>
+            <input type="text" class="form-control" name="mac" id="input-1" value="<?php echo $mac?>" placeholder="Household Size" >
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
@@ -303,17 +241,34 @@ else
           </form>
          </div>
          </div>
+         
       </div>
 
-     <div class="col-lg-9">
+     <!--<div class="col-lg-6">
         <div class="card">
            <div class="card-body">
-           <div class="card-title"><center><h5>Emails</h5></center>  <div class="form-outline">
+           <div class="card-title">Emails  <div class="form-outline">
+          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
            </div>
            <hr>
-          
+           <div class="card">
+           
+            <div class="card-body">
+              <h5 class="card-title"></h5>
+              <select class  ="form-control" name="state" id="maxRows">
+						 <option value="10000">Show ALL Rows</option>
+						 <option value="5">5</option>
+						 <option value="25">25</option>
+						 <option value="50">50</option>
+						 <option value="100">100</option>
+						 <option value="250">250</option>
+						 <option value="500">500</option>
+						 <option value="1000">1000</option>
+						</select>
+			 		
+			  	</div>
 			  <div class="table-responsive">
-              <table class="table table-hover" id="dtBasicExample">
+              <table class="table table-hover" id="myTable">
                 <thead>
                   <tr>
                     <th scope="col">No</th>
@@ -321,32 +276,42 @@ else
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Department</th>
-                    <th scope="col">More</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
-   <?php
-    
-    $sql="select * from employees order by ID ASC";
-    $result=$connection->query($sql);
-    while($row=$result->fetch_array()){
-      ?>
-      <tr>
-        <td><?php echo $row['ID']?></td>
-        <td><?php echo $row['FIRST_NAME']?></td>
-        <td><?php echo $row['LAST_NAME']?></td>
-        <td><?php echo $row['EMAIL']?></td>
-        <td><?php echo $row['DEPARTMENT']?></td>
-       <th>
-        <a href="edit-user.php?userid=<?php echo $row['ID']; ?>"><i class="fas fa-edit"></i></a>
-        <a href="delete-user.php?userid=<?php echo $row['ID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['FIRST_NAME']; ?> <?php  echo $row['LAST_NAME']; ?> from Users?')"><i class="fas fa-trash"></i></a>
-        </th>
-    </tr>
-    <?php } ?>
+                  <tr>
+                  <?php
+
+                        /*  $sql="select * from empemails order by ID ASC";
+                          $result=mysqli_query($connection,$sql);
+                          if($result){
+                          while($row=mysqli_fetch_assoc($result)){
+                           $id=$row['ID'];   
+                          $fname=$row['FirstName'];
+                          $lname=$row['LastName'];
+                          $email=$row['Email'];
+                          $dpt=$row['Department'];
+                          
+
+                          echo ' <tr>
+                          <td>'.$id.'</td>
+                          <td>'.$fname.'</td>
+                          <td>'.$lname.'</td>
+                          <td>'.$email.'</td>
+                          <td>'.$dpt.'</td>
+                          
+                          </tr>';
+
+                       }
+                         }*/
+                       ?>
+                  </tr>
                 </tbody>
               </table>
             </div>
             </div>
+          </div>
          </div>
          </div>
       </div>
@@ -415,8 +380,8 @@ else
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript--
-  <script src="../assets/js/jquery.min.js"></script>-->
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/js/jquery.min.js"></script>
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
@@ -427,11 +392,5 @@ else
   
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
-  <script>
-        $(document).ready(function () {
-$('#dtBasicExample').DataTable();
-$('.dataTables_length').addClass('bs-select');
-});
-    </script>
 </body>
 </html>

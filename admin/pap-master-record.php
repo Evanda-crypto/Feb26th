@@ -23,7 +23,8 @@ include_once("session.php");
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
   <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
@@ -105,7 +106,7 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+      <li style="margin-left:5%">
         <a href="list-of-teamleaders.php">
           <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
         </a>
@@ -152,12 +153,6 @@ include_once("session.php");
       <li style="margin-left:5%">
         <a href="gallery.php">
           <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="calendar.php">
-          <i class="fa fa-calendar"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
         </a>
       </li>
       <li  style="margin-left:5%">
@@ -229,6 +224,7 @@ include_once("session.php");
     <div class="container-fluid">
      
       <div class="row mt-3">
+<div class="col-12 col-lg-12">
           <div class="card">
                <center><h5 class="card-title" style=" margin-top:1%;">PAP MASTER RECORD</h5></center> 
               
@@ -257,12 +253,14 @@ include_once("session.php");
                    </th>
                    <th class="th-sm">Date Turned On
                    </th>
-                  </tr>
+                   <th class="th-sm">More
+                   </th>              
+                   </tr>
                   </thead>
                   <tbody>
 <?php
     
-    $sql="SELECT  turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
+    $sql="SELECT turnedonpap.ClientID,turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 ELSE CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) order by DateTurnedOn Desc";
 $result=$connection->query($sql);
@@ -279,6 +277,9 @@ while($row=$result->fetch_array()){
     <td><?php echo $row['Mac']?></td>
     <td><?php echo $row['PapStatus']?></td>
     <td><?php echo $row['DateTurnedOn']?></td>
+    <td>
+    <a href="edit-master-record.php?client-id=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
+    </td>
 </tr>
 <?php } ?>
           
@@ -287,7 +288,7 @@ while($row=$result->fetch_array()){
 </div>
   </div>
 </div> </div>
-        
+</div>
        <!-- <div class="col-lg-6">
           <div class="card">
             <div class="card-body">

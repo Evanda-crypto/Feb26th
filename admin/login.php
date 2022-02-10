@@ -12,12 +12,13 @@ if($connection){
     $stmt_result= $stmt->get_result();
     if($stmt_result->num_rows>0){
         $data= $stmt_result->fetch_assoc();
-        if($data['DEPARTMENT']=="Nats" || $data['DEPARTMENT']=="Executive" || $data['DEPARTMENT']=="Maton"){
+        if($data['DEPARTMENT']=="Nats" || $data['DEPARTMENT']=="Executive"){
         if(password_verify($Password, $data['PASSWORD'])){
 
             $_SESSION['Admin']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
+            $_SESSION['ID']=$data['ID'];
             header("Location: dashboard.php");
         }
         else{

@@ -1,5 +1,5 @@
 <?php
-include("../../db/db.php");
+include("../db/db.php");
 if(isset($_POST['submit'])){
 session_start();
 $EMAIL= $_POST['Username'];
@@ -19,17 +19,17 @@ if($connection){
             $_SESSION['teamleader']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
-           $_SESSION['ID']=$data['ID'];
+            $_SESSION['ID']=$data['ID'];
             $_SESSION['Region']=$data['REGION'];
-            header("Location: dashboard.php");
+            header("Location: techie/dashboard.php");
             }
             elseif ($data['DEPARTMENT']=="Sales") {
                 $_SESSION['FName']=$data['FIRST_NAME'];
                 $_SESSION['LName']=$data['LAST_NAME'];
                 $_SESSION['Sales']=$EMAIL;
-               $_SESSION['ID']=$data['ID'];
-                 $_SESSION['Region']=$data['REGION'];
-                header('Location: ../sales/dashboard.php ');
+                $_SESSION['ID']=$data['ID'];
+                $_SESSION['Region']=$data['REGION'];
+                header('Location: sales/dashboard.php ');
             }
             else {
                 echo "<script>alert('Please provide correct credentials!!');</script>";

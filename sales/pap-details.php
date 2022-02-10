@@ -79,12 +79,6 @@ $(document).ready(function(){
         </a>
       </li>
 
-     <!-- <li>
-        <a href="icons.php">
-          <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
-        </a>
-      </li>-->
-
       <li>
         <a href="pap-details.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>Pap daily sales</spsn>
@@ -96,14 +90,16 @@ $(document).ready(function(){
           <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
         </a>
       </li>
-
-      <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>
-
+            <li>
+       <a href="my-clients.php">
+         <i class="zmdi zmdi-wifi"></i> <span>My turned on pap</span>
+       </a>
+     </li>
+     <li>
+       <a href="pap-not-installed.php">
+         <i class="zmdi zmdi-alert-triangle"></i> <span>Pap not installed</span>
+       </a>
+     </li>
       <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
@@ -193,15 +189,16 @@ $(document).ready(function(){
            </div>
            <div class="form-group">
             <label for="input-1">Champs<i style="color:red;">*</i></label></label>
-            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?> <?php echo $_SESSION['LName'];?>" required>
-           </div>
-           <div class="form-group">
-            <label for="input-1">Building Name<i style="color:red;">*</i></label></label>
-            <input type="text" class="form-control" id="bname" name="Buildingname"onkeyup="GetDetail(this.value)"  placeholder="Building Name" required>
+            <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?> <?php echo $_SESSION['LName'];?>" readonly>
            </div>
            <div class="form-group">
             <label for="input-1">Building Code<i style="color:red">*</i></label>
-            <input type="text" class="form-control" id="bcode" name="BuildingCode" placeholder="Building Code" required>
+            <input type="text" class="form-control" id="bcode" onkeyup="GetDetail(this.value)" name="BuildingCode" placeholder="Building Code" required>
+           </div>
+
+           <div class="form-group">
+            <label for="input-1">Building Name<i style="color:red;">*</i></label></label>
+            <input type="text" class="form-control" id="bname" name="Buildingname"  placeholder="Building Name" required>
            </div>
             <div class="form-group">
             <label for="input-1">Region<i style="color:red">*</i></label>
@@ -209,7 +206,7 @@ $(document).ready(function(){
            </div>
            <div class="form-group">
             <label for="input-1">Floor<i style="color:red;">*</i></label></label>
-            <input type="text" class="form-control" id="input-1" name="floor" placeholder="Floor" required>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;"  class="form-control" id="input-1" name="floor" placeholder="Floor" required>
            </div>
            <div class="form-group">
             <label for="input-1">Apt Layout<i style="color:red;">*</i></label></label>
@@ -459,7 +456,7 @@ $(document).ready(function(){
 // assigned to this event
 function GetDetail(str) {
   if (str.length == 0) {
-    document.getElementById("bcode").value = "";
+    document.getElementById("bname").value = "";
     document.getElementById("region").value = "";
     return;
   }
@@ -484,7 +481,7 @@ function GetDetail(str) {
         // received to first name input field
         
         document.getElementById
-          ("bcode").value = myObj[0];
+          ("bname").value = myObj[0];
         
         // Assign the value received to
         // last name input field
@@ -494,7 +491,7 @@ function GetDetail(str) {
     };
 
     // xhttp.open("GET", "filename", true);
-    xmlhttp.open("GET", "retrieve.php?bname=" + str, true);
+    xmlhttp.open("GET", "retrieve.php?bcode=" + str, true);
     
     // Sends the request to the server
     xmlhttp.send();

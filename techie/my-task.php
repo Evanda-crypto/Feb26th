@@ -83,13 +83,6 @@ include("../db/db.php");
       </li>-->
 
       <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>
-
-      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
@@ -257,10 +250,13 @@ include("../db/db.php");
                       <th scope="col">Client ID</th>
                       <th scope="col">Building Name</th>
                       <th scope="col">Building Code</th>
+                     <th scope="col">Champ Name</th>
                       <th scope="col">Client Name</th>
                       <th scope="col">Client Contact</th>
                       <th scope="col">Floor</th>
-                      <th scope="col">Details</th>
+                      <th scope="col">Installed</th>
+                     <th scope="col">Not Installed</th>
+
 
                     </tr>
                   </thead>
@@ -268,7 +264,7 @@ include("../db/db.php");
                     <tr>
                     <?php
 
-                                  $sql="SELECT techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
+                                  $sql="SELECT papdailysales.ChampName,techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
                                   papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
                                   techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'";
                                   $result=mysqli_query($connection,$sql);
@@ -276,6 +272,7 @@ include("../db/db.php");
                                   while($row=mysqli_fetch_assoc($result)){
                                     $id=$row['ClientID'];
                                     $bname=$row['BuildingName'];
+                                    $champ=$row['ChampName'];
                                     $bcode=$row['BuildingCode'];
                                     $cname=$row['ClientName'];
                                     $cont=$row['ClientContact'];
@@ -285,15 +282,17 @@ include("../db/db.php");
                                     <th scope="row">'.$id.'</th>
                                     <td>'.$bname.'</td>
                                     <td>'.$bcode.'</td>
+                                    <td>'.$champ.'</td>
                                     <td>'.$cname.'</td>
                                     <td>'.$cont.'</td>
                                     <td>'.$floor.'</td>
                                     <td>
-                                    <button class="btn-primary" ><a href="papdetails.php?clientid='.$id.'" class="text-bold">Details</a></button>
-                                    </td>
-                                    </tr>';
-
-                                   }
+                                    <button class="btn-primary" ><a href="papdetails.php?clientid='.$id.'" class="text-bold">Installed Pap</a></button>
+                                   </td>
+                                   <td>
+                                 <button class="btn-secondary" ><a href="pap-not-installed.php?clientid='.$id.'" class="text-bold">Pap Not Installed</a></button>
+                                 </td>
+                                    </tr>';  }
                                      }?>
                       
                     </tr>

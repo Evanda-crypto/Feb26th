@@ -1,29 +1,29 @@
 <?php
 
 // Get the user id
-$bname = $_REQUEST['bname'];
+$bcode = $_REQUEST['bcode'];
 
 // Database connection
 include("../db/db.php");
 
-if ($bname !== "") {
+if ($bcode !== "") {
 	
 	// Get corresponding first name and
 	// last name for that user id	
 	$query = mysqli_query($connection, "SELECT Region,
-	BuildingCode FROM building WHERE BuildingName='$bname'");
+	BuildingName FROM building WHERE BuildingCode='$bcode'");
 
 	$row = mysqli_fetch_array($query);
 
 	// Get the first name
-	$Bcode = $row["BuildingCode"];
+	$Bname = $row["BuildingName"];
 
 	// Get the first name
 	$Reg = $row["Region"];
 }
 
 // Store it in a array
-$result = array("$Bcode", "$Reg");
+$result = array("$Bname", "$Reg");
 
 // Send in JSON encoded form
 $myJSON = json_encode($result);

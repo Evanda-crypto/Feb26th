@@ -59,24 +59,19 @@ include_once("session.php");
        </a>
      </li>-->
 
-     <li>
-       <a href="pap-details.php">
-         <i class="zmdi zmdi-format-list-bulleted"></i> <span>PAP Daily Sales</span>
-       </a>
-     </li>
-
-     <li>
-       <a href="buildings.php">
-         <i class="zmdi zmdi-grid"></i> <span>Buldings</span>
-       </a>
-     </li>
-
-     <li>
-       <a href="calendar.php">
-         <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-         <small class="badge float-right badge-light"></small>
-       </a>
-     </li>
+  <li>
+        <a href="my-task.php">
+          <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
+          <small class="badge float-right badge-light"><?php
+                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+                                             $data=mysqli_query($connection,$query);
+                                             while($row=mysqli_fetch_assoc($data)){
+                                             echo $row['MyTask']."<br><br>";
+                                              }
+                                              ?></small>
+        </a>
+      </li>     
 
     <li>
        <a href="profile.php" >

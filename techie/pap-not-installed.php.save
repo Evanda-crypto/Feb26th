@@ -3,7 +3,7 @@ include_once("session.php");
 include("../db/db.php");
 $id=$_GET['clientid'];
 
-$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.AptLayout,papdailysales.Floor,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
+$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.DateSigned,papadailysales.ClientContact,papdailysales.Floor,papdailysales.ChampName,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
 papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
 techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
 $result=mysqli_query($connection,$sql);
@@ -15,35 +15,29 @@ $reg=$row['Region'];
 $t1=$row['Techie_1'];
 $t2=$row['Techie_2'];
 $floor=$row['Floor'];
-$layout=$row['AptLayout'];
+$cname=$row['ClientName'];
+$champ=$row['ChampName'];
+$bname=$row['BuildingName'];
+$bcode=$row['BuildingCode'];
+$datesigned=$row['DateSigned'];
 
 
-if(isset($_POST['submit']) && !empty($_FILES["image"]["name"])) {
+if(isset($_POST['submit'])) {
 $Team_ID=$_POST['teamid'];
-$MacAddress = $_POST['macaddress'];
-$SerialNumber = $_POST['serialnumber'];
-$DateInstalled = $_POST['dateinstalled'];
-$ClientID = $_POST['ClientID'];
-$Region = $_POST['region'];
-$techie1 = $row['Techie_1'];
-$techie2 = $row['Techie_2'];
-$Floor = $_POST['floor'];
-$Note = $_POST['note'];
-$layout = $_POST['layout'];
-
-ini_set('upload_max_filesize', '60M');
-ini_set('post_max_size', '70M');
-ini_set('max_input_time', 300);
-ini_set('max_execution_time', 300);
-
-$fileName = basename($_FILES["image"]["name"]); 
-          $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
-           
-          // Allow certain file formats 
-          $allowTypes = array('jpg','png','jpeg','gif'); 
-          if(in_array($fileType, $allowTypes)){ 
-              $image = $_FILES['image']['tmp_name']; 
-              $imgContent = addslashes(file_get_contents($image)); 
+$DateAssigned = $_POST['Date'];
+$Techie_1 = $row['Techie_1'];
+$Techie_2 = $row['Techie_2'];
+$note = $_POST['note'];
+$ClientID=$row['ClientID'];
+$Date=$row['Date'];
+$Region=$row['Region'];
+$Floor=$row['Floor'];
+$ClientName=$row['ClientName'];
+$ChampName=$row['ChampName'];
+$BuildingName=$row['BuildingName'];
+$BuildingCode=$row['BuildingCode'];
+$DateSigned=$row['DateSigned'];
+$contact=$row['ClientContact'];
 
 //checking connection
 if($connection->connect_error){
@@ -51,32 +45,24 @@ if($connection->connect_error){
 }
 else
 {
-  $stmt= $connection->prepare("select * from papinstalled where MacAddress= ?");
-  $stmt->bind_param("s",$MacAddress);
-  $stmt->execute();
-  $stmt_result= $stmt->get_result();
-  if($stmt_result->num_rows>0){
-    echo "<script>alert('The Macaddress Already Exists');</script>";
-    echo '<script>window.location.href="my-task.php";</script>';
-  }
-  else{
+
 
      // Insert records into database 
-     $sql="update papdailysales set ClientID=$id,Floor='$Floor',AptLayout='$layout' where ClientID=$id";
+
+     $query = "DELETE FROM  techietask  WHERE ClientID= '$id'";
+     $result = mysqli_query($connection, $query);
      $result=mysqli_query($connection,$sql);
-     $insert = $connection->query("INSERT into papinstalled (Team_ID,ClientID,MacAddress,SerialNumber,DateInstalled,Region,Image,Note,Floor,AptLayout) VALUES ('$Team_ID','$ClientID','$MacAddress','$SerialNumber','$DateInstalled','$Region','$imgContent','$Note','$Floor','$layout')"); 
+     $insert = $connection->query("INSERT into papnotinstalled (ClientID,ClientName,BuildingName,BuildingCode,Region,Floor,DateSigned,Reason,ChampName,TeamID,Techie1,Techie2,DateAssigned,Contact) VALUES ('$ClientID','$ClientName','$BuildingName','$BuildingCode','$Region','$Floor','$DateSigned','$note','$ChampName','$Team_ID','$Techie_1','$Techie_2','$DateAssigned','$contact')"); 
     
      if($insert && $result){ 
+
      echo '<script>alert("Submitted!")</script>';
       echo '<script>window.location.href="my-task.php";</script>';
   }else{ 
     echo "<script>alert('UnSuccessfull.');</script>"; 
-echo '<script>window.location.href="my-task.php";</script>';
+     echo '<script>window.location.href="my-task.php";</script>';
   }  
-    
-  }
 
-}
 }
 }
 ?>
@@ -88,7 +74,7 @@ echo '<script>window.location.href="my-task.php";</script>';
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>New PAP</title>
+  <title>Pap | Not | Installed</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>--
   <script src="../assets/js/pace.min.js"></script>
@@ -139,7 +125,8 @@ echo '<script>window.location.href="my-task.php";</script>';
           <i class="zmdi zmdi-invert-colors"></i> <span>UI Icons</span>
         </a>
       </li>-->
-       <li>
+
+      <li>
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
@@ -152,7 +139,6 @@ echo '<script>window.location.href="my-task.php";</script>';
                                               ?></small>
         </a>
       </li>
-
 
       <li>
         <a href="profile.php">
@@ -233,9 +219,9 @@ echo '<script>window.location.href="my-task.php";</script>';
       <div class="col-lg-6">
          <div class="card">
            <div class="card-body">
-           <div class="card-title">PAP Details</div>
+           <div class="card-title">Pap Not Installed</div>
            <hr>
-            <form method="POST" enctype="multipart/form-data" autocomplete="off">
+            <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
             <label for="input-1">Client ID</label>
             <input type="text" class="form-control" id="input-1" name="ClientID" value="<?php echo $clientid?>" readonly>
@@ -245,45 +231,25 @@ echo '<script>window.location.href="my-task.php";</script>';
             <input type="text" class="form-control" id="input-1" name="teamid" value="<?php echo $teamid?>" readonly>
            </div>
            <div class="form-group">
-            <label for="input-4">Floor<i style="color:red;">*</i></label>
-            <input type="text" class="form-control" id="input-4" value="<?php echo $floor?>" name="floor" required>
+            <label for="input-4">Building Name<i style="color:red;">*</i></label>
+            <input type="text" class="form-control" id="input-4" value="<?php echo $bname?>" name="bname" readonly>
            </div>
+        
            <div class="form-group">
-            <label for="input-1">Apt Layout<i style="color:red;">*</i></label>
-            <select type="text" class="form-control" id="input-1" name="layout"value="<?php echo $layout?>" placeholder="Enter Your Name">
-              <option value="<?php echo $layout?>"><?php echo $layout?></option>
-              <option value="Single">Single</option>
-              <option value="Double">Double</option>
-              <option value="Bedsitter">Bedsitter</option>
-              <option value="1 BR">1 BR</option>
-              <option value="2 BR">2 BR</option>
-              <option value="3 BR">3 BR</option>
-              <option value="4 BR and above">4 BR and above</option>
-            </select>
-           </div>
-           <div class="form-group">
-            <label for="input-3">MAC Address<i style="color:red;">*</i></label>
-            <input type="text" class="form-control" id="input-3" name="macaddress" placeholder="Format:AB-CD-EF-GH-IJ-KL" maxlength="17" required>
-           </div>
-           <div class="form-group">
-            <label for="input-3">Serial Number<i style="color:red;">*</i></label>
-            <input type="text" class="form-control" id="input-3" placeholder="Serial Number" name="serialnumber" maxlength="13" required>
-           </div>
-           <div class="form-group">
-            <label for="input-3">Pap Image<i style="color:red;">*</i></label>
-            <input type="file" class="form-control" id="input-3" placeholder="Pac Image" name="image" required>
-           </div>
-           <div class="form-group">
-            <label for="input-4">Date Installed<i style="color:red;">*</i></label>
-            <input type="date" class="form-control" id="input-5" name="dateinstalled" required>
+            <label for="input-3">Building Code<i style="color:red;">*</i></label>
+            <input type="text" class="form-control" id="input-3" value="<?php echo $bcode?>" name="bcode" readonly>
            </div>
            <div class="form-group">
             <label for="input-4">Region</label>
             <input type="text" class="form-control" id="input-4" value="<?php echo $reg?>" name="region" readonly>
            </div>
+            <div class="form-group">
+            <label for="input-1">Date<i style="color:red;">*</i></label></label>
+            <input type="date" class="form-control" id="install" name="Date" required>
+           </div>
            <div class="form-group">
-            <label for="input-4">Note<i style="color:red;">*</i></label>
-            <input type="text" class="form-control" id="input-4"  name="note" placeholder="Comments/Suggestion/Observations" required>
+            <label for="input-4">Reason<i style="color:red;">*</i></label>
+            <input type="text" class="form-control" id="input-4"  name="note" placeholder="Enter Reason" required>
            </div>
            <div class="form-group">
             <button type="submit" name="submit"  class="btn btn-light px-5"><i class="icon-check"></i> Submit</button>
@@ -409,34 +375,19 @@ echo '<script>window.location.href="my-task.php";</script>';
   
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
- <script>
- var todayDate= new Date();
- var month= todayDate.getMonth() + 1;
- var year= todayDate.getFullYear();
- var todate=todayDate.getDate();
-if(todate<10){
-  todate= "0"+ todate;
-}
-if(month<10){
-  month= "0"+ month;
-}
- maxdate= year +"-" + month + "-" + todate;
- document.getElementById("input-5").setAttribute("max",maxdate);
- </script>
-</body>
 <script>
- var todayDate= new Date();
- var month= todayDate.getMonth() + 1;
- var year= todayDate.getFullYear();
- var todate=todayDate.getDate();
-if(todate<10){
-  todate= "0"+ todate;
+ var tDate= new Date();
+ var mm= todayDate.getMonth() + 1;
+ var yyyy= todayDate.getFullYear();
+ var dd=todayDate.getDate();
+if(dd<10){
+  dd= "0"+ dd;
 }
-if(month<10){
-  month= "0"+ month;
+if(mm<10){
+  mm= "0"+ mm;
 }
- maxdate= year +"-" + month + "-" + todate;
- document.getElementById("input-1").setAttribute("max",maxdate);
- </script> 
+ maxdate= yyyy +"-" + mm + "-" + dd;
+ document.getElementById("install").setAttribute("max",maxdate);
+ </script>
 </body>
 </html>

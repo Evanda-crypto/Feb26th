@@ -56,13 +56,6 @@ include_once("session.php");
         </a>
       </li>
 
-     <!-- <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light"></small>
-        </a>
-      </li>-->
-
       <li>
         <a href="new-team.php">
           <i class="zmdi zmdi-account-add"></i> <span>New Team</span>
@@ -79,8 +72,8 @@ include_once("session.php");
         <a href="pending-installation.php">
           <i class="fa fa-tasks"></i> <span>Assign Task</span>
           <small class="badge float-right badge-light"><?php
-                                             $query="SELECT  COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID
-                                             WHERE techietask.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -88,7 +81,16 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-
+      <li>
+        <a href="reasign-task.php">
+          <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
+        </a>
+      </li>
+      <li>
+        <a href="pap-installed.php">
+          <i class="fa fa-check"></i> <span>Pap Installed</span>
+        </a>
+      </li>
       <li>
       <!--<li>
         <a href="#">
