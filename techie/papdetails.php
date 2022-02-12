@@ -60,7 +60,11 @@ else
     echo '<script>window.location.href="my-task.php";</script>';
   }
   else{
-
+       if(strlen(trim($MacAddress)) <17 || strlen(trim($MacAddress))>17 ){
+      echo "<script>alert('Incorrect Mac Address Format');</script>";
+      echo '<script>window.location.href="my-task.php";</script>';
+     }
+     else{
      // Insert records into database 
      $sql="update papdailysales set ClientID=$id,Floor='$Floor',AptLayout='$layout' where ClientID=$id";
      $result=mysqli_query($connection,$sql);
@@ -73,7 +77,7 @@ else
     echo "<script>alert('UnSuccessfull.');</script>"; 
 echo '<script>window.location.href="my-task.php";</script>';
   }  
-    
+    }
   }
 
 }
@@ -263,7 +267,7 @@ echo '<script>window.location.href="my-task.php";</script>';
            </div>
            <div class="form-group">
             <label for="input-3">MAC Address<i style="color:red;">*</i></label>
-            <input type="text" class="form-control" id="input-3" name="macaddress" placeholder="Format:AB-CD-EF-GH-IJ-KL" maxlength="17" required>
+            <input type="text" class="form-control" id="input-3" name="macaddress" style="text-transform: uppercase" placeholder="Format:AB-CD-EF-GH-IJ-KL" maxlength="17" required>
            </div>
            <div class="form-group">
             <label for="input-3">Serial Number<i style="color:red;">*</i></label>

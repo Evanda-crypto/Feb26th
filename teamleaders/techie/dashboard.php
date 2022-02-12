@@ -213,12 +213,13 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body" >
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(*)as pending from papdailysales LEFT JOIN papinstalled on papinstalled.ClientID=papdailysales.ClientID WHERE papinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(papdailysales.ClientID) AS pending from papdailysales LEFT OUTER JOIN techietask on techietask.ClientID=papdailysales.ClientID left join  papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID
+                                             WHERE techietask.ClientID is null and papnotinstalled.ClientID is null and papdailysales.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
                                               }
-                                              ?> <span class="float-right"><i class="fa fa-question"></i></span></h5>
+                                              ?><span class="float-right"><i class="fa fa-question"></i></span></h5>
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>

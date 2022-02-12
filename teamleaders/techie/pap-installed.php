@@ -202,7 +202,10 @@ include_once("session.php");
                   <thead>
                     <tr>
                     <th>Client ID</th>
-                    <th>Team ID</th>
+                    <th>Client Name</th>
+                   <th>Contact</th>
+                  <th>Building Name</th>
+                   <th>Team ID</th>
                     <th>Techie 1</th>
                     <th>Techie 2</th>
                     <th>Mac Address</th>
@@ -213,13 +216,16 @@ include_once("session.php");
                   <tbody>
 <?php
     
-    $sql="SELECT papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
-    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
+    $sql="SELECT papdailysales.ClientName,papdailysales.BuildingName,papdailysales.ClientContact,papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID left join papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
 $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
   <tr>
     <td><?php echo $row['ClientID']?></td>
+    <td><?php echo $row['ClientName']?></td>
+    <td><?php echo $row['ClientContact']?></td>
+   <td><?php echo $row['BuildingName']?></td>
     <td><?php echo $row['Team_ID']?></td>
     <td><?php echo $row['Techie_1']?></td>
     <td><?php echo $row['Techie_2']?></td>

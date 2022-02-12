@@ -1,4 +1,5 @@
 <?php
+include("sidebar.php");
 include("../db/db.php");
 include("session.php");
 $id=$_GET['clientid'];
@@ -79,10 +80,10 @@ $stmt->close();
    <div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner" ><div class="loader"></div></div></div></div>
    <!-- end loader -->
 
-<!-- Start wrapper-->
+<!-- Start wrapper--
  <div id="wrapper">
 
- <!--Start sidebar-wrapper-->
+ <!--Start sidebar-wrapper--
  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -173,7 +174,7 @@ $stmt->close();
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>-->
+      </li>--
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">

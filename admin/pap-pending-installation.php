@@ -1,4 +1,5 @@
 <?php
+include_once("sidebar.php");
 include('../db/db.php');
 include_once("session.php");
 ?>
@@ -51,7 +52,7 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper-->
+  <!--Start sidebar-wrapper--
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -97,7 +98,7 @@ include_once("session.php");
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>-->
+      </li>--
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -147,7 +148,7 @@ include_once("session.php");
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>-->
+      </li>--
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">
@@ -238,12 +239,13 @@ include_once("session.php");
                     <th>Client Name</th>
                     <th>Client Contact</th>
                     <th>Date Signed</th>
+                    <th>Availability</th>
                     </tr>
                   </thead>
                   <tbody>
 <?php
     
-    $sql="SELECT papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
+    $sql="SELECT papdailysales.ClientAvailability,papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papdailysales.BuildingCode,papdailysales.DateSigned,papdailysales.Region FROM papdailysales left join papinstalled on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is null";
 $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
@@ -254,6 +256,8 @@ while($row=$result->fetch_array()){
     <td><?php echo $row['ClientName']?></td>
     <td><?php echo $row['ClientContact']?></td>
     <td><?php echo $row['DateSigned']?></td>
+     <td><?php echo $row['ClientAvailability']?></td>
+
 </tr>
 <?php } ?>
             

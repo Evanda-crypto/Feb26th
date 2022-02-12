@@ -1,4 +1,5 @@
 <?php
+include_once("sidebar.php");
 include('../db/db.php');
 include_once("session.php");
 ?>
@@ -51,7 +52,7 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper-->
+  <!--Start sidebar-wrapper--
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -97,7 +98,7 @@ include_once("session.php");
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>-->
+      </li>--
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -113,56 +114,7 @@ include_once("session.php");
 
      <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
       <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>A</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>B</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>C</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TECHIE</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>Material Usage</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>Payment</span>
-        </a>
-      </li>
-
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
-        </a>
-      </li>-->
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
-      <li style="margin-left:5%">
-        <a href="gallery.php">
-          <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="logout.php">
-          <i class="fa fa-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-
-    </ul>
-   
-   </div>
+       
    <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->

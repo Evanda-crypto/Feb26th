@@ -34,7 +34,7 @@ if(isset($_POST['submit'])){
   
         $result=mysqli_query($connection,$sql);
         if ($result) {
-          echo '<script>alert("Successfully easigned!")</script>';
+          echo '<script>alert("Successfully reasigned!")</script>';
             echo '<script>window.location.href="reasign-task.php";</script>';
         } else {
           echo '<script>alert("Not submitted try again!")</script>';

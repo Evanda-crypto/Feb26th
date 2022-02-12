@@ -1,4 +1,5 @@
 <?php
+include("sidebar.php");
 include("../db/db.php");
 include("session.php");
 $id=$_GET['client-id'];
@@ -31,7 +32,7 @@ if ($result) {
     echo '<script>window.location.href="pap-master-record.php";</script>';
 } else {
     echo "<script>alert('An error occurred please try again');</script>";
-    echo '<script>window.location.href="edit-mastr-record.php";</script>';
+
 }
 }
 ?>
@@ -76,7 +77,7 @@ if ($result) {
 <!-- Start wrapper-->
  <div id="wrapper">
 
- <!--Start sidebar-wrapper-->
+ <!--Start sidebar-wrapper--
  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">

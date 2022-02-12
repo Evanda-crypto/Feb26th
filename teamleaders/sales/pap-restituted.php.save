@@ -177,7 +177,7 @@ include_once("session.php");
                      <th>ChampName</th>
                      <th>Region</th>
                     <th>Reason</th>
-                     <th>Delete</th>
+                     <th>More</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -203,7 +203,7 @@ include_once("session.php");
                                     <th><?php echo $row['Region']; ?></th>
                                     <th><?php echo $row['Reason']; ?></th>
                                     <th>
-                                    <button class="btn-secondary" ><a href="resign.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to restore <?php  echo $row['ClientName']; ?> back to CMS database?')"> <i class="zmdi zmdi-refresh-alt"></i>Restore</a></button>
+                                   
                                     <button class="btn-secondary" ><a href="delete-client.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['ClientName']; ?> from CMS database?')"> <i class="fas fa-trash"></i>  Delete</a></button>
                                     </th>
 

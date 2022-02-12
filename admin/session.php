@@ -1,7 +1,8 @@
 <?php
+$currentTime = time();
 session_start();
-if(!isset($_SESSION['Admin']) && $_SESSION['Admin']==false)
+if(!isset($_SESSION['Admin']) && $_SESSION['Admin']==false || ($currentTime > $_SESSION['expire']))
 {
-    header("location: ../index.php");
+    header("location: login.php");
 }
 ?>

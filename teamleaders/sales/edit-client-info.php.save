@@ -36,8 +36,8 @@ if(isset($_POST['submit'])){
 $ChampName = $_POST['ChampName'];
 $ClientName = $_POST['ClientName'];
 $ClientContact = $_POST['ClientContact'];
-$ClientGender = $row['ClientGender'];
-$ClientAge = $row['ClientAge'];
+$ClientGender = $_POST['gender'];
+$ClientAge = $_POST['age'];
 $ClientOccupation = $_POST['occupation'];
 $ClientAvailability = $_POST['Day'];
 $Region = $_POST['Region'];
@@ -45,7 +45,7 @@ $BuildingName = $_POST['BuildingName'];
 $BuildingCode = $_POST['BuildingCode'];
 $Apt = $_POST['apt'];
 $Floor = $_POST['floor'];
-$Layout = $row['AptLayout'];
+$AptLayout = $_POST['aptlayout'];
 $HouseholdSize = $_POST['HouseholdSize'];
 $Children = $_POST['Children'];
 $Teenagers = $_POST['Teenagers'];
@@ -61,7 +61,7 @@ $BizDec = $_POST['BizDec'];
 
 $sql="update papdailysales set ClientID=$id,ChampName='$ChampName',ClientName='$ClientName',ClientContact='$ClientContact'
 ,ClientGender='$ClientGender',ClientAge='$ClientAge',ClientOccupation='$ClientOccupation',ClientAvailability='$ClientAvailability',Region='$Region',BuildingName='$BuildingName',BuildingCode='$BuildingCode',Apt='$Apt'
-,Floor='$Floor',AptLayout='$Layout',HouseholdSize='$HouseholdSize',Children='$Children',Teenagers='$Teenagers',Adults='$Adults',Birthday='$Birthday',ClientWhatsApp='$ClientWhatsApp',Facebook='$Facebook',
+,Floor='$Floor',AptLayout='$AptLayout',HouseholdSize='$HouseholdSize',Children='$Children',Teenagers='$Teenagers',Adults='$Adults',Birthday='$Birthday',ClientWhatsApp='$ClientWhatsApp',Facebook='$Facebook',
 Instagram='$Instagram',Twitter='$Twitter',BizName='$BizName',BizCat='$BizCat',BizDec='$BizDec' where ClientID=$id";
 
 $result=mysqli_query($connection,$sql);
@@ -341,7 +341,7 @@ if ($result) {
            </div>
            <div class="form-group">
             <label for="input-1">Apt Layout</label>
-            <select type="text" class="form-control" id="input-1" name="aptlayout">
+            <select type="text" class="form-control" id="input-1" name="aptlayout" placeholder="Enter Your Name">
               <option value="<?php echo $AptLayout?>" disabled selected><?php echo $AptLayout?></option>
               <option value="Single">Single</option>
               <option value="Double">Double</option>
@@ -358,8 +358,8 @@ if ($result) {
            </div>
            <div class="form-group">
             <label for="input-1">Age</label>
-            <select type="text" class="form-control" id="input-1" name="age"  placeholder="Age">
-              <option value="<?php echo $ClientAge?>" disabled selected ><?php echo $ClientAge?></option>
+            <select type="text" class="form-control" id="input-1" name="age" value="<?php echo $ClientAge?>" placeholder="Age">
+              <option value="<?php echo $ClientAge?>" disabled selected><?php echo $ClientAge?></option>
               <option value="Below 17">Below 17</option>  
               <option value="18-24">18-24</option>  
               <option value="25-34">25-34</option>  
@@ -389,10 +389,7 @@ if ($result) {
             <label for="input-5">Occupation</label>
             <input type="text" class="form-control" id="input-5" name="occupation" value="<?php echo $ClientOccupation?>"  placeholder="Client Occupation" required>
            </div>
-                      <div class="form-group">
-            <label for="input-5">Availability</label>
-            <input type="date" class="form-control" id="input-5" name="Day" value="<?php echo $availability?>"  placeholder="Availability" required>
-           </div>
+           
             <div class="form-group">
             <label for="input-1">Birthday</label>
             <input type="text" class="form-control" id="input-5"value="<?php echo $Birthday?>"   name="Birthday" placeholder="Birthday" >

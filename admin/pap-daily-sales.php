@@ -1,4 +1,5 @@
 <?php
+include_once("sidebar.php");
 include('../db/db.php');
 include_once("session.php");
 ?>
@@ -52,7 +53,7 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper-->
+  <!--Start sidebar-wrapper--
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -98,7 +99,7 @@ include_once("session.php");
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>-->
+      </li>--
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -148,7 +149,7 @@ include_once("session.php");
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>-->
+      </li>--
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">

@@ -1,4 +1,5 @@
 <?php
+include("sidebar.php");
 include("../db/db.php");
 include("session.php");
 $id=$_GET['teamleaderid'];
@@ -88,7 +89,7 @@ else{
 <!-- Start wrapper-->
  <div id="wrapper">
 
- <!--Start sidebar-wrapper-->
+ <!--Start sidebar-wrapper-
  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -179,7 +180,7 @@ else{
         <a href="#">
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
-      </li>-->
+      </li>-
       <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
       <li style="margin-left:5%">
         <a href="gallery.php">
@@ -254,7 +255,7 @@ else{
     <div class="container-fluid">
 
     <div class="row mt-3">
-      <div class="col-lg-6">
+      <div class="col-lg-3">
          <div class="card">
            <div class="card-body">
            <div class="card-title">New TeamLeader</div>
@@ -306,15 +307,12 @@ else{
          </div>
       </div>
 
-     <div class="col-lg-6">
+     <div class="col-lg-9">
         <div class="card">
            <div class="card-body">
            <div class="card-title">Current TeamLeaders
            </div>
            <hr>
-           <div class="card">
-           
-            <div class="card-body">
               <h5 class="card-title"></h5>
 			  <div class="table-responsive">
               <table class="table table-hover" id="dtBasicExample">
@@ -363,8 +361,6 @@ else{
             </div>
             </div>
           </div>
-         </div>
-         </div>
       </div>
     </div><!--End Row-->
 

@@ -1,6 +1,7 @@
 <?php
 include("../db/db.php");
 include("session.php");
+include("sidebar.php");
 ?>
 <?php
 
@@ -9,7 +10,7 @@ include("session.php");
   # code...
  echo "Problem in database connection! Contact administrator!" . mysqli_error();
       }else{
-       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE DateSigned>=DATE_ADD(CURDATE(), INTERVAL -5 DAY) GROUP BY DateSigned ORDER BY DateSigned ASC";
+       $sql ="SELECT  DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE DateSigned>=DATE_ADD(CURDATE(), INTERVAL -6 DAY) GROUP BY DateSigned ORDER BY DateSigned ASC";
        $result = mysqli_query($connection,$sql);
        $chart_data="";
         while ($row = mysqli_fetch_array($result)) { 
@@ -24,7 +25,7 @@ include("session.php");
           # code...
          echo "Problem in database connection! Contact administrator!" . mysqli_error();
               }else{
-               $sql ="SELECT  COUNT(DateInstalled) as dailyinstallation FROM papinstalled WHERE `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 5 DAY)GROUP BY DateInstalled order by DateInstalled Asc";
+               $sql ="SELECT  COUNT(DateInstalled) as dailyinstallation FROM papinstalled WHERE `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)GROUP BY DateInstalled order by DateInstalled Asc";
                $result = mysqli_query($connection,$sql);
                $chart_data="";
                 while ($data = mysqli_fetch_array($result)) { 
@@ -38,7 +39,7 @@ include("session.php");
                                       # code...
                                      echo "Problem in database connection! Contact administrator!" . mysqli_error();
                                           }else{
-                                           $sql ="SELECT COUNT(DateTurnedOn) as turnedon FROM turnedonpap WHERE `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 5 DAY) GROUP BY DateTurnedOn order by DateTurnedOn Asc";
+                                           $sql ="SELECT COUNT(DateTurnedOn) as turnedon FROM turnedonpap WHERE `DateTurnedOn` >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) GROUP BY DateTurnedOn order by DateTurnedOn Asc";
                                            $result = mysqli_query($connection,$sql);
                                            $chart_data="";
                                             while ($res = mysqli_fetch_array($result)) { 
@@ -108,7 +109,7 @@ include("session.php");
 <!-- Start wrapper-->
  <div id="wrapper" >
  
-  <!--Start sidebar-wrapper-->
+  <!--Start sidebar-wrapper--
    <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
@@ -154,7 +155,7 @@ include("session.php");
         <a href="new-user.php">
           <i class="fa fa-user"></i> <span>New User</span>
         </a>
-      </li>-->
+      </li>--
 
       <li  style="margin-left:5%">
         <a href="add-teamleader.php">
@@ -205,21 +206,7 @@ include("session.php");
           <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
         </a>
       </li>-->
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
-      <li style="margin-left:5%">
-        <a href="gallery.php">
-          <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="logout.php">
-          <i class="fa fa-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-
-    </ul>
-   
-   </div>
+     
    <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
@@ -325,7 +312,7 @@ include("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT count(MacAddress) as pap from papinstalled";
+                                             $query="SELECT count(*) as pap from papinstalled left join papdailysales on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is not null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pap']."<br><br>";
@@ -340,7 +327,7 @@ include("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT count(MacAddress) as turnedon from turnedonpap";
+                                             $query="SELECT count(*) as turnedon from turnedonpap";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['turnedon']."<br><br>";
@@ -378,7 +365,7 @@ include("session.php");
 		 <div class="card-body">
 		    <ul class="list-inline">
 			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-white"></i>Signed Pap</li>
-			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed pap</li>
+			  <li class="list-inline-item"><i class="fa fa-circle mr-2 text-light"></i>Installed Pap</li>
                           <li class="list-inline-item"><i class="fa fa-circle mr-2 text-black"></i>Turned On Pap</li>
 			</ul>
 			<div class="chart-container-1">
@@ -396,7 +383,7 @@ include("session.php");
                                              echo $row['SignedPaP']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Signing <span> <i class="fa fa-arrow"></i></span></small>
+			   <small class="mb-0">Pap Signed Today <span> <i class="fa fa-arrow"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
@@ -408,7 +395,7 @@ include("session.php");
                                              echo $row['dailyinstalled']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Installation <span> <i class="fa fa-arrow"></i></span></small>
+			   <small class="mb-0">Pap Installed Today <span> <i class="fa fa-arrow"></i></span></small>
 		     </div>
 		   </div>
 		   <div class="col-12 col-lg-4">
@@ -420,7 +407,7 @@ include("session.php");
                                              echo $row['dailyturnedon']."<br><br>";
                                               }
                                               ?></h5>
-			   <small class="mb-0">Daily Turned On <span> <i class="fa fa-arrow-"></i></span></small>
+			   <small class="mb-0">Pap Turned On Today<span> <i class="fa fa-arrow-"></i></span></small>
 		     </div>
 		   </div>
 		 </div>

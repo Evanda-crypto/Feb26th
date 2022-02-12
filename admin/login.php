@@ -14,7 +14,9 @@ if($connection){
         $data= $stmt_result->fetch_assoc();
         if($data['DEPARTMENT']=="Nats" || $data['DEPARTMENT']=="Executive"){
         if(password_verify($Password, $data['PASSWORD'])){
-
+           $_SESSION['Admin'] = true;
+           $_SESSION['start'] = time();
+           $_SESSION['expire'] = $_SESSION['start'] + (15 * 24 * 60 * 60 * 60);
             $_SESSION['Admin']=$EMAIL;
             $_SESSION['FName']=$data['FIRST_NAME'];
             $_SESSION['LName']=$data['LAST_NAME'];
