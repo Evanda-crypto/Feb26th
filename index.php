@@ -1,146 +1,242 @@
+<?php
+
+include("db/db.php");
+if(isset($_POST['submit'])){
+    session_start();
+    $EMAIL= trim($_POST['Username']);
+    $Password= trim($_POST['Password']);
+
+    if(!$connection){
+        echo "<script>alert('There is no connection at this time.Please try again later.');</script>";
+        echo '<script>window.location.href="login.php";</script>';
+    }
+    else{
+        $stmt= $connection->prepare("select * from employees where EMAIL= ?");
+        $stmt->bind_param("s",$EMAIL);
+        $stmt->execute();
+        $stmt_result= $stmt->get_result();
+        if($stmt_result->num_rows>0){
+            $data= $stmt_result->fetch_assoc();
+            if($data['DEPARTMENT']=="Nats" || $data['DEPARTMENT']=="Executive"){
+                if(password_verify($Password, $data['PASSWORD'])){
+                    $_SESSION['Admin'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
+                    $_SESSION['Admin']=$EMAIL;
+                    $_SESSION['FName']=$data['FIRST_NAME'];
+                    $_SESSION['LName']=$data['LAST_NAME'];
+                    $_SESSION['ID']=$data['ID'];
+                    header("Location: admin/dashboard.php");
+                }
+                else{
+                    echo "<script>alert('Wrong Password.');</script>";
+                    echo '<script>window.location.href="login.php";</script>';
+                    }
+
+            }
+            else if($data['DEPARTMENT']=="Sales"){
+                if(password_verify($Password, $data['PASSWORD'])){
+                    $_SESSION['Sales']=$EMAIL;
+                    $_SESSION['FName']=$data['FIRST_NAME'];
+                    $_SESSION['LName']=$data['LAST_NAME'];
+                    $_SESSION['ID']=$data['ID'];
+                    header("Location: sales/SalesDashboard.php");
+                }
+                else{
+                    echo "<script>alert('Wrong Password.');</script>";
+                     echo '<script>window.location.href="login.php";</script>';
+                }
+
+            }
+            else if($data['DEPARTMENT']=="Techie" && $data['Region']!="admin"){
+                $query= $connection->prepare("select employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,employees.PASSWORD,techieteams.Team_ID from employees LEFT join techieteams ON techieteams.Email1=employees.EMAIL OR techieteams.Email2=employees.EMAIL WHERE techieteams.Team_ID is not null AND Email= ?");
+                $query->bind_param("s",$EMAIL);
+                $query->execute();
+                $query_result= $query->get_result();
+                if($query_result->num_rows>0){
+                    $row= $query_result->fetch_assoc();
+                    if(password_verify($Password, $row['PASSWORD'])){
+                        $_SESSION['Techie']=$EMAIL;
+                        $_SESSION['FName']=$data['FIRST_NAME'];
+                        $_SESSION['LName']=$data['LAST_NAME'];
+                        $_SESSION['TeamID']=$row['Team_ID'];
+                        $_SESSION['ID']=$data['ID'];
+                        header("Location: techie/TechieDashboard.php");
+                    }
+                    else{
+                        echo "<script>alert('Wrong Password.');</script>";
+                        echo '<script>window.location.href="login.php";</script>';
+                    }
+            }
+        }
+        else{
+            $result= $connection->prepare("select * from teamleaders where EMAIL= ?");
+            $result->bind_param("s",$EMAIL);
+            $result->execute();
+            $result_result= $result->get_result();
+            if($result_result->num_rows>0){
+                $info= $result_result->fetch_assoc();
+                if(password_verify($Password, $data['PASSWORD']) && $data['DEPARTMENT']=='TechieTL'){
+                    $_SESSION['teamleader']=$EMAIL;
+                    $_SESSION['FName']=$data['FIRST_NAME'];
+                    $_SESSION['LName']=$data['LAST_NAME'];
+                    $_SESSION['ID']=$data['ID'];
+                    $_SESSION['Region']=$info['REGION'];
+                    header("Location: teamleaders/techie/dashboard.php");
+                }
+                else if(password_verify($Password, $data['PASSWORD']) && $data['DEPARTMENT']=='SalesTL'){
+                    $_SESSION['FName']=$data['FIRST_NAME'];
+                    $_SESSION['LName']=$data['LAST_NAME'];
+                    $_SESSION['Sales']=$EMAIL;
+                    $_SESSION['ID']=$data['ID'];
+                    $_SESSION['Region']=$info['REGION'];
+                    header('Location: teamleaders/sales/dashboard.php ');
+                }
+                else{
+                    echo "<script>alert('Wrong Password.');</script>";
+                    echo '<script>window.location.href="login.php";</script>';
+                }
+            }
+        }
+        }
+        else{
+            echo "<script>alert('No Records.');</script>";
+            echo '<script>window.location.href="login.php";</script>';
+        }
+}
+}
+?>
 <!DOCTYPE html>
-<html>
-  <head><title>KONNECT PANEL CMS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-<link rel="icon" href="assets/favicon.png" type="image/x-icon">
-<style>
-.carousel-item {
-    height: 65vh;
-    min-height: 350px;
-    background: no-repeat center center scroll;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-}
-.footer {
-   position: fixed;
-   left: 0;
-   bottom: 0;
-   width: 100%;
-   background-color: orange;
-   color: white;
-   text-align: center;
-}
-#mainNavbar {
-    padding-left: 50px;
-    padding-top: 20px;
-    overflow: hidden;
-  background-color:grey;
-}
-
-.navbar-dark .navbar-brand {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.navbar-nav .nav-link {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.display-4 {
-  font-family: Arial, Helvetica, sans-serif;
-}
-.lead {
-  font-family: Arial, Helvetica, sans-serif;
-}
-.navbar.scrolled {
-    background: rgb(34, 31, 31);
-    transition: background 500ms;
-}
-
-.font-weight-light {
-  font-family: Arial, Helvetica, sans-serif;
-}
-.nav-link, .nav-item  {
-  float: left;
-  display: block;
-  color: black;
-  text-align: center;
-  padding: 10px 14px;
-  text-decoration: none;
-  font-size:15px;
-}
-</style>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>K.O.M.P</title>
+  <!-- loader--
+  <link href=" assets/css/pace.min.css" rel="stylesheet"/>
+  <script src=" assets/js/pace.min.js"></script>
+  <!--favicon-->
+  <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+  <!-- Bootstrap core CSS-->
+  <link href=" assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href=" assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS--
+  <link href=" assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <!-- Custom Style-->
+  <link href=" assets/css/app-style.css" rel="stylesheet"/>
+ 
 </head>
-<body>
-<nav id="mainNavbar" class="navbar navbar-dark navbar-expand-md py-0 fixed-top"> <a href="#" class="navbar-brand"><img style="height:60px; width: 100px; margin-top:0.1px;" src="assets/logo.png"></a> <button style="color:black;" class="navbar-toggler" data-toggle="collapse" data-target="#navLinks"> <span  class="navbar-toggler-icon"></span> </button>
-    <div class="collapse navbar-collapse" id="navLinks">
-        <ul class="navbar-nav">
-            <li class="nav-item"> <a style="color: black;" href="admin/login.php" class="navbar-brand">ADMIN</a> </li>
-            <li class="nav-item"> <a style="color: black;" href="teamleaders/login.php" class="navbar-brand">TEAM LEADERS</a> </li>
-            <li class="nav-item"> <a style="color: black;" href="techie/login.php" class="navbar-brand">INSTALLATION </a></li>
-            <li class="nav-item"> <a style="color: black;" href="sales/login.php"class="navbar-brand">SALES</a></li>   
-           <!-- <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">image</a></li>
-            <li class="nav-item"> <a style="color: black;" href="users/test.php"class="navbar-brand">test</a></li> 
-            <li class="nav-item"> <a style="color: black;" href="users/table.php"class="navbar-brand">test</a></li> -->                                                                                                                                                                                                                                                    
-</div>
+
+<body >
+
+<!-- start loader -->
+   <div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner" ><div class="loader"></div></div></div></div>
+   <!-- end loader -->
+
+<!-- Start wrapper-->
+ <div id="wrapper">
+
+ <div class="loader-wrapper"><div class="lds-ring"><div></div><div></div><div></div><div></div></div></div>
+	<div class="card card-authentication1 mx-auto my-5">
+		<div class="card-body" >
+		 <div class="card-content p-2">
+		 	<div class="text-center">
+		 		<img src="assets/login-logo2.png" alt="logo icon" style="height:60%; width: 100%; corner-radius:2px;">
+		 	</div>
+		  <div class="card-title text-uppercase text-center py-3"></div>
+		    <form method="POST" autocomplete="off" style="background-image: url('assets/login-logo.png');">
+			  <div class="form-group">
+			  <label for="exampleInputUsername" class="sr-only">Username</label>
+			   <div class="position-relative has-icon-right">
+				  <input type="text" id="exampleInputUsername" class="form-control input-shadow" name="Username" placeholder="Enter Username">
+				  <div class="form-control-position">
+					 
+				  </div>
+			   </div>
+			  </div>
+			  <div class="form-group">
+			  <label for="exampleInputPassword" class="sr-only">Password</label>
+			   <div class="position-relative has-icon-right">
+				  <input type="password" id="exampleInputPassword" name="Password" class="form-control input-shadow" placeholder="Enter Password">
+				  <div class="form-control-position">
+					  
+				  </div>
+			   </div>
+			  </div>
+			<div class="form-row">
+			 <div class="form-group col-6">
+			   <div class="icheck-material-white">
+                <input type="checkbox" id="user-checkbox" checked="" />
+                <label for="user-checkbox">Remember me</label>
+			  </div>
+			 </div>
+			</div>
+			 <button type="submit" name="submit" class="btn btn-light btn-block">Sign In</button>
+
+			 
+			 </form>
+		   </div>
+		  </div>
+	     </div>
+    
+     <!--Start Back To Top Button-->
+    <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	
+	<!--start color switcher-->
+   <div class="right-sidebar">
+    <div class="switcher-icon">
+      <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
     </div>
-</nav>
-<header>
-    <div id="indicators" class="carousel slide" data-ride="carousel" style="">
-        <ol class="carousel-indicators">
-            <li data-target="#indicators" data-slide-to="0" class="active"></li>
-            <li data-target="#indicators" data-slide-to="1"></li>
-            <li data-target="#indicators" data-slide-to="2"></li>
-        </ol>
-        <div class="carousel-inner" role="listbox">
-            <!-- Slide One - Set the background image for this slide in the line below -->
-            <div class="carousel-item active" style="background-image: url('assets/techie.png')">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 class="display-4">Techies</h3>
-                    <p class="lead">Reliable Expertise who work to ensure safety installation strategies are Implemented.</p>
-                </div>
-            </div> <!-- Slide Two - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('assets/sales.png')">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 class="display-4">Champs</h3>
-                    <p class="lead">Committed to offer our customers all the informaton required to be part of Konnect family.</p>
-                </div>
-            </div> <!-- Slide Three - Set the background image for this slide in the line below -->
-            <div class="carousel-item" style="background-image: url('assets/ahadi.png')">
-                <div class="carousel-caption d-none d-md-block">
-                    <h3 class="display-4">Our Company</h3>
-                    <p class="lead">Committed to work round the clock to ensure fast affordabled Internet connection to our customers.</p>
-                </div>
-            </div>
-        </div> <a class="carousel-control-prev" href="#indicators" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> <a class="carousel-control-next" href="#indicators" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
-    </div>
-</header>
-<!-- Page Content -->
-<section class="py-5">
-    <div class="container">
-         <h1 class="font-weight-light">Objective</h1>
-        <p class="lead">To ensure efficiency in data collection,recording & presentation.</p>
-        <h1 class="font-weight-light">Mission</h1>
-        <p class="lead">Provision of affordable unlimited internet services to our customers.</p>
-    </div>
-</section>
-  <div class="footer">
-  <p>&copy; Konnect <?php echo date('Y')?></p>
+    <div class="right-sidebar-content">
+
+      <p class="mb-0">Gaussion Texture</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme1"></li>
+        <li id="theme2"></li>
+        <li id="theme3"></li>
+        <li id="theme4"></li>
+        <li id="theme5"></li>
+        <li id="theme6"></li>
+      </ul>
+
+      <p class="mb-0">Gradient Background</p>
+      <hr>
+      
+      <ul class="switcher">
+        <li id="theme7"></li>
+        <li id="theme8"></li>
+        <li id="theme9"></li>
+        <li id="theme10"></li>
+        <li id="theme11"></li>
+        <li id="theme12"></li>
+		<li id="theme13"></li>
+        <li id="theme14"></li>
+        <li id="theme15"></li>
+      </ul>
+      
+     </div>
    </div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-<script>
-    $(function() {
-        $(document).scroll(function() {
-            var $nav = $("#mainNavbar");
-            $nav.toggleClass("scrolled", $(this).scrollTop() > $nav.height());
-        });
-    });
-</script>
-<script>
-  jQuery(document).ready(function() {
- // executes when HTML-Document is loaded and DOM is read
+  <!--end color switcher-->
+	
+	</div><!--wrapper-->
+	
+  <!-- Bootstrap core JavaScript--
+  <script src=" assets/js/jquery.min.js"></script>
+  <script src=" assets/js/popper.min.js"></script>
+  <script src=" assets/js/bootstrap.min.js"></script>
+	
+  <!-- sidebar-menu js -->
+  <script src=" assets/js/sidebar-menu.js"></script>
   
-  jQuery('.btn[href^=#]').click(function(e){
-    e.preventDefault();
-    var href = jQuery(this).attr('href');
-    jQuery(href).modal('toggle');
-  });
-});  
-</script>
+  <!-- Custom scripts -->
+  <script src=" assets/js/app-script.js"></script>
+  
+</body>
 </html>

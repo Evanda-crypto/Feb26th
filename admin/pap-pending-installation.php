@@ -52,119 +52,7 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper--
-  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
-     <div class="brand-logo">
-      <a href="dashboard.php">
-       <img src="../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text">   </h5>
-     </a>
-   </div>
-   <ul class="sidebar-menu do-nicescrol" >
-      <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <li>
-        <a href="dashboard.php">
-          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TABLES</span></li>
-      <li  style="margin-left:5%">
-        <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
-        <a href="pap-daily-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Installation</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
-        <a href="pap-pending-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pending Pap Installation</span>
-        </a>
-      </li>
-
-      <li style="margin-left:5%">
-        <a href="pap-master-record.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-     <!-- <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
-      </li>--
-
-      <li  style="margin-left:5%">
-        <a href="add-teamleader.php">
-          <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
-        </a>
-      </li>
-
-      <li style="margin-left:5%">
-        <a href="list-of-teamleaders.php">
-          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
-        </a>
-      </li>
-
-    <!--  <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>A</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>B</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>C</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TECHIE</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>Material Usage</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>Payment</span>
-        </a>
-      </li>
-
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
-        </a>
-      </li>--
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
-      <li style="margin-left:5%">
-        <a href="gallery.php">
-          <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="logout.php">
-          <i class="fa fa-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-
-    </ul>
-   
-   </div>
-   <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
 <header class="topbar-nav">
@@ -228,7 +116,7 @@ include_once("session.php");
           <div class="card">
             <div class="card-body">
               
-              <center><h5 class="card-title">PAP PENDING INSTALLATION</h5></center>
+              <center><h5 class="card-title">PENDING INSTALLATION</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>

@@ -2,6 +2,6 @@
 session_start();
 if(!isset($_SESSION['Sales']) && $_SESSION['Sales']==false)
 {
-    header("location: login.php");
+    header("location: ../index.php");
 }
 ?>

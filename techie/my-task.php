@@ -16,6 +16,19 @@ include("../db/db.php");
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>--
   <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+
+<link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+
   <link rel="icon" href="../assets/images/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
   <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
@@ -244,10 +257,10 @@ include("../db/db.php");
             <div class="card-body">
               <h5 class="card-title">My Tasks</h5>
 			  <div class="table-responsive">
-               <table class="table table-striped">
+        <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                      <th scope="col">Client ID</th>
+                    <th scope="col">Client ID</th>
                       <th scope="col">Building Name</th>
                       <th scope="col">Building Code</th>
                      <th scope="col">Champ Name</th>
@@ -256,49 +269,41 @@ include("../db/db.php");
                       <th scope="col">Floor</th>
                       <th scope="col">Installed</th>
                      <th scope="col">Not Installed</th>
-
-
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                    <?php
+ <?php
+    $query=mysqli_query($connection,"SELECT papdailysales.ChampName,techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
+    papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
+    techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'");
+    while($row=mysqli_fetch_assoc($query)){
+      $id=$row['ClientID'];
+      $bname=$row['BuildingName'];
+      $champ=$row['ChampName'];
+      $bcode=$row['BuildingCode'];
+      $cname=$row['ClientName'];
+      $cont=$row['ClientContact'];
+      $floor=$row['Floor'];
 
-                                  $sql="SELECT papdailysales.ChampName,techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                  papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
-                                  techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'";
-                                  $result=mysqli_query($connection,$sql);
-                                  if($result){
-                                  while($row=mysqli_fetch_assoc($result)){
-                                    $id=$row['ClientID'];
-                                    $bname=$row['BuildingName'];
-                                    $champ=$row['ChampName'];
-                                    $bcode=$row['BuildingCode'];
-                                    $cname=$row['ClientName'];
-                                    $cont=$row['ClientContact'];
-                                    $floor=$row['Floor'];
-
-                                      echo ' <tr>
-                                    <th scope="row">'.$id.'</th>
-                                    <td>'.$bname.'</td>
-                                    <td>'.$bcode.'</td>
-                                    <td>'.$champ.'</td>
-                                    <td>'.$cname.'</td>
-                                    <td>'.$cont.'</td>
-                                    <td>'.$floor.'</td>
-                                    <td>
-                                    <button class="btn-primary" ><a href="papdetails.php?clientid='.$id.'" class="text-bold">Installed Pap</a></button>
-                                   </td>
-                                   <td>
-                                 <button class="btn-secondary" ><a href="pap-not-installed.php?clientid='.$id.'" class="text-bold">Pap Not Installed</a></button>
-                                 </td>
-                                    </tr>';  }
-                                     }?>
-                      
-                    </tr>
-                
-                  </tbody>
-                </table>
+        echo ' <tr>
+      <th scope="row">'.$id.'</th>
+      <td>'.$bname.'</td>
+      <td>'.$bcode.'</td>
+      <td>'.$champ.'</td>
+      <td>'.$cname.'</td>
+      <td>'.$cont.'</td>
+      <td>'.$floor.'</td>
+      <td>
+      <button class="btn-primary" ><a href="papdetails.php?clientid='.$id.'" class="text-bold">Installed Pap</a></button>
+     </td>
+     <td>
+   <button class="btn-secondary" ><a href="pap-not-installed.php?clientid='.$id.'" class="text-bold">Pap Not Installed</a></button>
+   </td>
+      </tr>';
+    }
+    ?>
+    </tbody>
+     </table>
             </div>
             </div>
           
@@ -510,8 +515,8 @@ include("../db/db.php");
   </div><!--End wrapper-->
 
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="../assets/js/jquery.min.js"></script>
+  <!-- Bootstrap core JavaScript--
+  <script src="../assets/js/jquery.min.js"></script>-->
   <script src="../assets/js/popper.min.js"></script>
   <script src="../assets/js/bootstrap.min.js"></script>
 	
@@ -522,6 +527,11 @@ include("../db/db.php");
   
   <!-- Custom scripts -->
   <script src="../assets/js/app-script.js"></script>
-	
+	<script>
+        $(document).ready(function () {
+$('#dtBasicExample').DataTable();
+$('.dataTables_length').addClass('bs-select');
+});
+    </script>
 </body>
 </html>

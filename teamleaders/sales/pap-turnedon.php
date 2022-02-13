@@ -55,7 +55,7 @@ include_once("session.php");
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
+       <img src="../../assets/login-logo3.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
        <h5 class="logo-text">   </h5>
      </a>
    </div>

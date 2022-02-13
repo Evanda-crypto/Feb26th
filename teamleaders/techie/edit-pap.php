@@ -91,7 +91,7 @@ else
  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../../assets/logo.png" class="logo-icon" alt="logo icon" style="width: 80px; height: 60px;">
+       <img src="../../assets/login-logo3.png" class="logo-icon" alt="logo icon" style="width: 100px; height: 60px;">
        <h5 class="logo-text"></h5>
      </a>
    </div>

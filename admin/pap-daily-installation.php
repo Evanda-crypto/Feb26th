@@ -201,7 +201,7 @@ include_once("session.php");
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php## echo $_SESSION['FName']?> <?php #echo $_SESSION['LName']?></h6>
+            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
             <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
             </div>
            </div>
@@ -230,7 +230,7 @@ include_once("session.php");
       <div class="row mt-3">
           <div class="card">
             <div class="card-body"> 
-            <center>  <h5 class="card-title">Pap to be turned on</h5></center>
+            <center>  <h5 class="card-title">PAP INSTALLED</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>

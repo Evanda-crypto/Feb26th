@@ -4,33 +4,33 @@ include("../db/db.php");
 include_once("session.php");
 
 if(isset($_POST['submit'])){
-$DateSigned = $_POST['DateSigned'];
+$DateSigned = trim($_POST['DateSigned']);
 $ChampName = $_POST['ChampName'];
-$BuildingName = $_POST['Buildingname'];
-$BuildingCode = $_POST['BuildingCode'];
-$Region = $_POST['Region'];
-$Apt = $_POST['Apt'];
-$AptLayout = $_POST['aptlayout'];
-$Floor = $_POST['floor'];
-$ClientName = $_POST['ClientName'];
-$ClientAvailability = $_POST['Day'];
-$ClientContact = $_POST['ClientContact'];
-$ClientWhatsApp = $_POST['WhatsApp'];
-$ClientGender = $_POST['gender'];
-$ClientAge = $_POST['age'];
-$ClientOccupation = $_POST['occupation'];
-$HouseholdSize = $_POST['Householdsize'];
-$Children = $_POST['Children'];
-$Teenagers = $_POST['Teenagers'];
-$Adults = $_POST['Adults'];
-$Birthday = $_POST['Birthday'];
-$Facebook = $_POST['facebook'];
-$Instagram = $_POST['Instagram'];
-$Twitter = $_POST['twitter'];
-$BizName = $_POST['bizname'];
-$BizCat = $_POST['bizcat'];
-$BizDec = $_POST['bizdec'];
-$Note = $_POST['Note'];
+$BuildingName = trim($_POST['Buildingname']);
+$BuildingCode = trim($_POST['BuildingCode']);
+$Region = trim($_POST['Region']);
+$Apt = trim($_POST['Apt']);
+$AptLayout = trim($_POST['aptlayout']);
+$Floor = trim($_POST['floor']);
+$ClientName = trim($_POST['ClientName']);
+$ClientAvailability = trim($_POST['Day']);
+$ClientContact = trim($_POST['ClientContact']);
+$ClientWhatsApp = trim($_POST['WhatsApp']);
+$ClientGender = trim($_POST['gender']);
+$ClientAge = trim($_POST['age']);
+$ClientOccupation = trim($_POST['occupation']);
+$HouseholdSize = trim($_POST['Householdsize']);
+$Children = trim($_POST['Children']);
+$Teenagers = trim($_POST['Teenagers']);
+$Adults = trim($_POST['Adults']);
+$Birthday = trim($_POST['Birthday']);
+$Facebook = trim($_POST['facebook']);
+$Instagram = trim($_POST['Instagram']);
+$Twitter = trim($_POST['twitter']);
+$BizName = trim($_POST['bizname']);
+$BizCat = trim($_POST['bizcat']);
+$BizDec = trim($_POST['bizdec']);
+$Note = trim($_POST['Note']);
 
 if($connection->connect_error){
   die('connection failed : '.$connection->connect_error);
@@ -50,6 +50,11 @@ else
   }
   else{
     
+    if(strlen(trim($BuildingCode)) <10 || strlen(trim($BuildingCode))>10 ){
+      echo "<script>alert('Incorrect Building Code format');</script>";
+      echo '<script>document.getElementById(bcode.id).select();</script>';
+     }
+     else{
       $insert= $connection->prepare("insert into papdailysales (DateSigned,ChampName,BuildingName,BuildingCode,Region,Apt,AptLayout,Floor,ClientName,ClientAvailability,ClientContact,
       ClientWhatsApp,ClientGender,ClientAge,ClientOccupation,HouseholdSize,Children,Teenagers,Adults,Birthday,Facebook,Instagram,Twitter,BizName,BizCat,BizDec,Note)
       values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
@@ -70,6 +75,7 @@ else
         Error occurs while updating the query
       </div>';
     }
+  }
   }
 }  
 }

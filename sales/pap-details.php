@@ -183,9 +183,51 @@ $(document).ready(function(){
            <div class="card-title"><center><h5> NEW PAP CLIENT</h5></center></div>
            <hr>
             <form method="POST" action="action.php">
+
+            <div>
+       <center> <label><input type="radio" name="colorRadio" value="red"> Residential</label>
+        <label><input type="radio" name="colorRadio" value="green"> Business</label></center>
+    </div>
+    <div class="red box">
+             <div class="form-group">
+            <label for="input-1">Apt</label>
+            <input type="text" class="form-control" id="input-1" name="Apt" placeholder="Apartment">
+           </div>
+
+          <div class="form-group">
+            <label for="input-3">Household Size</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-3" name="Householdsize" placeholder="Household Size">
+           </div>
+           <div class="form-group">
+            <label for="input-4">Children</label>
+            <input type="number" class="form-control" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" id="input-4" name="Children" placeholder="Children">
+           </div>
+           <div class="form-group">
+            <label for="input-5">Teenagers</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-5" name="Teenagers" placeholder="Teenagers">
+           </div>
+           <div class="form-group">
+            <label for="input-4">Adults</label>
+            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-4" name="Adults" placeholder="Adults">
+           </div>
+    </div>
+    <div class="green box">
+    <div class="form-group">
+            <label for="input-5">Biz Name</label>
+            <input type="text" class="form-control" id="input-5" name="bizname" placeholder="Biz Name">
+           </div>
+           <div class="form-group">
+            <label for="input-5">Biz Category</label>
+            <input type="text" class="form-control" id="input-5" name="bizcat" placeholder="Biz Category">
+           </div>
+           <div class="form-group">
+            <label for="input-5">Biz Description</label>
+            <input type="text" class="form-control" id="input-5" name="bizdec" placeholder="Biz Description">
+           </div>
+         </div>
            <div class="form-group">
             <label for="input-1">Date Signed<i style="color:red;">*</i></label></label>
-            <input type="date" class="form-control" id="input-1" name="DateSigned" placeholder="Date Signed" required>
+            <input type="date" class="form-control" id="datesigned" name="DateSigned" placeholder="Date Signed" required>
            </div>
            <div class="form-group">
             <label for="input-1">Champs<i style="color:red;">*</i></label></label>
@@ -193,7 +235,7 @@ $(document).ready(function(){
            </div>
            <div class="form-group">
             <label for="input-1">Building Code<i style="color:red">*</i></label>
-            <input type="text" class="form-control" id="bcode" onkeyup="GetDetail(this.value)" name="BuildingCode" placeholder="Building Code" required>
+            <input type="text" class="form-control" id="bcode" style="text-transform: uppercase" minlength="10" maxlength="10" onkeyup="GetDetail(this.value)" name="BuildingCode" placeholder="Building Code" required>
            </div>
 
            <div class="form-group">
@@ -282,47 +324,8 @@ $(document).ready(function(){
             <label for="input-5">Suggestions/Observations/Remarks<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-5" name="Note" placeholder="Note" required>
            </div>
-           <div>
-       <center> <label><input type="radio" name="colorRadio" value="red"> Residential</label>
-        <label><input type="radio" name="colorRadio" value="green"> Business</label></center>
-    </div>
-       <div class="red box">
-             <div class="form-group">
-            <label for="input-1">Apt</label>
-            <input type="text" class="form-control" id="input-1" name="Apt" placeholder="Apartment">
-           </div>
-
-          <div class="form-group">
-            <label for="input-3">Household Size</label>
-            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-3" name="Householdsize" placeholder="Household Size">
-           </div>
-           <div class="form-group">
-            <label for="input-4">Children</label>
-            <input type="number" class="form-control" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" id="input-4" name="Children" placeholder="Children">
-           </div>
-           <div class="form-group">
-            <label for="input-5">Teenagers</label>
-            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-5" name="Teenagers" placeholder="Teenagers">
-           </div>
-           <div class="form-group">
-            <label for="input-4">Adults</label>
-            <input type="number" pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==2) return false;" class="form-control" id="input-4" name="Adults" placeholder="Adults">
-           </div>
-    </div>
-    <div class="green box">
-    <div class="form-group">
-            <label for="input-5">Biz Name</label>
-            <input type="text" class="form-control" id="input-5" name="bizname" placeholder="Biz Name">
-           </div>
-           <div class="form-group">
-            <label for="input-5">Biz Category</label>
-            <input type="text" class="form-control" id="input-5" name="bizcat" placeholder="Biz Category">
-           </div>
-           <div class="form-group">
-            <label for="input-5">Biz Description</label>
-            <input type="text" class="form-control" id="input-5" name="bizdec" placeholder="Biz Description">
-           </div>
-         </div>
+          
+       
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-check"></i> Submit</button>
           </div>
@@ -510,7 +513,7 @@ if(month<10){
   month= "0"+ month;
 }
  maxdate= year +"-" + month + "-" + todate;
- document.getElementById("input-5").setAttribute("max",maxdate);
+ document.getElementById("datesigned").setAttribute("max",maxdate);
  </script>
 </body>
 <script>
@@ -525,7 +528,7 @@ if(month<10){
   month= "0"+ month;
 }
  maxdate= year +"-" + month + "-" + todate;
- document.getElementById("input-1").setAttribute("max",maxdate);
+ document.getElementById("datesigned").setAttribute("max",maxdate);
  </script> 
    <script>
 $(document).ready(function(){

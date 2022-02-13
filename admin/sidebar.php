@@ -1,12 +1,6 @@
 
 <html>
 <head>
-<meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-  <meta name="description" content=""/>
-<meta http-equiv="refresh" content="60">
-  <meta name="author" content=""/>
 <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
    <!--Vector CSS -->
   <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
@@ -28,7 +22,7 @@
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
+       <img src="../assets/login-logo3.png" style="width: 120px; height: 70px;" class="logo-icon" alt="logo icon">
        <h5 class="logo-text">   </h5>
      </a>
    </div>
@@ -48,7 +42,7 @@
       </li>
       <li  style="margin-left:5%">
         <a href="pap-pending-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pending Pap Installation</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pending Installation</span>
         </a>
       </li>
      <!-- <li  style="margin-left:5%">
@@ -58,13 +52,13 @@
       </li>-->
       <li  style="margin-left:5%">
         <a href="pap-daily-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap to be turned on </span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap Installed</span>
         </a>
       </li>
 
       <li style="margin-left:5%">
         <a href="pap-master-record.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
+          <i class="zmdi zmdi-grid"></i> <span>Pap Turned On</span>
         </a>
       </li>
 

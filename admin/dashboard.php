@@ -291,7 +291,7 @@ include("sidebar.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Signed PAP <span class="float-right"> <i class="zmdi zmdi-"></i></span></p>
+                  <p class="mb-0 text-white small-font">Signed Pap <span class="float-right"> <i class="zmdi zmdi-"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">
@@ -321,7 +321,7 @@ include("sidebar.php");
                     <div class="progress my-3" style="height:3px;">
                        <div class="progress-bar" style="width:55%"></div>
                     </div>
-                  <p class="mb-0 text-white small-font">Installed PAP <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
+                  <p class="mb-0 text-white small-font">Installed Pap <span class="float-right"> <i class="zmdi zmdi-up"></i></span></p>
                 </div>
             </div>
             <div class="col-12 col-lg-6 col-xl-3 border-light">

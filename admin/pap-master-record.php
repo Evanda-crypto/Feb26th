@@ -53,118 +53,7 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper--
-  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
-     <div class="brand-logo">
-      <a href="dashboard.php">
-       <img src="../assets/logo.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text">   </h5>
-     </a>
-   </div>
-   <ul class="sidebar-menu do-nicescrol" >
-      <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <li>
-        <a href="dashboard.php">
-          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
 
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TABLES</span></li>
-      <li  style="margin-left:5%">
-        <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Sales</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
-        <a href="pap-daily-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Daily Installation</span>
-        </a>
-      </li>
-
-      <li  style="margin-left:5%">
-        <a href="pap-pending-installation.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pending Pap Installation</span>
-        </a>
-      </li>
-
-      <li style="margin-left:5%">
-        <a href="pap-master-record.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap Master Record</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold;"><span> ACCOUNTS</span></li>
-     <!-- <li  style="margin-left:5%">
-        <a href="new-user.php">
-          <i class="fa fa-user"></i> <span>New User</span>
-        </a>
-      </li>--
-
-      <li  style="margin-left:5%">
-        <a href="add-teamleader.php">
-          <i class="fa fa-user-plus"></i> <span>Add TeamLeader</span>
-        </a>
-      </li>
-
-      <li style="margin-left:5%">
-        <a href="list-of-teamleaders.php">
-          <i class="fa fa-eye"></i> <span>View TeamLeaders</span>
-        </a>
-      </li>
-
-     <!-- <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> SALES</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>A</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>B</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>C</span>
-        </a>
-      </li>
-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TECHIE</span></li>
-      <li>
-        <a href="#">
-          <i class="fa fa-user"></i> <span>Material Usage</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="forms.php">
-          <i class="fa fa-user-plus"></i> <span>Payment</span>
-        </a>
-      </li>
-
-    <!--  <li>
-        <a href="#">
-          <i class="fa fa-minus-circle"></i> <span>Change TeamLeader</span>
-        </a>
-      </li>-
-      <li class="sidebar-header" style="font-size: 17px; color:white; font-style:bold; alignment:center;"><span> TOOLS</span></li>
-      <li style="margin-left:5%">
-        <a href="gallery.php">
-          <i class="fa fa-picture-o"></i> <span>Gallery</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="logout.php">
-          <i class="fa fa-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-    </ul>
-   
-   </div>
-   <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
 <header class="topbar-nav">
@@ -227,7 +116,7 @@ include_once("session.php");
       <div class="row mt-3">
 <div class="col-12 col-lg-12">
           <div class="card">
-               <center><h5 class="card-title" style=" margin-top:1%;">PAP MASTER RECORD</h5></center> 
+               <center><h5 class="card-title" style=" margin-top:1%;">PAP TURNED ON</h5></center> 
               
             <div class="card-body">
 			  <div class="table-responsive">
@@ -261,7 +150,7 @@ include_once("session.php");
                   <tbody>
 <?php
     
-    $sql="SELECT turnedonpap.ClientID,turnedonpap.BuildingName,turnedonpap.BuildingCode,turnedonpap.Region,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
+    $sql="SELECT turnedonpap.ClientID,turnedonpap.BuildingName,upper(turnedonpap.BuildingCode) as bcode,upper(turnedonpap.Region) as reg,turnedonpap.ChampName,turnedonpap.ClientName,turnedonpap.ClientContact,Upper(turnedonpap.MacAddress) as Mac,turnedonpap.PapStatus,turnedonpap.DateTurnedOn,CASE WHEN (row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)) <=9 THEN CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,'0',(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 ELSE CONCAT(papdailysales.BuildingCode,'-',papdailysales.Floor,(row_number() over(partition by papdailysales.BuildingCode,papdailysales.Floor)),'P')
 end as papcode from papdailysales LEFT JOIN turnedonpap ON turnedonpap.ClientID=papdailysales.ClientID WHERE DateTurnedOn >= DATE_SUB(CURDATE(), INTERVAL 70 DAY) order by DateTurnedOn Desc";
 $result=$connection->query($sql);
@@ -270,8 +159,8 @@ while($row=$result->fetch_array()){
   <tr>
     <td><?php echo $row['papcode']?></td>
     <td><?php echo $row['BuildingName']?></td>
-    <td><?php echo $row['BuildingCode']?></td>
-    <td><?php echo $row['Region']?></td>
+    <td><?php echo $row['bcode']?></td>
+    <td><?php echo $row['reg']?></td>
     <td><?php echo $row['ChampName']?></td>
     <td><?php echo $row['ClientName']?></td>
     <td><?php echo $row['ClientContact']?></td>
