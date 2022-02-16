@@ -198,8 +198,8 @@ else
               <option value="HR">HR</option>
               <option value="Nats">Nats</option>
               <option value="Maton">Maton</option>
-              <option value="Hub">Hub</option>
-              <option value="Media">Media</option>
+              <option value="SalesTL">SalesTL</option>
+              <option value="TechieTL">TechieTL</option>
               <option value="Sales">Sales</option>
               <option value="Techie">Techie</option>
             </select>

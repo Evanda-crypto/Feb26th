@@ -1,6 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION['Sales']) && $_SESSION['Sales']==false)
+$currentTime = time();
+if(!isset($_SESSION['Sales']) && $_SESSION['Sales']==false || ($currentTime > $_SESSION['expire']))
 {
     header("location: ../../index.php");
 }

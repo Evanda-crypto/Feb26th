@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
                 if(password_verify($Password, $data['PASSWORD'])){
                     $_SESSION['Admin'] = true;
                     $_SESSION['start'] = time();
-                    $_SESSION['expire'] = $_SESSION['start'] + (40 * 60);
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
                     $_SESSION['Admin']=$EMAIL;
                     $_SESSION['FName']=$data['FIRST_NAME'];
                     $_SESSION['LName']=$data['LAST_NAME'];
@@ -30,12 +30,15 @@ if(isset($_POST['submit'])){
                 }
                 else{
                     echo "<script>alert('Wrong Password.');</script>";
-                    echo '<script>window.location.href="login.php";</script>';
+                    echo '<script>window.location.href="index.php";</script>';
                     }
 
             }
             else if($data['DEPARTMENT']=="Sales"){
                 if(password_verify($Password, $data['PASSWORD'])){
+                    $_SESSION['Sales'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
                     $_SESSION['Sales']=$EMAIL;
                     $_SESSION['FName']=$data['FIRST_NAME'];
                     $_SESSION['LName']=$data['LAST_NAME'];
@@ -44,11 +47,11 @@ if(isset($_POST['submit'])){
                 }
                 else{
                     echo "<script>alert('Wrong Password.');</script>";
-                     echo '<script>window.location.href="login.php";</script>';
+                     echo '<script>window.location.href="index.php";</script>';
                 }
 
             }
-            else if($data['DEPARTMENT']=="Techie" && $data['Region']!="admin"){
+            else if($data['DEPARTMENT']=="Techie"){
                 $query= $connection->prepare("select employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,employees.PASSWORD,techieteams.Team_ID from employees LEFT join techieteams ON techieteams.Email1=employees.EMAIL OR techieteams.Email2=employees.EMAIL WHERE techieteams.Team_ID is not null AND Email= ?");
                 $query->bind_param("s",$EMAIL);
                 $query->execute();
@@ -56,6 +59,9 @@ if(isset($_POST['submit'])){
                 if($query_result->num_rows>0){
                     $row= $query_result->fetch_assoc();
                     if(password_verify($Password, $row['PASSWORD'])){
+                    $_SESSION['Techie'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
                         $_SESSION['Techie']=$EMAIL;
                         $_SESSION['FName']=$data['FIRST_NAME'];
                         $_SESSION['LName']=$data['LAST_NAME'];
@@ -65,7 +71,7 @@ if(isset($_POST['submit'])){
                     }
                     else{
                         echo "<script>alert('Wrong Password.');</script>";
-                        echo '<script>window.location.href="login.php";</script>';
+                        echo '<script>window.location.href="index.php";</script>';
                     }
             }
         }
@@ -77,6 +83,9 @@ if(isset($_POST['submit'])){
             if($result_result->num_rows>0){
                 $info= $result_result->fetch_assoc();
                 if(password_verify($Password, $data['PASSWORD']) && $data['DEPARTMENT']=='TechieTL'){
+                    $_SESSION['teamleader'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
                     $_SESSION['teamleader']=$EMAIL;
                     $_SESSION['FName']=$data['FIRST_NAME'];
                     $_SESSION['LName']=$data['LAST_NAME'];
@@ -85,6 +94,9 @@ if(isset($_POST['submit'])){
                     header("Location: teamleaders/techie/dashboard.php");
                 }
                 else if(password_verify($Password, $data['PASSWORD']) && $data['DEPARTMENT']=='SalesTL'){
+                    $_SESSION['Sales'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
                     $_SESSION['FName']=$data['FIRST_NAME'];
                     $_SESSION['LName']=$data['LAST_NAME'];
                     $_SESSION['Sales']=$EMAIL;
@@ -94,14 +106,14 @@ if(isset($_POST['submit'])){
                 }
                 else{
                     echo "<script>alert('Wrong Password.');</script>";
-                    echo '<script>window.location.href="login.php";</script>';
+                    echo '<script>window.location.href="index.php";</script>';
                 }
             }
         }
         }
         else{
             echo "<script>alert('No Records.');</script>";
-            echo '<script>window.location.href="login.php";</script>';
+            echo '<script>window.location.href=index.php";</script>';
         }
 }
 }
@@ -131,7 +143,7 @@ if(isset($_POST['submit'])){
  
 </head>
 
-<body >
+<body class="bg-theme bg-theme11" >
 
 <!-- start loader -->
    <div id="pageloader-overlay" class="visible incoming"><div class="loader-wrapper-outer"><div class="loader-wrapper-inner" ><div class="loader"></div></div></div></div>

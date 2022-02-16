@@ -1,6 +1,7 @@
 <?php
 session_start();
-if(!isset($_SESSION['teamleader']) && $_SESSION['teamleader']==false)
+$currentTime = time();
+if(!isset($_SESSION['teamleader']) && $_SESSION['teamleader']==false || ($currentTime > $_SESSION['expire']))
 {
     header("location: ../../index.php");
 }

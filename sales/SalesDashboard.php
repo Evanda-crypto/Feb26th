@@ -170,7 +170,7 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-         $query="SELECT count(*) as papcon from papdailysales where `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' ";
+         $query="SELECT COUNT(papdailysales.DateSigned) as papcon FROM papdailysales left JOIN papnotinstalled ON papnotinstalled.ClientID=papdailysales.ClientID WHERE papdailysales.DateSigned>=DATE_ADD(CURDATE(), INTERVAL -6 DAY)and papnotinstalled.ClientID is null and papdailysales.ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."'";
           $data=mysqli_query($connection,$query);
           while($row=mysqli_fetch_assoc($data)){
           echo $row['papcon']."<br><br>";
@@ -185,7 +185,7 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-        $query="SELECT count(*) as today from papdailysales where DateSigned=CURDATE() AND ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."'";
+        $query="SELECT count(*) as today from papdailysales left join papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID where papdailysales.DateSigned=CURDATE() and papnotinstalled.ClientID is null AND papdailysales.ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."'";
           $data=mysqli_query($connection,$query);
           while($row=mysqli_fetch_assoc($data)){
           echo $row['today']."<br><br>";
@@ -308,7 +308,7 @@ include_once("session.php");
 if (!$connection) {
  echo "Problem in database connection! Contact administrator!" . mysqli_error();
      }else{
- $sql ="SELECT DateSigned,COUNT(DateSigned) as sales FROM papdailysales WHERE ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY DateSigned HAVING COUNT(DateSigned)>1 OR COUNT(DateSigned)=1 AND `DateSigned` >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)";
+ $sql ="SELECT  papdailysales.DateSigned,COUNT(papdailysales.DateSigned) as sales FROM papdailysales left JOIN papnotinstalled ON papnotinstalled.ClientID=papdailysales.ClientID WHERE papdailysales.DateSigned>=DATE_ADD(CURDATE(), INTERVAL -6 DAY) and papnotinstalled.ClientID is null  and papdailysales.ChampName='".$_SESSION['FName']." ".$_SESSION['LName']."' GROUP BY papdailysales.DateSigned";
 $result = mysqli_query($connection,$sql);
 $chart_data="";
                                            

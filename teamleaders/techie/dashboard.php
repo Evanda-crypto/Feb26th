@@ -2,21 +2,6 @@
 include("../../db/db.php");
 include_once("session.php");
 ?>
-<!--Graphs-->
-<?php
-                                  if (!$connection) {
-                                    # code...
-                                  echo "Problem in database connection! Contact administrator!" . mysqli_error();
-                                      }else{
-                                      $sql ="SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 order by buildings Desc";
-                                      $result = mysqli_query($connection,$sql);
-                                      $chart_data="";
-                                      while ($row = mysqli_fetch_array($result)) { 
- 
-                                      $Region[]  = $row['Region']  ;
-                                      $Build[] = $row['buildings'];
-                                       }
-                                    }?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -321,7 +306,7 @@ include_once("session.php");
                                         # code...
                                    echo "Problem in database connection! Contact administrator!" . mysqli_error();
                                  }else{
-                                     $sql ="SELECT DateInstalled,COUNT(DateInstalled) as reginstallation FROM papinstalled where REGION='".$_SESSION['Region']."' GROUP BY DateInstalled HAVING COUNT(DateInstalled)>1 OR COUNT(DateInstalled)=1 AND `DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)";
+                                     $sql ="SELECT DateInstalled,COUNT(DateInstalled) as reginstallation FROM papinstalled where DateInstalled>=DATE_ADD(CURDATE(), INTERVAL -7 DAY) and REGION='".$_SESSION['Region']."' GROUP BY DateInstalled";
                                      $result = mysqli_query($connection,$sql);# individual region installation
                                      $chart_data="";
                                       while ($row = mysqli_fetch_array($result)) { 
@@ -351,7 +336,7 @@ include_once("session.php");
 		   <div class="col-12 col-lg-4">
 		     <div class="p-3">
 		       <h5 class="mb-0"><?php
-                                             $query="SELECT  COUNT(papinstalled.MacAddress) as installed FROM papinstalled WHERE`DateInstalled` >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) and papinstalled.Region='".$_SESSION['Region']."'";
+                                             $query="SELECT  COUNT(papinstalled.MacAddress) as installed FROM papinstalled WHERE DateInstalled>=DATE_ADD(CURDATE(), INTERVAL -7 DAY) and papinstalled.Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['installed']."<br><br>";
@@ -373,7 +358,6 @@ include_once("session.php");
 		     </div>
 		   </div>
 		 </div>
-		 
 		</div>
 	 </div>
 

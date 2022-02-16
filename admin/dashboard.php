@@ -282,7 +282,7 @@ include("sidebar.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT count(*) as clients from papdailysales";
+                                             $query="SELECT count(*) as clients from papdailysales left join papnotinstalled on papdailysales.ClientID=papnotinstalled.ClientID where papnotinstalled.ClientID is null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['clients']."<br><br>";
@@ -297,7 +297,7 @@ include("sidebar.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(*)as pending from papdailysales LEFT JOIN papinstalled on papinstalled.ClientID=papdailysales.ClientID WHERE papinstalled.ClientID is null";
+                                             $query="SELECT COUNT(*)as pending from papdailysales LEFT JOIN papinstalled on papinstalled.ClientID=papdailysales.ClientID left join papnotinstalled on papnotinstalled.ClientID=papdailysales.ClientID WHERE papinstalled.ClientID is null and papnotinstalled.ClientID is null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pending']."<br><br>";
@@ -312,7 +312,7 @@ include("sidebar.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT count(*) as pap from papinstalled left join papdailysales on papdailysales.ClientID=papinstalled.ClientID where papinstalled.ClientID is not null";
+                                             $query="SELECT COUNT(papinstalled.MacAddress) as pap FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID JOIN papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pap']."<br><br>";
@@ -416,7 +416,7 @@ include("sidebar.php");
 	 </div>
      <div class="col-12 col-lg-4 col-xl-4">
         <div class="card">
-           <div class="card-header"><center>Buildings Per Region</center>
+           <div class="card-header"><center>Pap Clients Per Region</center>
              <div class="card-action">
              <div class="dropdown">
              <a href="javascript:void();" class="dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown">
@@ -440,12 +440,12 @@ include("sidebar.php");
                     <tr>
                     <th>No</th>
                      <th>Region</th>
-                     <th>Buildings</th>
+                     <th>Clients</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                        $query  = "SELECT  Region, COUNT(Region) as buildings FROM building GROUP BY Region HAVING COUNT(Region)>1 OR COUNT(Region)=1 ORDER BY buildings DESC";
+                        $query  = "SELECT upper(Region) as reg, COUNT(clientID) as pap FROM turnedonpap GROUP BY Region ORDER BY pap DESC";
                         $result  = mysqli_query($connection, $query);
 
                         $num_rows  = mysqli_num_rows($result);
@@ -457,8 +457,8 @@ include("sidebar.php");
                         ?>
                                 <tr>
                                     <th><?php echo $num; ?></th>
-                                    <th><?php echo $row['Region']; ?></th>
-                                    <th><?php echo $row['buildings']; ?></th>
+                                    <th><?php echo $row['reg']; ?></th>
+                                    <th><?php echo $row['pap']; ?></th>
                                 </tr>
                         <?php
 

@@ -238,8 +238,8 @@ else
             <label for="input-1">Department</label>
             <select type="text" class="form-control" name="Department" id="input-1" placeholder="Region" required>
               <option value="<?php echo $dpt?>" disabled selected><?php echo $dpt?></option>
-              <option value="Sales">Sales</option>
-              <option value="Techie">Techie</option>
+              <option value="SalesTL">SalesTL</option>
+              <option value="TechieTL">TechieTL</option>
             </select>
            </div>
            <div class="form-group">

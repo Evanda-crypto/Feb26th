@@ -1,6 +1,7 @@
 <?php
-include('../../db/db.php');
+include('../db/db.php');
 include_once("session.php");
+include_once("sidebar.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -10,13 +11,11 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Pap | Restituted</title>
+  <title>Restituted | Pap</title>
   <!-- loader--
   <link href="../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../assets/js/pace.min.js"></script>
-  <!--favicon-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="../assets/js/pace.min.js"></script>-->
+      <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
 <link href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css" rel="stylesheet">
 
@@ -27,20 +26,21 @@ include_once("session.php");
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 
-  <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
+  <!--favicon-->
+
+  <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
-  <link href="../../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
+  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
   <!-- Bootstrap core CSS-->
-  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
   <!-- animate CSS-->
-  <link href="../../assets/css/animate.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
   <!-- Icons CSS-->
-  <link href="../../assets/css/icons.css" rel="stylesheet" type="text/css"/>
+  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
   <!-- Sidebar CSS-->
-  <link href="../../assets/css/sidebar-menu.css" rel="stylesheet"/>
+  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
   <!-- Custom Style-->
-  <link href="../../assets/css/app-style.css" rel="stylesheet"/>
-  
+  <link href="../assets/css/app-style.css" rel="stylesheet"/>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -52,54 +52,6 @@ include_once("session.php");
 <!-- Start wrapper-->
 <div id="wrapper">
 
-  <!--Start sidebar-wrapper-->
-  <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
-     <div class="brand-logo">
-      <a href="dashboard.php">
-       <img src="../../assets/login-logo3.png" style="width: 100px; height: 70px;" class="logo-icon" alt="logo icon">
-       <h5 class="logo-text">   </h5>
-     </a>
-   </div>
-   <ul class="sidebar-menu do-nicescrol" >
-      <li class="sidebar-header">    MAIN NAVIGATION</li>
-      <li style="margin-left:5%">
-        <a href="dashboard.php">
-          <i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="pap-daily-sales.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap daily sales[<?php echo $_SESSION['Region']?>]</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="all-pap.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap all records</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="pap-restituted.php">
-          <i class="zmdi zmdi-alert-triangle"></i> <span>Pap restituted</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="pap-turnedon.php">
-          <i class="zmdi zmdi-grid"></i> <span>Pap turnedon</span>
-        </a>
-      </li>
-      <li  style="margin-left:5%">
-        <a href="profile.php">
-          <i class="zmdi zmdi-face"></i> <span>Profile</span>
-        </a>
-</li>
-      <li  style="margin-left:5%">
-        <a href="logout.php">
-          <i class="fa fa-lock"></i> <span>Logout</span>
-        </a>
-      </li>
-    </ul>
-   
-   </div>
    <!--End sidebar-wrapper-->
 
 <!--Start topbar header-->
@@ -135,7 +87,7 @@ include_once("session.php");
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
             <h6 class="mt-2 user-title"><?php echo $_SESSION['FName']?> <?php echo $_SESSION['LName']?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Sales']?></p>
+            <p class="user-subtitle"><?php echo $_SESSION['Admin']?></p>
             </div>
            </div>
           </a>
@@ -155,18 +107,17 @@ include_once("session.php");
 </header>
 <!--End topbar header-->
 
-<div class="clearfix"></div>
+<div class="clearfix"> </div>
 	
   <div class="content-wrapper">
     <div class="container-fluid">
      
       <div class="row mt-3">
           <div class="card">
-            <div class="card-body">
-              
-            <center>  <h5 class="card-title">PAP RESTITUTED</h5></center>
+            <div class="card-body"> 
+            <center>  <h5 class="card-title">RESTITUTED PAP</h5></center>
 			  <div class="table-responsive">
-               <table class="table" id="dtBasicExample">
+        <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
                     <th>No</th>
@@ -179,7 +130,6 @@ include_once("session.php");
                      <th>Techie 1</th>
                      <th>Techie 2</th>
                     <th>Reason</th>
-                     <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -206,11 +156,6 @@ include_once("session.php");
                                     <th><?php echo $row['Techie1']; ?></th>
                                     <th><?php echo $row['Techie2']; ?></th>
                                     <th><?php echo $row['Reason']; ?></th>
-                                    <th>
-                                    <button class="btn-secondary" ><a href="resign.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to restore <?php  echo $row['ClientName']; ?> back to KOMP database?')"> <i class="zmdi zmdi-refresh-alt"></i>Restore</a></button>
-                                    <button class="btn-secondary" ><a href="delete-client.php?client-id=<?php echo $row['ClientID']; ?> " onClick="return confirm('Sure to delete <?php  echo $row['ClientName']; ?> from KOMP database?')"> <i class="fas fa-trash"></i>  Delete</a></button>
-                                    </th>
-
                                 </tr>
                         <?php
 
@@ -219,17 +164,17 @@ include_once("session.php");
                         ?>
  </tbody>
 </table>
- </div>
-
-  </div>
             </div>
           </div>
-        
+            </div>
+          </div>
+
+
         </div>
       </div><!--End Row-->
 	  
 	  <!--start overlay-->
-		  <div class="overlay toggle-menu"></div>
+		  <div class="overlay toggle-menu"> </div>
 		<!--end overlay-->
 
     </div>
@@ -292,23 +237,23 @@ include_once("session.php");
 
 
   <!-- Bootstrap core JavaScript--
-  <script src="../../assets/js/jquery.min.js"></script>-->
-  <script src="../../assets/js/popper.min.js"></script>
-  <script src="../../assets/js/bootstrap.min.js"></script>
+  <script src="../assets/js/jquery.min.js"></script>-->
+  <script src="../assets/js/popper.min.js"></script>
+  <script src="../assets/js/bootstrap.min.js"></script>
 	
   <!-- simplebar js -->
-  <script src="../../assets/plugins/simplebar/js/simplebar.js"></script>
+  <script src="../assets/plugins/simplebar/js/simplebar.js"></script>
   <!-- sidebar-menu js -->
-  <script src="../../assets/js/sidebar-menu.js"></script>
+  <script src="../assets/js/sidebar-menu.js"></script>
   
   <!-- Custom scripts -->
-  <script src="../../assets/js/app-script.js"></script>
-	<script>
-        $(document).ready(function () {
+  <script src="../assets/js/app-script.js"></script>
+
+  <script>
+  $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
-    </script>
+</script>
 </body>
-
 </html>

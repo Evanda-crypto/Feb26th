@@ -264,7 +264,7 @@ while($row=$result->fetch_array()){
      <td><?php echo $row['ClientContact']?></td>
     <td><?php echo $row['Floor']?></td>
     <td>
-    <a href="turnedon.php?clientid=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i>Turn On</a>
+    <a href="turnedon.php?clientid=<?php echo $row['ClientID']; ?>"><i class="fas fa-edit"></i></a>
     </td>
 </tr>
 <?php } ?>

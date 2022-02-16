@@ -230,12 +230,12 @@ $(document).ready(function(){
             <input type="date" class="form-control" id="datesigned" name="DateSigned" placeholder="Date Signed" required>
            </div>
            <div class="form-group">
-            <label for="input-1">Champs<i style="color:red;">*</i></label></label>
+            <label for="input-1">Champ<i style="color:red;">*</i></label></label>
             <input type="text" class="form-control" id="input-1" name="ChampName" value="<?php echo $_SESSION['FName'];?> <?php echo $_SESSION['LName'];?>" readonly>
            </div>
            <div class="form-group">
             <label for="input-1">Building Code<i style="color:red">*</i></label>
-            <input type="text" class="form-control" id="bcode" style="text-transform: uppercase" minlength="10" maxlength="10" onkeyup="GetDetail(this.value)" name="BuildingCode" placeholder="Building Code" required>
+            <input type="text" class="form-control" id="bcode" minlength="10" onkeyup="GetDetail(this.value)" name="BuildingCode" placeholder="Building Code" required>
            </div>
 
            <div class="form-group">

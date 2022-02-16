@@ -41,6 +41,11 @@
         </a>
       </li>
       <li  style="margin-left:5%">
+        <a href="restituted-pap.php">
+          <i class="zmdi zmdi-grid"></i> <span>Restituted Pap</span>
+        </a>
+      </li>
+      <li  style="margin-left:5%">
         <a href="pap-pending-installation.php">
           <i class="zmdi zmdi-grid"></i> <span>Pending Installation</span>
         </a>
