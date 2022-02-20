@@ -69,12 +69,12 @@ include_once("session.php");
         </a>
       </li>
 
-      <li>
+     <!-- <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
         </a>
-      </li>
+      </li>-->
 
       <li>
         <a href="new-team.php">
@@ -82,7 +82,7 @@ include_once("session.php");
         </a>
       </li>
 
-      <!--<li>
+     <!-- <li>
         <a href="techie-teams.php">
           <i class="fa fa-pencil"></i> <span>Change Team</span>
         </a>
@@ -101,23 +101,22 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-           <li>
+ <li>
         <a href="reasign-task.php">
           <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
         </a>
       </li>
       <li>
-      <li>
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
         </a>
-      </li>
-     <li>
+      </li>      <li>
      <li>
         <a href="restituted.php">
           <i class="zmdi zmdi-alert-triangle"></i> <span>Restituted Pap</span>
         </a>
       </li>
+     <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>
@@ -203,7 +202,7 @@ include_once("session.php");
             <div class="card-body"> 
             <center>  <h5 class="card-title">PAP DAILY INSTALLATION</h5></center>
 			  <div class="table-responsive">
-               <table class="table" id="dtBasicExample">
+               <table class="table" id="example">
                   <thead>
                     <tr>
                     <th>Client ID</th>
@@ -248,228 +247,7 @@ while($row=$result->fetch_array()){
             </div>
           </div>
 </div>        
-       <!-- <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Bordered Table</h5>
-			  <div class="table-responsive">
-              <table class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div><!--End Row
-
-
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Striped Table</h5>
-			  <div class="table-responsive">
-               <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">Handle</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>@fat</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>@twitter</td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Hover Table</h5>
-			  <div class="table-responsive">
-              <table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            </div>
-          </div>
-        </div>
-      </div><!--End Row
-
-      <div class="row">
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Small Table</h5>
-			  <div class="table-responsive">
-               <table class="table table-sm">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Responsive Table</h5>
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                      <th scope="col">Heading</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">2</th>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">3</th>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>-->
+      
         </div>
       </div><!--End Row-->
 	  
@@ -548,12 +326,67 @@ while($row=$result->fetch_array()){
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
-  <script>
-  $(document).ready(function () {
-$('#dtBasicExample').DataTable();
-$('.dataTables_length').addClass('bs-select');
+  <script >
+		$(document).ready(function () {
+    // Setup - add a text input to each footer cell
+    $('#example thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#example thead');
+ 
+    var table = $('#example').DataTable({
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            var api = this.api();
+ 
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+                    $(cell).html('<input type="text" class="form-control col-lg-12 " placeholder="' + title + '" />');
+ 
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('keyup change', function (e) {
+                            e.stopPropagation();
+ 
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+ 
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+ 
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        },
+    });
 });
-</script>
+	</script>
 </body>
 
 </html>

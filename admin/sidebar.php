@@ -1,23 +1,5 @@
 
 <html>
-<head>
-<link rel="icon" href="../assets/favicon.png" type="image/x-icon">
-   <!--Vector CSS -->
-  <link href="../assets/plugins/vectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet"/>
-  <!-- simplebar CS-->
-  <link href="../assets/plugins/simplebar/css/simplebar.css" rel="stylesheet"/>
-  <!-- Bootstrap core CSS-->
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet"/>
-  <!-- animate CSS-->
-  <link href="../assets/css/animate.css" rel="stylesheet" type="text/css"/>
-  <!-- Icons CSS-->
-  <link href="../assets/css/icons.css" rel="stylesheet" type="text/css"/>
-  <!-- Sidebar CSS-->
-  <link href="../assets/css/sidebar-menu.css" rel="stylesheet"/>
-  <!-- Custom Style-->
-  <link href="../assets/css/app-style.css" rel="stylesheet"/>
-</head>
-<body class="bg-theme bg-theme11">
  <div id="wrapper" >
 <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="false" >
      <div class="brand-logo">
@@ -94,7 +76,6 @@
 
     </ul>
    
-   </div>
 <div class="overlay toggle-menu"></div>
 </div>
  <script src="../assets/js/popper.min.js"></script>
