@@ -38,9 +38,9 @@ values(?,?,?,?,?,?,?,?,?,?,?)");
 $stmt->bind_param("sssssssssss",$Team_ID,$MacAddress,$ChampName,$Region,$ClientName,$ClientContact,$BuildingName,$BuildingCode,$PapStatus,$DateTurnedOn,$ClientID);
 $stmt->execute();
 echo "<script>alert('Successfull');</script>"; 
-header('Location: pap-daily-installation.php');
+ echo '<script>window.location.href="pap-daily-installation.php";</script>';
 $stmt->close();
-#$connection->close();
+$connection->close();
     
 }
 ?>

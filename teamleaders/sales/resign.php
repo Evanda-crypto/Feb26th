@@ -42,7 +42,7 @@ if (isset($id)) {
             </div>
 
             <div class="col-md-12 text-center pt-5 ">
-                <a href="pap-not-installed.php" class="btn btn-info">Go back</a>
+                <a href="pap-restituted.php" class="btn btn-info">Go back</a>
             </div>
         </div>
     </div>

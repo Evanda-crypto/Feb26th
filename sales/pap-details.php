@@ -270,7 +270,7 @@ $(document).ready(function(){
            </div>
            <div class="form-group">
             <label for="input-4">Contact<i style="color:red;">*</i></label></label>
-            <input type="text" class="form-control" id="input-4" name="ClientContact" placeholder="Contact" required>
+            <input type="text" class="form-control" id="input-4" maxlength="10" minlength="10" name="ClientContact" placeholder="Contact" required>
            </div>
            <div class="form-group">
             <label for="input-5">WhatsApp<i style="color:red;">*</i></label></label>

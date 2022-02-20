@@ -113,6 +113,11 @@ include_once("session.php");
         </a>
       </li>
      <li>
+     <li>
+        <a href="restituted.php">
+          <i class="zmdi zmdi-alert-triangle"></i> <span>Restituted Pap</span>
+        </a>
+      </li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
         </a>

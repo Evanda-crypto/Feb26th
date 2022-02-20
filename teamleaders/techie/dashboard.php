@@ -104,7 +104,12 @@ include_once("session.php");
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
         </a>
-      </li>      <li>
+      </li>
+     <li>
+        <a href="restituted.php">
+          <i class="zmdi zmdi-alert-triangle"></i> <span>Restituted Pap</span>
+        </a>
+      </li>
      <!-- <li>
         <a href="#">
           <i class="fa fa-check"></i> <span>Work Report</span>

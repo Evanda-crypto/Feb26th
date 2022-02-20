@@ -228,6 +228,8 @@ include_once("session.php");
     <div class="container-fluid">
      
       <div class="row mt-3">
+<div class="col-lg-12">
+
           <div class="card">
             <div class="card-body"> 
             <center>  <h5 class="card-title">PAP INSTALLED</h5></center>
@@ -274,7 +276,7 @@ while($row=$result->fetch_array()){
           </div>
             </div>
           </div>
-        
+       </div> 
        <!-- <div class="col-lg-6">
           <div class="card">
             <div class="card-body">

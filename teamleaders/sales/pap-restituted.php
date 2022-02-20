@@ -179,7 +179,7 @@ include_once("session.php");
                      <th>Techie 1</th>
                      <th>Techie 2</th>
                     <th>Reason</th>
-                     <th>Delete</th>
+                     <th>More</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -10,12 +10,11 @@ include_once("session.php");
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
   <meta name="description" content=""/>
   <meta name="author" content=""/>
-  <title>Reasign | Task</title>
+  <title>Restituted | Pap</title>
   <!-- loader--
-  <link href="../../assets/css/pace.min.css" rel="stylesheet"/>
-  <script src="../../assets/js/pace.min.js"></script>
+  <link href="../assets/css/pace.min.css" rel="stylesheet"/>
+  <script src="../assets/js/pace.min.js"></script>
   <!--favicon-->
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" integrity="sha512-PgQMlq+nqFLV4ylk1gwUOgm6CtIIXkKwaIHp/PAIWHzig/lKZSEGKEysh0TCVbHJXCLN7WetD8TFecIky75ZfQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
 
@@ -27,7 +26,6 @@ include_once("session.php");
 <!-- Page level plugin JavaScript--><script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
-
 
   <link rel="icon" href="../../assets/favicon.png" type="image/x-icon">
   <!-- simplebar CSS-->
@@ -43,11 +41,6 @@ include_once("session.php");
   <!-- Custom Style-->
   <link href="../../assets/css/app-style.css" rel="stylesheet"/>
   
-  <style>
-    .pagination li:hover{
-    cursor: pointer;
-}
-  </style>
 </head>
 
 <body class="bg-theme bg-theme11">
@@ -63,7 +56,7 @@ include_once("session.php");
   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
      <div class="brand-logo">
       <a href="dashboard.php">
-       <img src="../../assets/login-logo3.png" class="logo-icon" alt="logo icon" style="width: 80px; height: 60px;">
+       <img src="../../assets/login-logo3.png" class="logo-icon" alt="logo icon" style="width: 100px; height: 60px;">
        <h5 class="logo-text"></h5>
      </a>
    </div>
@@ -75,7 +68,7 @@ include_once("session.php");
         </a>
       </li>
 
-    <!--  <li>
+     <!-- <li>
         <a href="calendar.php">
           <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
           <small class="badge float-right badge-light"></small>
@@ -107,26 +100,21 @@ include_once("session.php");
                                               ?></small>
         </a>
       </li>
-      <li>
+ <li>
         <a href="reasign-task.php">
           <i class="zmdi zmdi-refresh-alt"></i> <span>Reasign Task</span>
         </a>
       </li>
-        <li>
+      <li>
         <a href="pap-installed.php">
           <i class="fa fa-check"></i> <span>Pap Installed</span>
         </a>
-      </li>
+      </li>      <li>
      <li>
         <a href="restituted.php">
           <i class="zmdi zmdi-alert-triangle"></i> <span>Restituted Pap</span>
         </a>
       </li>
-     <!-- <li>
-        <a href="#">
-          <i class="fa fa-check"></i> <span>Work Report</span>
-        </a>
-      </li>-->
      <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
@@ -168,7 +156,7 @@ include_once("session.php");
      
     <li class="nav-item dropdown-lg">
       <a class="nav-link dropdown-toggle dropdown-toggle-nocaret waves-effect" data-toggle="dropdown" href="javascript:void();">
-      <b class=""><?php echo $_SESSION['Region']?></b></a>
+      <i class=""><?php echo $_SESSION['Region']?></i></a>
     </li>
 
     <li class="nav-item">
@@ -208,64 +196,57 @@ include_once("session.php");
     <div class="container-fluid">
      
       <div class="row mt-3">
-<div class="col-lg-12">
-
           <div class="card">
             <div class="card-body">
               
-              <center><h5 class="card-title">Current Tasks</h5></center>
+            <center>  <h5 class="card-title">Restituted Pap</h5></center>
 			  <div class="table-responsive">
                <table class="table" id="dtBasicExample">
                   <thead>
                     <tr>
-                    <th>Team ID</th>
-                    <th>ClientID</th>
-                     <th>Building Name</th>
-                     <th>Building Code</th>
-                     <th>Region</th>
                      <th>Client Name</th>
-                     <th>Client Contact</th>
-                     <th>Availability</th>
-                     <th>More</th>
+                     <th>Contact</th>
+                     <th>Building Name</th>
+                     <th>BuildingCode</th>
+                     <th>ChampName</th>
+                     <th>Techie 1</th>
+                     <th>Techie 2</th>
+                    <th>Reason</th>
                     </tr>
                   </thead>
                   <tbody>
+
  <?php
-    $query=mysqli_query($connection,"SELECT techietask.TeamID,techietask.ClientID,techietask.ClientName,techietask.ClientContact,techietask.TeamID,techietask.Region,techietask.ClientAvailability,techietask.BuildingCode,techietask.BuildingName,techietask.Date from techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID where papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."'");
-    while($row=mysqli_fetch_assoc($query)){
-      $tid=$row['TeamID'];
-      $id=$row['ClientID'];
-      $cname=$row['ClientName'];
-      $contact=$row['ClientContact'];
-      $availD=$row['ClientAvailability'];
-      $reg=$row['Region'];
-      $bname=$row['BuildingName'];
-      $bcode=$row['BuildingCode'];
-      
-      echo ' <tr>
-      <th scope="row">'.$tid.'</th>
-      <td>'.$id.'</td>
-      <td>'.$bname.'</td>
-      <td>'.$bcode.'</td>
-      <td>'.$reg.'</td>
-      <td>'.$cname.'</td>
-      <td>'.$contact.'</td>
-      <td>'.$availD.'</td>
-      <td>
-        <button class="btn-success"><a href="change-task.php?client-id='.$id.'" class="text-bold">Reasign Task</a></button>
-      </td>
-      </tr>';
-    }
-    ?>
-                  </tbody>
-                </table>
-            </div>
+                        $query  = "SELECT ClientID,ClientName,BuildingName,BuildingCode,Region,Floor,DateSigned,Reason,Contact,ChampName,Techie1,Techie2 from papnotinstalled where Region='".$_SESSION['Region']."' order by DateSigned Desc";
+                        $result  = mysqli_query($connection, $query);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                             
+                        ?>
+                                <tr>
+                                    <th><?php echo $row['ClientName']; ?></th>
+                                    <th><?php echo $row['Contact']; ?></th>
+                                    <th><?php echo $row['BuildingName']; ?></th>
+                                    <th><?php echo $row['BuildingCode']; ?></th>
+                                    <th><?php echo $row['ChampName']; ?></th>
+                                    <th><?php echo $row['Techie1']; ?></th>
+                                    <th><?php echo $row['Techie2']; ?></th>
+                                    <th><?php echo $row['Reason']; ?></th>
+
+                                </tr>
+                        <?php
+
+                            }
+                       
+                        ?>
+ </tbody>
+</table>
+ </div>
 
   </div>
             </div>
           </div>
         
-        </div></div>
+        </div>
       </div><!--End Row-->
 	  
 	  <!--start overlay-->
@@ -279,16 +260,6 @@ include_once("session.php");
    <!--Start Back To Top Button-->
     <a href="javaScript:void();" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
     <!--End Back To Top Button-->
-	
-	<!--Start footer-->
-	<!--<footer class="footer">
-      <div class="container">
-        <div class="text-center">
-          Copyright © Konnect 2022
-        </div>
-      </div>
-    </footer>-->
-	<!--End footer-->
 	
 	<!--start color switcher-->
    <div class="right-sidebar">
@@ -343,12 +314,12 @@ include_once("session.php");
   
   <!-- Custom scripts -->
   <script src="../../assets/js/app-script.js"></script>
- <script>
- $(document).ready(function () {
+	<script>
+        $(document).ready(function () {
 $('#dtBasicExample').DataTable();
 $('.dataTables_length').addClass('bs-select');
 });
-</script>	
+    </script>
 </body>
 
 </html>
