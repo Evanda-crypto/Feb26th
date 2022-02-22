@@ -246,7 +246,7 @@ include_once("session.php");
                   <tbody>
                   <?php
 
-$records = mysqli_query($connection,"SELECT  papinstalled.Image,papinstalled.ClientID,papinstalled.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled from papinstalled join techieteams on papinstalled.Team_ID=techieteams.Team_ID where papinstalled.DateInstalled=CURDATE() order by DateInstalled asc"); // fetch data from database
+$records = mysqli_query($connection,"SELECT  papinstalled.Image,papinstalled.ClientID,papinstalled.Team_ID,teams.Techie1,teams.Techie2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled from papinstalled join teams on papinstalled.Team_ID=teams.Team_ID where papinstalled.DateInstalled=CURDATE() order by DateInstalled asc"); // fetch data from database
 
 while($data = mysqli_fetch_array($records))
 {
@@ -254,7 +254,7 @@ while($data = mysqli_fetch_array($records))
   <tr>
     <td><?php echo $data['ClientID']; ?></td>
     <td><?php echo $data['Team_ID']; ?></td>
-    <td><?php echo $data['Techie_1']; ?></td>
+    <td><?php echo $data['Techie1']; ?></td>
     <td><?php echo $data['Techie_2']; ?></td>
     <td><?php echo $data['Mac']; ?></td>
     <td><?php echo $data['DateInstalled']; ?></td>

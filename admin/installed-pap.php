@@ -133,8 +133,8 @@ include_once("sidebar.php");
                   <tbody>
                   <?php
 
-$records = mysqli_query($connection,"SELECT papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papinstalled.ClientID,papinstalled.Note,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
-FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID IS NOT null ORDER BY papinstalled.DateInstalled ASC"); // fetch data from database
+$records = mysqli_query($connection,"SELECT papdailysales.ClientName,papdailysales.ClientContact,papdailysales.BuildingName,papinstalled.ClientID,papinstalled.Note,teams.Team_ID,teams.Techie1,teams.Techie2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+FROM teams LEFT JOIN papinstalled on teams.Team_ID=papinstalled.Team_ID left join papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID IS NOT null ORDER BY papinstalled.DateInstalled ASC"); // fetch data from database
 
 while($data = mysqli_fetch_array($records))
 {
@@ -143,8 +143,8 @@ while($data = mysqli_fetch_array($records))
     <td><?php echo $data['ClientName']; ?></td>
     <td><?php echo $data['ClientContact']; ?></td>
     <td><?php echo $data['BuildingName']; ?></td>
-    <td><?php echo $data['Techie_1']; ?></td>
-    <td><?php echo $data['Techie_2']; ?></td>
+    <td><?php echo $data['Techie1']; ?></td>
+    <td><?php echo $data['Techie2']; ?></td>
     <td><?php echo $data['Mac']; ?></td>
     <td><?php echo $data['DateInstalled']; ?></td>
     <td><?php echo $data['Note']; ?></td>

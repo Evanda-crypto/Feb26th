@@ -214,14 +214,20 @@ echo '<script>window.location.href="my-task.php";</script>';
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Techie'];?></p>
+          
+            <p class="user-subtitle"><?php echo $_SESSION['TeamID'];?></p>
             </div>
            </div>
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+        <li class="dropdown-item" >Team ID : <?php echo $_SESSION['TeamID'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 1 : <?php echo $_SESSION['Techie1'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 2 : <?php echo $_SESSION['Techie2'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" ></i></li>
       </ul>
     </li>
   </ul>

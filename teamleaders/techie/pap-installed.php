@@ -220,8 +220,8 @@ include_once("session.php");
                   <tbody>
 <?php
     
-    $sql="SELECT papdailysales.ClientName,papdailysales.BuildingName,papdailysales.ClientContact,papinstalled.ClientID,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
-    FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID left join papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
+    $sql="SELECT papdailysales.ClientName,papdailysales.BuildingName,papdailysales.ClientContact,papinstalled.ClientID,teams.Team_ID,teams.Techie1,teams.Techie2,Upper(papinstalled.MacAddress) as Mac,papinstalled.DateInstalled,papinstalled.ClientID 
+    FROM teams LEFT JOIN papinstalled on teams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID left join papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null and papinstalled.Region='".$_SESSION['Region']."' ORDER BY papinstalled.DateInstalled ASC";
 $result=$connection->query($sql);
 while($row=$result->fetch_array()){
   ?>
@@ -231,8 +231,8 @@ while($row=$result->fetch_array()){
     <td><?php echo $row['ClientContact']?></td>
    <td><?php echo $row['BuildingName']?></td>
     <td><?php echo $row['Team_ID']?></td>
-    <td><?php echo $row['Techie_1']?></td>
-    <td><?php echo $row['Techie_2']?></td>
+    <td><?php echo $row['Techie1']?></td>
+    <td><?php echo $row['Techie2']?></td>
     <td><?php echo $row['Mac']?></td>
     <td><?php echo $row['DateInstalled']?></td>
     <td>

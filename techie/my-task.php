@@ -79,8 +79,8 @@ include("../db/db.php");
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
-                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+                                            $query="SELECT  COUNT(teams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN teams ON teams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND teams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['MyTask']."<br><br>";
@@ -150,14 +150,20 @@ include("../db/db.php");
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Techie'];?></p>
+            
+            <p class="user-subtitle"><?php echo $_SESSION['TeamID'];?></p>
             </div>
            </div>
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+        <li class="dropdown-item" >Team ID : <?php echo $_SESSION['TeamID'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 1 : <?php echo $_SESSION['Techie1'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 2 : <?php echo $_SESSION['Techie2'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" ></i></li>
       </ul>
     </li>
   </ul>
@@ -273,9 +279,9 @@ include("../db/db.php");
                   </thead>
                   <tbody>
  <?php
-    $query=mysqli_query($connection,"SELECT papdailysales.ChampName,techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
+    $query=mysqli_query($connection,"SELECT papdailysales.ChampName,techietask.ClientName,techietask.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,papinstalled.MacAddress,techietask.Date,teams.Team_ID,
     papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
-    techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and techieteams.Team_ID='".$_SESSION['TeamID']."'");
+    techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN teams ON teams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE techietask.ClientID is not null AND papinstalled.ClientID is null and teams.Team_ID='".$_SESSION['TeamID']."'");
     while($row=mysqli_fetch_assoc($query)){
       $id=$row['ClientID'];
       $bname=$row['BuildingName'];

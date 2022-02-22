@@ -312,7 +312,7 @@ include("sidebar.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(papinstalled.MacAddress) as pap FROM techieteams LEFT JOIN papinstalled on techieteams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID JOIN papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null";
+                                             $query="SELECT COUNT(papinstalled.MacAddress) as pap FROM teams LEFT JOIN papinstalled on teams.Team_ID=papinstalled.Team_ID left join turnedonpap on papinstalled.ClientID=turnedonpap.ClientID JOIN papdailysales on papdailysales.ClientID=papinstalled.ClientID WHERE papinstalled.ClientID is NOT null and turnedonpap.ClientID is null";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['pap']."<br><br>";

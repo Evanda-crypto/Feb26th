@@ -6,7 +6,7 @@ if(isset($_POST['submit'])){
 $Password = $_POST['password'];
 $hashpass= password_hash($Password, PASSWORD_DEFAULT);
 
-$sql="update employees set ID=$id,PASSWORD='$hashpass' where ID=$id";
+$sql="update teams set ID=$id,PASSWORD='$hashpass' where ID=$id";
 
 $result=mysqli_query($connection,$sql);
 if ($result) {

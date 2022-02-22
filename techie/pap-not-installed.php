@@ -3,17 +3,17 @@ include_once("session.php");
 include("../db/db.php");
 $id=$_GET['clientid'];
 
-$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.DateSigned,papdailysales.Floor,papdailysales.ChampName,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,techieteams.Team_ID,techieteams.Techie_1,techieteams.Techie_2,
+$sql="SELECT techietask.ClientName,techietask.Region,papdailysales.DateSigned,papdailysales.Floor,papdailysales.ChampName,papdailysales.ClientID,techietask.ClientContact,techietask.ClientAvailability,techietask.BuildingName,techietask.Region,techietask.Date,teams.Team_ID,teams.Techie1,teams.Techie2,
 papdailysales.BuildingCode,papdailysales.Floor from papdailysales LEFT JOIN 
-techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN teams ON teams.Team_ID=techietask.TeamID WHERE techietask.ClientID is not null AND techietask.ClientID=$id AND teams.Team_ID='".$_SESSION['TeamID']."'";
 $result=mysqli_query($connection,$sql);
 $row=mysqli_fetch_assoc($result);
 $clientid=$row['ClientID'];
 $teamid=$row['Team_ID'];
 $date=$row['Date'];
 $reg=$row['Region'];
-$t1=$row['Techie_1'];
-$t2=$row['Techie_2'];
+$t1=$row['Techie1'];
+$t2=$row['Techie2'];
 $floor=$row['Floor'];
 $cname=$row['ClientName'];
 $champ=$row['ChampName'];
@@ -25,8 +25,8 @@ $datesigned=$row['DateSigned'];
 if(isset($_POST['submit'])) {
 $Team_ID=$_POST['teamid'];
 $DateAssigned = $_POST['Date'];
-$Techie_1 = $row['Techie_1'];
-$Techie_2 = $row['Techie_2'];
+$Techie1 = $row['Techie1'];
+$Techie2 = $row['Techie2'];
 $note = $_POST['note'];
 $ClientID=$row['ClientID'];
 $Date=$row['Date'];
@@ -53,7 +53,7 @@ else
      $query = "DELETE FROM  techietask  WHERE ClientID= '$id'";
      $result = mysqli_query($connection, $query);
      $result=mysqli_query($connection,$sql);
-     $insert = $connection->query("INSERT into papnotinstalled (ClientID,ClientName,BuildingName,BuildingCode,Region,Floor,DateSigned,Reason,ChampName,TeamID,Techie1,Techie2,DateAssigned,Contact) VALUES ('$ClientID','$ClientName','$BuildingName','$BuildingCode','$Region','$Floor','$DateSigned','$note','$ChampName','$Team_ID','$Techie_1','$Techie_2','$DateAssigned','$contact')"); 
+     $insert = $connection->query("INSERT into papnotinstalled (ClientID,ClientName,BuildingName,BuildingCode,Region,Floor,DateSigned,Reason,ChampName,TeamID,Techie1,Techie2,DateAssigned,Contact) VALUES ('$ClientID','$ClientName','$BuildingName','$BuildingCode','$Region','$Floor','$DateSigned','$note','$ChampName','$Team_ID','$Techie1','$Techie2','$DateAssigned','$contact')"); 
     
      if($insert && $result){ 
      echo '<script>alert("Submitted!")</script>';
@@ -130,9 +130,9 @@ else
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask,papinstalled.MacAddress,techietask.Date,techieteams.Team_ID,
-                                             papdailysales.BuildingCode from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
-                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+                                            $query="SELECT  COUNT(teams.Team_ID)as MyTask,papinstalled.MacAddress,techietask.Date,teams.Team_ID,
+                                             papdailysales.BuildingCode from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN teams ON teams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND teams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['MyTask']."<br><br>";
@@ -140,20 +140,6 @@ else
                                               ?></small>
         </a>
       </li>
-
-      <li>
-        <a href="tables.php">
-          <i class="zmdi zmdi-grid"></i> <span>Tables</span>
-        </a>
-      </li>
-
-      <li>
-        <a href="calendar.php">
-          <i class="zmdi zmdi-calendar-check"></i> <span>Calendar</span>
-          <small class="badge float-right badge-light">New</small>
-        </a>
-      </li>
-
       <li>
         <a href="profile.php">
           <i class="zmdi zmdi-face"></i> <span>Profile</span>
@@ -210,14 +196,20 @@ else
            <div class="media">
              <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
             <div class="media-body">
-            <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-            <p class="user-subtitle"><?php echo $_SESSION['Techie'];?></p>
+            
+            <p class="user-subtitle"><?php echo $_SESSION['TeamID'];?></p>
             </div>
            </div>
           </a>
         </li>
         <li class="dropdown-divider"></li>
-        <li class="dropdown-item"><i class="icon-power mr-2"></i> Logout</li>
+        <li class="dropdown-item" >Team ID : <?php echo $_SESSION['TeamID'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 1 : <?php echo $_SESSION['Techie1'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 2 : <?php echo $_SESSION['Techie2'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" ></i></li>
       </ul>
     </li>
   </ul>

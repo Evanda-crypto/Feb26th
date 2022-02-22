@@ -25,7 +25,7 @@ if(isset($_POST['submit'])){
     }
     else
     {    
-      $stmt= $connection->prepare("select * from techieteams where Team_ID= ? and Region= ?");
+      $stmt= $connection->prepare("select * from teams where Team_ID= ? and Region= ?");
       $stmt->bind_param("ss",$TeamID,$Region);
       $stmt->execute();
       $stmt_result= $stmt->get_result();
@@ -299,8 +299,8 @@ if(isset($_POST['submit'])){
                 </thead>
                 <tbody>
                 <?php
-                        $query  = "SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,techieteams.Techie_1,techieteams.Techie_2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
-                        left join techieteams on techietask.TeamID=techieteams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
+                        $query  = "SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,teams.Techie1,teams.Techie2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
+                        left join teams on techietask.TeamID=teams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
                         GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1";
                         $result  = mysqli_query($connection, $query);
 
@@ -314,8 +314,8 @@ if(isset($_POST['submit'])){
                                 <tr>
                                     <th><?php echo $num; ?></th>
                                     <th><?php echo $row['TeamID']; ?></th>
-                                    <th><?php echo $row['Techie_1']; ?></th>
-                                    <th><?php echo $row['Techie_2']; ?></th>
+                                    <th><?php echo $row['Techie1']; ?></th>
+                                    <th><?php echo $row['Techie2']; ?></th>
                                     <th><?php echo $row['tasks']; ?></th>
                                 </tr>
                         <?php

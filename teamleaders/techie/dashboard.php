@@ -234,7 +234,7 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT (COUNT(*)*2) as techies from techieteams where Region='".$_SESSION['Region']."'";
+                                             $query="SELECT (COUNT(*)*2) as techies from teams where Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['techies']."<br><br>";
@@ -249,7 +249,7 @@ include_once("session.php");
             <div class="col-12 col-lg-6 col-xl-3 border-light">
                 <div class="card-body">
                   <h5 class="text-white mb-0"><?php
-                                             $query="SELECT COUNT(*) as myteams from techieteams where Region='".$_SESSION['Region']."'";
+                                             $query="SELECT COUNT(*) as myteams from teams where Region='".$_SESSION['Region']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['myteams']."<br><br>";
@@ -399,7 +399,7 @@ include_once("session.php");
                   </thead>
                   <tbody>
                     <?php
-                        $query  = "SELECT techieteams.Techie_1,techieteams.Techie_2,COUNT(papinstalled.Team_ID) as task FROM papinstalled LEFT JOIN techieteams ON techieteams.Team_ID=papinstalled.Team_ID WHERE papinstalled.Region='".$_SESSION['Region']."' and  papinstalled.DateInstalled BETWEEN subdate(curdate(), WEEKDAY(curdate())) AND  subdate(curdate(), WEEKDAY(curdate())-13) GROUP BY techieteams.Team_ID";
+                        $query  = "SELECT teams.Techie1,teams.Techie2,COUNT(papinstalled.Team_ID) as task FROM papinstalled LEFT JOIN teams ON teams.Team_ID=papinstalled.Team_ID WHERE papinstalled.Region='".$_SESSION['Region']."' and  papinstalled.DateInstalled BETWEEN subdate(curdate(), WEEKDAY(curdate())) AND  subdate(curdate(), WEEKDAY(curdate())-13) GROUP BY teams.Team_ID";
                         $result  = mysqli_query($connection, $query);
 
                         $num_rows  = mysqli_num_rows($result);
@@ -411,8 +411,8 @@ include_once("session.php");
                         ?>
                                 <tr>
                                     <th><?php echo $num; ?></th>
-                                    <th><?php echo $row['Techie_1']; ?></th>
-                                    <th><?php echo $row['Techie_2']; ?></th>
+                                    <th><?php echo $row['Techie1']; ?></th>
+                                    <th><?php echo $row['Techie2']; ?></th>
                                     <th><?php echo $row['task']; ?></th>
 
                                 </tr>

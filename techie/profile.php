@@ -63,8 +63,8 @@ include_once("session.php");
         <a href="my-task.php">
           <i class="zmdi zmdi-format-list-bulleted"></i> <span>My Task</span>
           <small class="badge float-right badge-light"><?php
-                                            $query="SELECT  COUNT(techieteams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN techieteams ON techieteams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
-                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND techieteams.Team_ID='".$_SESSION['TeamID']."'";
+                                            $query="SELECT  COUNT(teams.Team_ID)as MyTask from papdailysales LEFT JOIN techietask on techietask.ClientID=papdailysales.ClientID LEFT JOIN teams ON teams.Team_ID=techietask.TeamID  LEFT JOIN papinstalled ON papinstalled.ClientID=papdailysales.ClientID WHERE 
+                                             techietask.ClientID is not null AND papinstalled.ClientID is null AND teams.Team_ID='".$_SESSION['TeamID']."'";
                                              $data=mysqli_query($connection,$query);
                                              while($row=mysqli_fetch_assoc($data)){
                                              echo $row['MyTask']."<br><br>";
@@ -128,14 +128,20 @@ include_once("session.php");
           <div class="media">
             <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
            <div class="media-body">
-           <h6 class="mt-2 user-title"><?php echo $_SESSION['FName'];?>  <?php echo $_SESSION['LName'];?></h6>
-           <p class="user-subtitle"><?php echo $_SESSION['Techie'];?></p>
+          
+           <p class="user-subtitle"><?php echo $_SESSION['TeamID'];?></p>
            </div>
           </div>
          </a>
        </li>
        <li class="dropdown-divider"></li>
-       <li class="dropdown-item"><i class="icon-power mr-2">  <a href="#" target="_blank"></i> Logout</li>
+        <li class="dropdown-item" >Team ID : <?php echo $_SESSION['TeamID'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 1 : <?php echo $_SESSION['Techie1'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" >Techie 2 : <?php echo $_SESSION['Techie2'];?></li>
+        <li class="dropdown-divider"></li>
+        <li class="dropdown-item" ><i class="icon-power mr-2" ></i></li>
      </ul>
    </li>
  </ul>
@@ -346,21 +352,21 @@ include_once("session.php");
                 <div class="tab-pane" id="edit">
                     <form method="post" action="reset-pass.php">
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">First name</label>
+                            <label class="col-lg-3 col-form-label form-control-label">Techie 1</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value="<?php echo $_SESSION['FName'];?> " readonly>
+                                <input class="form-control" type="text" value="<?php echo $_SESSION['Techie1'];?> " readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                            <label class="col-lg-3 col-form-label form-control-label">Techie 2</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="text" value=" <?php echo $_SESSION['LName'];?>" readonly>
+                                <input class="form-control" type="text" value=" <?php echo $_SESSION['Techie2'];?>" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                            <label class="col-lg-3 col-form-label form-control-label">Username</label>
                             <div class="col-lg-9">
-                                <input class="form-control" type="email" value=" <?php echo $_SESSION['Techie'];?>" readonly>
+                                <input class="form-control" type="email" value=" <?php echo $_SESSION['TeamID'];?>" readonly>
                             </div>
                         </div>
 

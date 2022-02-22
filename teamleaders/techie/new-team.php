@@ -6,9 +6,10 @@ if(isset($_POST['submit'])){
     $Team_ID=$_POST['teamid'];
     $Techie_1 = $_POST['Techie1'];
     $Techie_2 = $_POST['Techie2'];
-    $Email1 = $_POST['Email1'];
-    $Email2 = $_POST['Email2'];
+    $password = $_POST['password'];
     $Region = $_POST['region'];
+
+    $hassh= password_hash($password, PASSWORD_DEFAULT);
     
     //checking connection
     if($connection->connect_error){
@@ -16,22 +17,33 @@ if(isset($_POST['submit'])){
     }
     else
     {
+      $stmt= $connection->prepare("select * from teams where Team_ID= ?");
+      $stmt->bind_param("s",$Team_ID);
+      $stmt->execute();
+     $stmt_result= $stmt->get_result();
+     if($stmt_result->num_rows>0){
+      echo "<script>alert('There is another team with the same Team_ID');</script>";
+      echo '<script>window.location.href="new-team.php";</script>';
+     }
+     else if(strlen(trim($Team_ID))<=4){
+      echo "<script>alert('Invalid Team_ID');</script>";
+      echo '<script>window.location.href="new-team.php";</script>';
+     }
+     else{
          //Insert query
-        $stmt= $connection->prepare("insert into techieteams (Team_ID,Techie_1,Techie_2,Region,Email1,Email2)
-        values(?,?,?,?,?,?)");
+        $stmt= $connection->prepare("insert into teams (Team_ID,Techie1,Techie2,Region,Password)
+        values(?,?,?,?,?)");
            //values from the fields
-        $stmt->bind_param("ssssss",$Team_ID,$Techie_1,$Techie_2,$Region,$Email1,$Email2);
+        $stmt->bind_param("sssss",$Team_ID,$Techie_1,$Techie_2,$Region,$hassh);
         $stmt->execute();
-        echo "<script>alert('Information successfully submited');</script>";
+        echo "<script>alert('New team created successfully');</script>";
+        echo '<script>window.location.href="new-team.php";</script>';
         $stmt->close();
         $connection->close();
+     }
     
     }
     }
-?>
-<?php
-include("../../db/db.php");
-include_once("session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -239,23 +251,19 @@ include_once("session.php");
            </div>
            <div class="form-group">
             <label for="input-2">Techie 1</label>
-            <input type="text" class="form-control" name="Techie1" id="techie1"  onkeyup="GetDetail(this.value)" placeholder="Techie 1" required>
-           </div>
-           <div class="form-group">
-            <label for="input-2">Techie 1 Email</label>
-            <input type="text" class="form-control" name="Email1" id="Email1" placeholder="Techie 1 Email" required>
+            <input type="text" class="form-control" name="Techie1" id="techie1"  placeholder="Techie 1 Full Names" required>
            </div>
            <div class="form-group">
             <label for="input-2">Techie 2</label>
-            <input type="text" class="form-control" name="Techie2" id="techie2"  onkeyup="GetDetaila(this.value)" placeholder="Techie 2" required>
-           </div>
-           <div class="form-group">
-            <label for="input-2">Techie 2 Email</label>
-            <input type="text" class="form-control" name="Email2" id="Email2" placeholder="Techie 2 Email" required>
+            <input type="text" class="form-control" name="Techie2" id="techie2"   placeholder="Techie 2 Full names" required>
            </div>
            <div class="form-group">
             <label for="input-2">Region</label>
-            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $_SESSION['Region']?>" placeholder="Region" required>
+            <input type="text" class="form-control" name="region" id="input-2" value="<?php echo $_SESSION['Region']?>" placeholder="Region" readonly>
+           </div>
+           <div class="form-group">
+            <label for="input-2">Password</label>
+            <input type="text" class="form-control" name="password" value="123456" placeholder="Password" readonly>
            </div>
            <div class="form-group">
             <button type="submit" name="submit" class="btn btn-light px-5"><i class="icon-tick"></i> Submit</button>
@@ -282,13 +290,13 @@ include_once("session.php");
                 <tbody>
                   <?php
 
-                          $sql="select * from techieteams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
+                          $sql="select * from teams where Region='".$_SESSION['Region']."' order by Team_ID ASC";
                           $result=mysqli_query($connection,$sql);
                           if($result){
                           while($row=mysqli_fetch_assoc($result)){
                           $tid=$row['Team_ID'];
-                          $tname1=$row['Techie_1'];
-                          $tname2=$row['Techie_2'];
+                          $tname1=$row['Techie1'];
+                          $tname2=$row['Techie2'];
                           
 
                           echo ' <tr>

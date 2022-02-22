@@ -51,30 +51,7 @@ if(isset($_POST['submit'])){
                 }
 
             }
-            else if($data['DEPARTMENT']=="Techie"){
-                $query= $connection->prepare("select employees.ID,employees.FIRST_NAME,employees.LAST_NAME,employees.EMAIL,employees.DEPARTMENT,employees.PASSWORD,techieteams.Team_ID from employees LEFT join techieteams ON techieteams.Email1=employees.EMAIL OR techieteams.Email2=employees.EMAIL WHERE techieteams.Team_ID is not null AND Email= ?");
-                $query->bind_param("s",$EMAIL);
-                $query->execute();
-                $query_result= $query->get_result();
-                if($query_result->num_rows>0){
-                    $row= $query_result->fetch_assoc();
-                    if(password_verify($Password, $row['PASSWORD'])){
-                    $_SESSION['Techie'] = true;
-                    $_SESSION['start'] = time();
-                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
-                        $_SESSION['Techie']=$EMAIL;
-                        $_SESSION['FName']=$data['FIRST_NAME'];
-                        $_SESSION['LName']=$data['LAST_NAME'];
-                        $_SESSION['TeamID']=$row['Team_ID'];
-                        $_SESSION['ID']=$data['ID'];
-                        header("Location: techie/TechieDashboard.php");
-                    }
-                    else{
-                        echo "<script>alert('Wrong Password.');</script>";
-                        echo '<script>window.location.href="index.php";</script>';
-                    }
-            }
-        }
+            
         else{
             $result= $connection->prepare("select * from teamleaders where EMAIL= ?");
             $result->bind_param("s",$EMAIL);
@@ -109,11 +86,37 @@ if(isset($_POST['submit'])){
                     echo '<script>window.location.href="index.php";</script>';
                 }
             }
+            
+
         }
         }
         else{
-            echo "<script>alert('No Records.');</script>";
-            echo '<script>window.location.href=index.php";</script>';
+                $query= $connection->prepare("SELECT * from teams Where Team_ID= ?");
+                $query->bind_param("s",$EMAIL);
+                $query->execute();
+                $query_result= $query->get_result();
+                if($query_result->num_rows>0){
+                    $row= $query_result->fetch_assoc();
+                    if(password_verify($Password, $row['Password'])){
+                    $_SESSION['Techie'] = true;
+                    $_SESSION['start'] = time();
+                    $_SESSION['expire'] = $_SESSION['start'] + (24 * 60 * 60);
+                        $_SESSION['Techie']=$EMAIL;
+                        $_SESSION['Techie1']=$row['Techie1'];
+                        $_SESSION['Techie2']=$row['Techie2'];
+                        $_SESSION['TeamID']=$row['Team_ID'];
+                        $_SESSION['ID']=$data['ID'];
+                        header("Location: techie/TechieDashboard.php");
+                    }
+                    else{
+                        echo "<script>alert('Wrong Password.');</script>";
+                        echo '<script>window.location.href="index.php";</script>';
+                    }
+                }
+                else{
+                    echo "<script>alert('No Records.');</script>";
+                    echo '<script>window.location.href=index.php";</script>';
+                }
         }
 }
 }

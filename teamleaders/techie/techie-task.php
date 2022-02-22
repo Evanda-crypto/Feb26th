@@ -30,7 +30,7 @@ if(isset($_POST['submit'])){
     }
     else
     {    
-      $stmt= $connection->prepare("select * from techieteams where Team_ID= ? and Region= ?");
+      $stmt= $connection->prepare("select * from teams where Team_ID= ? and Region= ?");
     $stmt->bind_param("ss",$TeamID,$Region);
     $stmt->execute();
     $stmt_result= $stmt->get_result();
@@ -229,7 +229,7 @@ if(isset($_POST['submit'])){
     <div class="container-fluid">
 
     <div class="row mt-3">
-      <div class="col-lg-6">
+      <div class="col-lg-4">
          <div class="card">
            <div class="card-body">
            <div class="card-title">New Task</div>
@@ -279,16 +279,12 @@ if(isset($_POST['submit'])){
          </div>
       </div>
 
-     <div class="col-lg-6">
+     <div class="col-lg-8">
         <div class="card">
            <div class="card-body">
-           <div class="card-title">Pending Tasks for Teams <div class="form-outline">
-          <input type="search" id="myInput" onkeyup="myFunction()"class="form-control" placeholder="Search by Name.." aria-label="Search" /></div>
+           <div class="card-title">Pending Tasks for Teams 
            </div>
            <hr>
-           <div class="card">
-           
-            <div class="card-body">
               <h5 class="card-title"></h5>
 			  <div class="table-responsive">
               <table class="table table-hover" id="myTable">
@@ -305,15 +301,15 @@ if(isset($_POST['submit'])){
                   <tr>
                   <?php
 
-                          $sql="SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,techieteams.Techie_1,techieteams.Techie_2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
-                          left join techieteams on techietask.TeamID=techieteams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
+                          $sql="SELECT techietask.TeamID, COUNT(techietask.TeamID) as tasks,teams.Techie1,teams.Techie2 FROM techietask left join papinstalled on papinstalled.ClientID=techietask.ClientID
+                          left join teams on techietask.TeamID=teams.Team_ID WHERE papinstalled.ClientID is null and techietask.Region='".$_SESSION['Region']."' 
                           GROUP BY techietask.TeamID HAVING COUNT(techietask.TeamID)>1 OR COUNT(techietask.TeamID)=1";
                           $result=mysqli_query($connection,$sql);
                           if($result){
                           while($row=mysqli_fetch_assoc($result)){
                           $tid=$row['TeamID'];
-                          $t1=$row['Techie_1'];
-                          $t2=$row['Techie_2'];
+                          $t1=$row['Techie1'];
+                          $t2=$row['Techie2'];
                           $task=$row['tasks'];
 
                           echo ' <tr>
@@ -332,8 +328,6 @@ if(isset($_POST['submit'])){
             </div>
             </div>
           </div>
-         </div>
-         </div>
       </div>
     </div><!--End Row-->
 
